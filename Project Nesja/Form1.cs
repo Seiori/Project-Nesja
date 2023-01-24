@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Security.Policy;
 using System.Text.Json.Nodes;
 
 namespace Project_Nesja
@@ -11,14 +13,17 @@ namespace Project_Nesja
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            GetData();
+            GameData.FetchVersion();
         }
 
-        async static void GetData()
+        private void Logo_Click(object sender, EventArgs e)
         {
-            JsonGrabber grabber = new JsonGrabber();
-            GameData.currentVersion = grabber.GetJsonObject<List<string>>("https://ddragon.leagueoflegends.com/api/versions.json")[0];
-            GameData.aram = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/aram?period=week&tier=all");
-        } 
+            var psi = new ProcessStartInfo
+            {
+                FileName = "https://github.com/Seiori/Project-Nesja",
+                UseShellExecute = true
+            };
+            Process.Start(psi);
+        }
     }
 }
