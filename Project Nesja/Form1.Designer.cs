@@ -38,6 +38,9 @@
             this.RankedButton = new FontAwesome.Sharp.IconButton();
             this.HomeButton = new FontAwesome.Sharp.IconButton();
             this.PanelTitleBar = new System.Windows.Forms.Panel();
+            this.MinimiseButton = new FontAwesome.Sharp.IconButton();
+            this.MaximiseButton = new FontAwesome.Sharp.IconButton();
+            this.ExitButton = new FontAwesome.Sharp.IconButton();
             this.LabelFormTitle = new System.Windows.Forms.Label();
             this.IconCurrentForm = new FontAwesome.Sharp.IconPictureBox();
             this.PanelDesktop = new System.Windows.Forms.Panel();
@@ -214,6 +217,9 @@
             // PanelTitleBar
             // 
             this.PanelTitleBar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.PanelTitleBar.Controls.Add(this.MinimiseButton);
+            this.PanelTitleBar.Controls.Add(this.MaximiseButton);
+            this.PanelTitleBar.Controls.Add(this.ExitButton);
             this.PanelTitleBar.Controls.Add(this.LabelFormTitle);
             this.PanelTitleBar.Controls.Add(this.IconCurrentForm);
             this.PanelTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
@@ -223,10 +229,58 @@
             this.PanelTitleBar.TabIndex = 3;
             this.PanelTitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanelTitleBar_MouseDown);
             // 
+            // MinimiseButton
+            // 
+            this.MinimiseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.MinimiseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MinimiseButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.MinimiseButton.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            this.MinimiseButton.IconColor = System.Drawing.Color.White;
+            this.MinimiseButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            this.MinimiseButton.IconSize = 15;
+            this.MinimiseButton.Location = new System.Drawing.Point(753, -4);
+            this.MinimiseButton.Name = "MinimiseButton";
+            this.MinimiseButton.Size = new System.Drawing.Size(35, 29);
+            this.MinimiseButton.TabIndex = 4;
+            this.MinimiseButton.UseVisualStyleBackColor = false;
+            this.MinimiseButton.Click += new System.EventHandler(this.MinimiseButton_Click);
+            // 
+            // MaximiseButton
+            // 
+            this.MaximiseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.MaximiseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MaximiseButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.MaximiseButton.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
+            this.MaximiseButton.IconColor = System.Drawing.Color.White;
+            this.MaximiseButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            this.MaximiseButton.IconSize = 15;
+            this.MaximiseButton.Location = new System.Drawing.Point(794, 0);
+            this.MaximiseButton.Name = "MaximiseButton";
+            this.MaximiseButton.Size = new System.Drawing.Size(35, 29);
+            this.MaximiseButton.TabIndex = 3;
+            this.MaximiseButton.UseVisualStyleBackColor = false;
+            this.MaximiseButton.Click += new System.EventHandler(this.MaximiseButton_Click);
+            // 
+            // ExitButton
+            // 
+            this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExitButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.ExitButton.IconChar = FontAwesome.Sharp.IconChar.X;
+            this.ExitButton.IconColor = System.Drawing.Color.White;
+            this.ExitButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
+            this.ExitButton.IconSize = 15;
+            this.ExitButton.Location = new System.Drawing.Point(835, 0);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(35, 29);
+            this.ExitButton.TabIndex = 2;
+            this.ExitButton.UseVisualStyleBackColor = false;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // 
             // LabelFormTitle
             // 
             this.LabelFormTitle.AutoSize = true;
-            this.LabelFormTitle.Location = new System.Drawing.Point(58, 18);
+            this.LabelFormTitle.Location = new System.Drawing.Point(58, 26);
             this.LabelFormTitle.Name = "LabelFormTitle";
             this.LabelFormTitle.Size = new System.Drawing.Size(40, 15);
             this.LabelFormTitle.TabIndex = 1;
@@ -240,7 +294,7 @@
             this.IconCurrentForm.IconChar = FontAwesome.Sharp.IconChar.Home;
             this.IconCurrentForm.IconColor = System.Drawing.SystemColors.ControlLightLight;
             this.IconCurrentForm.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.IconCurrentForm.Location = new System.Drawing.Point(20, 9);
+            this.IconCurrentForm.Location = new System.Drawing.Point(20, 18);
             this.IconCurrentForm.Name = "IconCurrentForm";
             this.IconCurrentForm.Size = new System.Drawing.Size(32, 32);
             this.IconCurrentForm.TabIndex = 0;
@@ -269,6 +323,7 @@
             this.Name = "MainMenu";
             this.Text = "Project Nesja";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.MainMenu_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
             this.PanelMenu.ResumeLayout(false);
             this.PanelTitleBar.ResumeLayout(false);
@@ -293,5 +348,8 @@
         private Label LabelFormTitle;
         private FontAwesome.Sharp.IconPictureBox IconCurrentForm;
         private Panel PanelDesktop;
+        private FontAwesome.Sharp.IconButton ExitButton;
+        private FontAwesome.Sharp.IconButton MinimiseButton;
+        private FontAwesome.Sharp.IconButton MaximiseButton;
     }
 }

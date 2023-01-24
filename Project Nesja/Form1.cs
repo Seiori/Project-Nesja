@@ -13,9 +13,17 @@ namespace Project_Nesja
         public MainMenu()
         {
             InitializeComponent();
+
+            // Defines a new Panel and Button for the Navigation Menus Selection Highlight
             leftBorderButton = new Panel();
             leftBorderButton.Size = new Size(7, 60);
             PanelMenu.Controls.Add(leftBorderButton);
+
+            // Removes Application Title At the Top
+            this.Text = string.Empty;
+            this.ControlBox = false;
+            this.DoubleBuffered = true;
+            this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -85,6 +93,49 @@ namespace Project_Nesja
 
         }
 
+        private void PanelDesktop_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void PanelTitleBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, 0xA1, 0x2, 0);
+            }
+        }
+
+        private void MainMenu_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Maximized)
+            {
+                FormBorderStyle = FormBorderStyle.None;
+            }
+            else
+            {
+                FormBorderStyle = FormBorderStyle.Sizable;
+            }
+        }
+
+        private void MaximiseButton_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void MinimiseButton_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+        
         private void OpenChildForm(Form childForm)
         {
             if (currentChildForm != null)
@@ -147,23 +198,14 @@ namespace Project_Nesja
             }
         }
 
-        private void PanelDesktop_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void PanelTitleBar_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, 0xA1, 0x2, 0);
-            }
-        }
-
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
