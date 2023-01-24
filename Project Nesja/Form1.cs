@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
+using Project_Nesja.Data;
+using Project_Nesja.Forms;
 
 namespace Project_Nesja
 {
@@ -29,6 +31,8 @@ namespace Project_Nesja
         private void Form1_Load(object sender, EventArgs e)
         {
             GameData.FetchVersion();
+            GameData.FetchAramData();
+            GameData.FetchRanked();
         }
 
         private void Logo_Click(object sender, EventArgs e)
@@ -50,37 +54,37 @@ namespace Project_Nesja
         private void HomeButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Form());
+            OpenChildForm(new Home());
         }
 
         private void ProfileButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Form());
+            OpenChildForm(new Profile());
         }
 
         private void RankedButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Form());
+            OpenChildForm(new Ranked());
         }
 
         private void AramButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Form());
+            OpenChildForm(new Aram());
         }
 
         private void GameButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Form());
+            OpenChildForm(new Game());
         }
 
         private void MiscButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Form());
+            OpenChildForm(new Misc());
         }
 
         private void IconCurrentForm_Click(object sender, EventArgs e)

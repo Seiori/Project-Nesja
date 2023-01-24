@@ -5,5 +5,5 @@
     public object Mid { get; set; }
     public object ADC { get; set; }
     public object Support { get; set; }
-    public object All { get; set; }
+    public new object All { get; set; }
 }
