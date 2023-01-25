@@ -44,10 +44,13 @@
             this.LabelFormTitle = new System.Windows.Forms.Label();
             this.IconCurrentForm = new FontAwesome.Sharp.IconPictureBox();
             this.PanelDesktop = new System.Windows.Forms.Panel();
+            this.searchChampionListBox = new System.Windows.Forms.ListBox();
+            this.searchChampionTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.PanelMenu.SuspendLayout();
             this.PanelTitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IconCurrentForm)).BeginInit();
+            this.PanelDesktop.SuspendLayout();
             this.SuspendLayout();
             // 
             // Logo
@@ -80,7 +83,6 @@
             this.PanelMenu.Name = "PanelMenu";
             this.PanelMenu.Size = new System.Drawing.Size(189, 586);
             this.PanelMenu.TabIndex = 2;
-            this.PanelMenu.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // MiscButton
             // 
@@ -303,12 +305,33 @@
             // 
             // PanelDesktop
             // 
+            this.PanelDesktop.Controls.Add(this.searchChampionListBox);
+            this.PanelDesktop.Controls.Add(this.searchChampionTextBox);
             this.PanelDesktop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelDesktop.Location = new System.Drawing.Point(189, 75);
             this.PanelDesktop.Name = "PanelDesktop";
             this.PanelDesktop.Size = new System.Drawing.Size(870, 511);
             this.PanelDesktop.TabIndex = 4;
             this.PanelDesktop.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelDesktop_Paint);
+            // 
+            // searchChampionListBox
+            // 
+            this.searchChampionListBox.FormattingEnabled = true;
+            this.searchChampionListBox.ItemHeight = 15;
+            this.searchChampionListBox.Location = new System.Drawing.Point(305, 158);
+            this.searchChampionListBox.Name = "searchChampionListBox";
+            this.searchChampionListBox.Size = new System.Drawing.Size(283, 94);
+            this.searchChampionListBox.TabIndex = 1;
+            this.searchChampionListBox.Visible = false;
+            this.searchChampionListBox.SelectedIndexChanged += new System.EventHandler(this.searchChampionListBox_SelectedIndexChanged);
+            // 
+            // searchChampionTextBox
+            // 
+            this.searchChampionTextBox.Location = new System.Drawing.Point(305, 135);
+            this.searchChampionTextBox.Name = "searchChampionTextBox";
+            this.searchChampionTextBox.Size = new System.Drawing.Size(283, 23);
+            this.searchChampionTextBox.TabIndex = 0;
+            this.searchChampionTextBox.TextChanged += new System.EventHandler(this.searchChampionTextBox_TextChanged);
             // 
             // MainMenu
             // 
@@ -329,6 +352,8 @@
             this.PanelTitleBar.ResumeLayout(false);
             this.PanelTitleBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.IconCurrentForm)).EndInit();
+            this.PanelDesktop.ResumeLayout(false);
+            this.PanelDesktop.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -351,5 +376,7 @@
         private FontAwesome.Sharp.IconButton ExitButton;
         private FontAwesome.Sharp.IconButton MinimiseButton;
         private FontAwesome.Sharp.IconButton MaximiseButton;
+        private ListBox searchChampionListBox;
+        private TextBox searchChampionTextBox;
     }
 }

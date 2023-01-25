@@ -1,29 +1,28 @@
 ﻿using Newtonsoft.Json;
-using System;
+using Newtonsoft.Json.Linq;
 using System.Net;
-using System.Security.Policy;
-using System.Windows.Forms;
+using System.Net.Http;
 
 namespace Project_Nesja
 {
     public class JsonGrabber
     {
-        public T GetJsonObject<T>(string url)
+        public static JToken? GetJsonObject(string url)
         {
             try
             {
-                using (var client = new WebClient())
+                using (var client = new HttpClient())
                 {
-                    var json = client.DownloadString(url);
-                    return JsonConvert.DeserializeObject<T>(json);
+                    var json = client.GetStringAsync(url).Result;
+                    return JToken.Parse(json);
                 }
             }
             catch (WebException ex)
             {
                 if (ex.Status == WebExceptionStatus.NameResolutionFailure)
                 {
-                    MessageBox.Show("Error: Internet Connection not available.");
-                    return default(T);
+                    Console.WriteLine("Error: Internet Connection not available.");
+                    return default;
                 }
                 else
                 {

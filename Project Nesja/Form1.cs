@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Xml;
 using FontAwesome.Sharp;
+using Newtonsoft.Json.Linq;
 using Project_Nesja.Data;
 using Project_Nesja.Forms;
 
@@ -8,17 +10,19 @@ namespace Project_Nesja
 {
     public partial class MainMenu : Form
     {
-        private IconButton currentButton;
-        private Panel leftBorderButton;
-        private Form currentChildForm;
+        private IconButton? currentButton;
+        private readonly Panel leftBorderButton;
+        private Form? currentChildForm;
         
         public MainMenu()
         {
             InitializeComponent();
 
             // Defines a new Panel and Button for the Navigation Menus Selection Highlight
-            leftBorderButton = new Panel();
-            leftBorderButton.Size = new Size(7, 60);
+            leftBorderButton = new Panel
+            {
+                Size = new Size(7, 60)
+            };
             PanelMenu.Controls.Add(leftBorderButton);
 
             // Removes Application Title At the Top
@@ -30,7 +34,7 @@ namespace Project_Nesja
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            GameData.FetchData();
+            GameData.FetchGameData();
         }
 
         private void Logo_Click(object sender, EventArgs e)
@@ -42,11 +46,6 @@ namespace Project_Nesja
                 UseShellExecute = true
             };
             Process.Start(psi);
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void HomeButton_Click(object sender, EventArgs e)
@@ -97,7 +96,7 @@ namespace Project_Nesja
 
         private void PanelDesktop_Paint(object sender, PaintEventArgs e)
         {
-
+            
         }
 
         private void PanelTitleBar_MouseDown(object sender, MouseEventArgs e)
@@ -201,13 +200,36 @@ namespace Project_Nesja
         }
 
         [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
+        private static extern bool ReleaseCapture();
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void searchChampionTextBox_TextChanged(object sender, EventArgs e)
+        {
+            var champions = GameData.Champions.Children().ToList();
+            var filteredChampions = champions.Where(x => x.First.ElementAt(3).Last().ToString().ToLower().Contains(searchChampionTextBox.Text.ToLower())).ToList();
+
+            // Now add the Names gathered in filteredChampions to the ListBox
+            searchChampionListBox.Items.Clear();
+            foreach (var champion in filteredChampions)
+            {
+                searchChampionListBox.Items.Add(champion.First.ElementAt(3).Last().ToString());
+            }
+            searchChampionListBox.Visible = true;
+        }
+
+        private void searchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get the selected champion from the list box
+            string selectedChampion = searchChampionListBox.SelectedItem.ToString();
+
+            // Open the new form and pass the selected champion as a parameter
+            OpenChildForm(new Home(selectedChampion));
         }
     }
 }

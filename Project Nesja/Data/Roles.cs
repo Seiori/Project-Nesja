@@ -1,9 +1,11 @@
-﻿public class Roles
+﻿using Newtonsoft.Json.Linq;
+
+public class Roles
 {
-    public object Top { get; set; }
-    public object Jungle { get; set; }
-    public object Mid { get; set; }
-    public object ADC { get; set; }
-    public object Support { get; set; }
-    public new object All { get; set; }
+    public JObject? Top { get; set; }
+    public JObject? Jungle { get; set; }
+    public JObject? Mid { get; set; }
+    public JObject? ADC { get; set; }
+    public JObject? Support { get; set; }
+    public JObject? All { get; set; }
 }
