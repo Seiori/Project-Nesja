@@ -13,30 +13,35 @@ namespace Project_Nesja.Data
         static JsonGrabber grabber = new JsonGrabber();
         public static string currentVersion { get; set; }
         public static object aram { get; set; }
-        public static Region rankedSoloDuo { get; set; }
-        public static Region rankedFlex { get; set; }
+        public static Ranks rankedQueue { get; set; }
+        public static Champions champions { get; set; }
 
         static GameData()
         {
             currentVersion = "";
             aram = new object();
-            rankedSoloDuo = new Region();
-            rankedFlex = new Region();
+            rankedQueue = new Ranks();
+            champions = new Champions();
         }
 
-        public async static void FetchVersion()
+        public async static void FetchData()
         {
+            // Grabs Current Live Patch Version
             currentVersion = grabber.GetJsonObject<List<string>>("https://ddragon.leagueoflegends.com/api/versions.json")[0];
-        }
 
-        public static void FetchRanked()
-        {
-            rankedSoloDuo.All.All.All = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/NA/champions/ranked?period=week&tier=all");
-        }
-
-        public async static void FetchAramData()
-        {
+            // Grabs Last Month of Aram Games Data, Global
             aram = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/aram?period=month&tier=all");
+
+            // Grabs Last 7 Days of Ranked Solo/Duo Games
+            rankedQueue.All.All = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all");
+            rankedQueue.All.Top = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/th/champions/ranked?period=week&tier=all&position=top");
+            rankedQueue.All.Jungle = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/th/champions/ranked?period=week&tier=all&position=jungle");
+            rankedQueue.All.Mid = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/th/champions/ranked?period=week&tier=all&position=mid");
+            rankedQueue.All.ADC = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/th/champions/ranked?period=week&tier=all&position=adc");
+            rankedQueue.All.Support = grabber.GetJsonObject<object>("https://op.gg/api/v1.0/internal/bypass/statistics/th/champions/ranked?period=week&tier=all&position=support");
+
+            // Grabs All Champion Data
+            champions.championData = grabber.GetJsonObject<object>("http://ddragon.leagueoflegends.com/cdn/" + currentVersion + "/data/en_US/champion.json");
         }
     }
 }

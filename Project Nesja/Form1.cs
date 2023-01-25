@@ -30,9 +30,7 @@ namespace Project_Nesja
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            GameData.FetchVersion();
-            GameData.FetchAramData();
-            GameData.FetchRanked();
+            GameData.FetchData();
         }
 
         private void Logo_Click(object sender, EventArgs e)
