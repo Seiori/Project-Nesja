@@ -51,7 +51,7 @@ namespace Project_Nesja
         private void HomeButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Home());
+            OpenChildForm(new Home("Aatrox"));
         }
 
         private void ProfileButton_Click(object sender, EventArgs e)
