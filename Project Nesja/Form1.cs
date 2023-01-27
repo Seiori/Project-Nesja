@@ -1,8 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Xml;
 using FontAwesome.Sharp;
-using Newtonsoft.Json.Linq;
 using Project_Nesja.Data;
 using Project_Nesja.Forms;
 

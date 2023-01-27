@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Data;
-using System.Text.RegularExpressions;
 
 namespace Project_Nesja.Data
 {
@@ -11,9 +10,10 @@ namespace Project_Nesja.Data
         public static Ranks RankedQueue { get; set; }
         public static Dictionary<int, ChampionRoleData> Aram { get; set; }
         public static Dictionary<int, Item> ItemsList { get; set; }
-        public static JArray? Runes { get; set; }
-        public static JObject? SummonerSpells { get; set; }
-        //public static JObject? Abilities { get; set; }
+        public static Dictionary<int, Runes> RunesList { get; set; }
+        public static Dictionary<int, RunePages> RunePagesList { get; set; }
+        public static Dictionary<int, StatMods> StatModsList { get; set; }
+        public static Dictionary<int, SummonerSpells> SummonerSpellsList { get; set; }
 
 
 
@@ -22,16 +22,18 @@ namespace Project_Nesja.Data
             CurrentVersion = "";
             ChampionList = new Dictionary<int, ChampionData>();
             RankedQueue = new Ranks();
-            Aram = new Dictionary<int, ChampionRoleData>();
-            ItemsList = new Dictionary<int, Item>();
-            Runes = new JArray();
-            SummonerSpells = new JObject();
             RankedQueue.All.All = new Dictionary<int, ChampionRoleData>();
             RankedQueue.All.Top = new Dictionary<int, ChampionRoleData>();
             RankedQueue.All.Jungle = new Dictionary<int, ChampionRoleData>();
             RankedQueue.All.Mid = new Dictionary<int, ChampionRoleData>();
             RankedQueue.All.ADC = new Dictionary<int, ChampionRoleData>();
             RankedQueue.All.Support = new Dictionary<int, ChampionRoleData>();
+            Aram = new Dictionary<int, ChampionRoleData>();
+            ItemsList = new Dictionary<int, Item>();
+            RunesList = new Dictionary<int, Runes>();
+            RunePagesList = new Dictionary<int, RunePages>();
+            StatModsList = new Dictionary<int, StatMods>();
+            SummonerSpellsList = new Dictionary<int, SummonerSpells>();
         }
 
         public static async void FetchGameData()
@@ -40,10 +42,10 @@ namespace Project_Nesja.Data
             CurrentVersion = (await WebRequests.GetJsonObject("https://ddragon.leagueoflegends.com/api/versions.json")).First.ToString();
 
             // Grabs All Champion Data
-            var Champions = (JObject?)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/champion.json")).SelectToken("data");
+            var champions = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/champion.json")).SelectToken("data");
 
             // Parses the Champion Data into a Easily Accessible Dictionary of Relevant Data
-            foreach (var champion in Champions.Children())
+            foreach (var champion in champions.Children())
             {
                 ChampionData championData = new ChampionData();
                 championData.Name = champion.First.SelectToken("name").ToString();
@@ -56,20 +58,20 @@ namespace Project_Nesja.Data
             }
 
             // Grabs Last 7 Days of Ranked Data
-            FetchChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all"), RankedQueue.All.All);
-            FetchChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=top"), RankedQueue.All.Top);
-            FetchChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=jungle"), RankedQueue.All.Jungle);
-            FetchChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=mid"), RankedQueue.All.Mid);
-            FetchChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=adc"), RankedQueue.All.ADC);
-            FetchChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=support"), RankedQueue.All.Support);
-
+            //ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all"), RankedQueue.All.All);
+            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=top"), RankedQueue.All.Top);
+            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=jungle"), RankedQueue.All.Jungle);
+            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=mid"), RankedQueue.All.Mid);
+            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=adc"), RankedQueue.All.ADC);
+            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=support"), RankedQueue.All.Support);
+            
             // Grabs Last Month of Aram Games Data, Global
-            FetchChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/aram?period=month&tier=all"), Aram);
+            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/aram?period=month&tier=all"), Aram);
 
             // Grabs All Item Data
-            var Items = (JObject?)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/item.json")).SelectToken("data");
+            var Items = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/item.json")).SelectToken("data");
 
-            // Parses the Item Data into a Easily Accessible Dictionary of Relevant Data
+            // Parses the Item Data into a Easily Accessible Dictionary of Relevant ItemData
             foreach (var item in Items.Children())
             {
                 Item ItemData = new Item();
@@ -80,16 +82,57 @@ namespace Project_Nesja.Data
             }
 
             // Grabs All Rune Data
-            var RuneData = (JArray?)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/runesReforged.json"));
-            
-            // NEED TO ADD A WAY OF TURNING THE RUNEDATA INTO RUNE OBJECT
+            var runeData = (await WebRequests.GetJsonObject("https://www.op.gg/_next/data/2PwAMU3MRxsUxzv2L2VOU/champions/aatrox/top/runes.json?region=global&tier=platinum_plus&champion=aatrox&position=top")).SelectToken("pageProps").SelectToken("data").SelectToken("meta").SelectToken("runes");
+            var runePageData = (await WebRequests.GetJsonObject("https://www.op.gg/_next/data/2PwAMU3MRxsUxzv2L2VOU/champions/aatrox/top/runes.json?region=global&tier=platinum_plus&champion=aatrox&position=top")).SelectToken("pageProps").SelectToken("data").SelectToken("meta").SelectToken("runePages");
+            var statModData = (await WebRequests.GetJsonObject("https://www.op.gg/_next/data/2PwAMU3MRxsUxzv2L2VOU/champions/aatrox/top/runes.json?region=global&tier=platinum_plus&champion=aatrox&position=top")).SelectToken("pageProps").SelectToken("data").SelectToken("meta").SelectToken("statMods");
 
+            // Parses the Rune Data into an Easily Accessible Dictionary of Relevant RuneData
+            foreach (var rune in runeData.Children())
+            {
+                Runes runes = new Runes();
+                runes.Name = (string)rune.ElementAt(5);
+                runes.NameID = (string)rune.ElementAt(4);
+                runes.ID = (int)rune.First;
+
+                RunesList.Add(runes.ID, runes);
+            }
+
+            // Parses the Rune Page Data into an Easily Accessible Dictionary of Relevant RunePageData
+            foreach (var runePage in runePageData.Children())
+            {
+                RunePages runePages = new RunePages();
+                runePages.Name = (string)runePage.ElementAt(1);
+                runePages.ID = (int)runePage.First;
+
+                RunePagesList.Add(runePages.ID, runePages);
+            }
+
+            // Parses the Stat Mod Data into an Easily Accessible Dictionart of Relevant StatModData
+            foreach (var statMod in statModData)
+            {
+                StatMods statMods = new StatMods();
+                statMods.Name = (string)statMod.ElementAt(1);
+                statMods.ID = (int)statMod.First;
+
+                StatModsList.Add(statMods.ID, statMods);
+            }
             
             // Grabs All SummonerSpell Data
-            SummonerSpells = (JObject?)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json")).SelectToken("data");
-        }
+            var summonerSpellData = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json")).SelectToken("data");
 
-        private static void FetchChampRoleData(JObject rankedData, Dictionary<int, ChampionRoleData> ChampRoleDataList)
+            // Parses the Summoner Spell Data into an Easily Accessible Dictionary of Relevant SummonerSpellData
+            foreach (var summonerSpell in summonerSpellData.Children())
+            {
+                SummonerSpells summonerSpells = new SummonerSpells();
+                summonerSpells.Name = (string)summonerSpell.First.ElementAt(1);
+                summonerSpells.NameID = (string)summonerSpell.First.First;
+                summonerSpells.ID = (int)summonerSpell.First.ElementAt(13);
+
+                SummonerSpellsList.Add(summonerSpells.ID, summonerSpells);
+            }
+        }
+        
+        private static void ParseChampRoleData(JObject rankedData, Dictionary<int, ChampionRoleData> ChampRoleDataList)
         {
             foreach (var champion in rankedData.SelectToken("data"))
             {

@@ -5,12 +5,12 @@ namespace Project_Nesja.Forms
 {
     public partial class Home : Form
     {
-        private ChampionData? selectedChampion;
+        private ChampionData selectedChampion;
 
-        public Home(ChampionData selectedChampion)
+        public Home(ChampionData chosenChampion)
         {
             InitializeComponent();
-            this.selectedChampion = selectedChampion;
+            selectedChampion = chosenChampion;
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -20,7 +20,9 @@ namespace Project_Nesja.Forms
 
         private async void LoadChamptionData()
         {
-            await this.selectedChampion.FetchChampionImages();
+            if (selectedChampion == null)
+                selectedChampion = GameData.ChampionList.Values.First();
+            await selectedChampion.FetchChampionImages();
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;
             championImage.Image = selectedChampion.SplashImage;
@@ -55,11 +57,17 @@ namespace Project_Nesja.Forms
 
         private void searchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Get the selected champion from the list box
-            this.selectedChampion = GameData.ChampionList.Where(x => x.Value.Name == searchChampionListBox.SelectedItem.ToString()).FirstOrDefault().Value;
+            // Grab the ChampionData from the Dictionary of ChampionData Values using the ChampionName
+            selectedChampion = GameData.ChampionList.Where(x => x.Value.Name == searchChampionListBox.SelectedItem.ToString()).FirstOrDefault().Value;
 
-            // Open the new form and pass the selected champion as a parameter
+            // Load the Selected Champions ChampionData to the UI
             LoadChamptionData();
+
+            // Clear the Results
+            searchChampionListBox.Items.Clear();
+
+            // Clear the Search
+            searchChampionTextBox.Clear();
         }
     }
 }
