@@ -305,6 +305,7 @@
             // 
             // PanelDesktop
             // 
+            this.PanelDesktop.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.PanelDesktop.Controls.Add(this.searchChampionListBox);
             this.PanelDesktop.Controls.Add(this.searchChampionTextBox);
             this.PanelDesktop.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -316,20 +317,29 @@
             // 
             // searchChampionListBox
             // 
+            this.searchChampionListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchChampionListBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.searchChampionListBox.FormattingEnabled = true;
-            this.searchChampionListBox.ItemHeight = 15;
-            this.searchChampionListBox.Location = new System.Drawing.Point(305, 158);
+            this.searchChampionListBox.ItemHeight = 30;
+            this.searchChampionListBox.Location = new System.Drawing.Point(274, 171);
             this.searchChampionListBox.Name = "searchChampionListBox";
-            this.searchChampionListBox.Size = new System.Drawing.Size(283, 94);
+            this.searchChampionListBox.ScrollAlwaysVisible = true;
+            this.searchChampionListBox.Size = new System.Drawing.Size(279, 184);
             this.searchChampionListBox.TabIndex = 1;
             this.searchChampionListBox.Visible = false;
             this.searchChampionListBox.SelectedIndexChanged += new System.EventHandler(this.searchChampionListBox_SelectedIndexChanged);
             // 
             // searchChampionTextBox
             // 
-            this.searchChampionTextBox.Location = new System.Drawing.Point(305, 135);
+            this.searchChampionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchChampionTextBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.searchChampionTextBox.Location = new System.Drawing.Point(274, 136);
             this.searchChampionTextBox.Name = "searchChampionTextBox";
-            this.searchChampionTextBox.Size = new System.Drawing.Size(283, 23);
+            this.searchChampionTextBox.Size = new System.Drawing.Size(279, 35);
             this.searchChampionTextBox.TabIndex = 0;
             this.searchChampionTextBox.TextChanged += new System.EventHandler(this.searchChampionTextBox_TextChanged);
             // 

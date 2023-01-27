@@ -7,15 +7,14 @@ namespace Project_Nesja
 {
     public class WebRequests
     {
-        public static JToken? GetJsonObject(string url)
+        private static readonly HttpClient client = new HttpClient();
+
+        public static async Task<JToken?> GetJsonObject(string url)
         {
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var json = client.GetStringAsync(url).Result;
-                    return JToken.Parse(json);
-                }
+                var json = await client.GetStringAsync(url);
+                return JToken.Parse(json);
             }
             catch (WebException ex)
             {
@@ -31,17 +30,13 @@ namespace Project_Nesja
             }
         }
 
-        public static Image DownloadImage(string url)
+        public static async Task<Image?> DownloadImage(string url)
         {
-            using (var client = new HttpClient())
+            var imageBytes = await client.GetByteArrayAsync(url);
+            using (var ms = new MemoryStream(imageBytes))
             {
-                var imageBytes = client.GetByteArrayAsync(url).Result;
-                using (var ms = new MemoryStream(imageBytes))
-                {
-                    return Image.FromStream(ms);
-                }
+                return Image.FromStream(ms);
             }
         }
     }
-
 }

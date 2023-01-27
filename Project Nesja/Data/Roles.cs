@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-
-public class Roles
+﻿public class Roles
 {
-    public JObject? Top { get; set; }
-    public JObject? Jungle { get; set; }
-    public JObject? Mid { get; set; }
-    public JObject? ADC { get; set; }
-    public JObject? Support { get; set; }
-    public JObject? All { get; set; }
+    public Dictionary<int, ChampionRoleData>? Top { get; set; }
+    public Dictionary<int, ChampionRoleData>? Jungle { get; set; }
+    public Dictionary<int, ChampionRoleData>? Mid { get; set; }
+    public Dictionary<int, ChampionRoleData>? ADC { get; set; }
+    public Dictionary<int, ChampionRoleData>? Support { get; set; }
+    public Dictionary<int, ChampionRoleData>? All { get; set; }
 }

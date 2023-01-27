@@ -51,7 +51,7 @@ namespace Project_Nesja
         private void HomeButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Home("Aatrox"));
+            OpenChildForm(new Home(GameData.ChampionList.Where(x => x.Value.Name == "Aatrox").FirstOrDefault().Value));
         }
 
         private void ProfileButton_Click(object sender, EventArgs e)
@@ -211,16 +211,29 @@ namespace Project_Nesja
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)
         {
-            var champions = GameData.Champions.Children().ToList();
-            var filteredChampions = champions.Where(x => x.First.ElementAt(3).Last().ToString().ToLower().Contains(searchChampionTextBox.Text.ToLower())).ToList();
-
-            // Now add the Names gathered in filteredChampions to the ListBox
-            searchChampionListBox.Items.Clear();
-            foreach (var champion in filteredChampions)
+            if (GameData.ChampionList != null)
             {
-                searchChampionListBox.Items.Add(champion.First.ElementAt(3).Last().ToString());
-            }
-            searchChampionListBox.Visible = true;
+                // Use the GameData.ChampionList, and compare the letters in the searchChampionTextBox to the names of the champions in the list
+                var filteredList = GameData.ChampionList.Where(x => x.Value.Name.ToLower().Contains(searchChampionTextBox.Text.ToLower())).ToList();
+
+                // Clear the listbox
+                searchChampionListBox.Items.Clear();
+
+                // Add the filtered list to the listbox
+                foreach (var champion in filteredList)
+                {
+                    searchChampionListBox.Items.Add(champion.Value.Name);
+                }
+
+                if (searchChampionTextBox.Text != "")
+                {
+                    searchChampionListBox.Visible = true;
+                }
+                else
+                {
+                    searchChampionListBox.Visible = false;
+                }
+            }  
         }
 
         private void searchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -229,7 +242,7 @@ namespace Project_Nesja
             string selectedChampion = searchChampionListBox.SelectedItem.ToString();
 
             // Open the new form and pass the selected champion as a parameter
-            OpenChildForm(new Home(selectedChampion));
+            OpenChildForm(new Home(GameData.ChampionList.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value));
         }
     }
 }

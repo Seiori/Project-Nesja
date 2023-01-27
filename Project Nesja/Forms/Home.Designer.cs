@@ -70,19 +70,23 @@
             // 
             // searchChampionTextBox
             // 
+            this.searchChampionTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.searchChampionTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.searchChampionTextBox.Location = new System.Drawing.Point(308, 9);
             this.searchChampionTextBox.Name = "searchChampionTextBox";
-            this.searchChampionTextBox.Size = new System.Drawing.Size(249, 23);
+            this.searchChampionTextBox.Size = new System.Drawing.Size(249, 29);
             this.searchChampionTextBox.TabIndex = 3;
             this.searchChampionTextBox.TextChanged += new System.EventHandler(this.searchChampionTextBox_TextChanged);
             // 
             // searchChampionListBox
             // 
+            this.searchChampionListBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.searchChampionListBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.searchChampionListBox.FormattingEnabled = true;
-            this.searchChampionListBox.ItemHeight = 15;
+            this.searchChampionListBox.ItemHeight = 20;
             this.searchChampionListBox.Location = new System.Drawing.Point(308, 34);
             this.searchChampionListBox.Name = "searchChampionListBox";
-            this.searchChampionListBox.Size = new System.Drawing.Size(249, 94);
+            this.searchChampionListBox.Size = new System.Drawing.Size(249, 84);
             this.searchChampionListBox.TabIndex = 4;
             this.searchChampionListBox.SelectedIndexChanged += new System.EventHandler(this.searchChampionListBox_SelectedIndexChanged);
             // 
