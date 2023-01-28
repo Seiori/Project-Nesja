@@ -1,4 +1,5 @@
-﻿using Project_Nesja;
+﻿using Newtonsoft.Json.Linq;
+using Project_Nesja;
 using Project_Nesja.Data;
 
 public class ChampionData
@@ -20,8 +21,24 @@ public class ChampionData
     {
         SplashImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg");
         SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png");
-        var championJson = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/data/en_US/champion/" + NameID + ".json")).Last.Children();
-        
+
+        return this;
+    }
+
+    public async Task<ChampionData> FetchChampionAbilityImages()
+    {
+        var championJson = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/data/en_US/champion/" + NameID + ".json")).SelectToken("data").SelectToken(NameID).SelectToken("spells");
+
+        string QAbilityUrl = (string)championJson.ElementAt(0).SelectToken("image").First;
+        QAbility = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + QAbilityUrl);
+        string WAbilityUrl = (string)championJson.ElementAt(1).SelectToken("image").First;
+        WAbility = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + WAbilityUrl);
+        string EAbilityUrl = (string)championJson.ElementAt(2).SelectToken("image").First;
+        EAbility = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + EAbilityUrl);
+        string RAbilityUrl = (string)championJson.ElementAt(3).SelectToken("image").First;
+        RAbility = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + RAbilityUrl);
+
+        GameData.ChampionList[ID] = this;
         return this;
     }
 }

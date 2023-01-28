@@ -35,7 +35,9 @@ namespace Project_Nesja
             var imageBytes = await client.GetByteArrayAsync(url);
             using (var ms = new MemoryStream(imageBytes))
             {
-                return Image.FromStream(ms);
+                var img = Image.FromStream(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                return img;
             }
         }
     }

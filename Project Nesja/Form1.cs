@@ -204,7 +204,7 @@ namespace Project_Nesja
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            GameData.SaveGameData();
         }
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)
