@@ -23,7 +23,6 @@ namespace Project_Nesja.Forms
             if (selectedChampion == null)
                 selectedChampion = GameData.ChampionList.Values.First();
             await selectedChampion.FetchChampionImages();
-            await selectedChampion.FetchChampionAbilityImages();
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;
             championImage.Image = selectedChampion.SplashImage;

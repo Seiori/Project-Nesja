@@ -9,7 +9,7 @@ public class Runes
     
     public async Task<Runes> FetchRuneImages()
     {
-        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png");
+        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png", "Runes", NameID);
 
         return this;
     }

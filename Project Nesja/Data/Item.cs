@@ -9,7 +9,7 @@ public class Item
     
     public async Task<Item> FetchItemImages()
     {
-        Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/item/" + ID + ".png");
+        Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/item/" + ID + ".png", "Items", ID.ToString());
 
         return this;
     }

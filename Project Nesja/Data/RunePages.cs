@@ -8,7 +8,7 @@ public class RunePages
 
     public async Task<RunePages> FetchRunePageImages()
     {
-        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkStyle/" + ID + ".png");
+        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkStyle/" + ID + ".png", "RunePages", ID.ToString());
 
         return this;
     }

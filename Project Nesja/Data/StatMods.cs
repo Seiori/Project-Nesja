@@ -8,7 +8,7 @@ public class StatMods
     
     public async Task<StatMods> FetchChampionStatMods()
     {
-        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png");
+        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png", "StatMods", ID.ToString());
 
         return this;
     }
