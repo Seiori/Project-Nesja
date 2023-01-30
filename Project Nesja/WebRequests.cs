@@ -9,46 +9,26 @@ namespace Project_Nesja
     {
         private static readonly HttpClient client = new HttpClient();
 
-        public static async Task<JToken?> GetJsonObject(string url, string filePath = null, bool forceDownload = false)
+        public static async Task<JToken?> GetJsonObject(string url)
         {
-            if (!forceDownload && filePath != null && File.Exists(filePath))
+            try
             {
-                var jsonString = File.ReadAllText(filePath);
-                return JToken.Parse(jsonString);
+                var json = await client.GetStringAsync(url);
+                return JToken.Parse(json);
             }
-            else
+            catch (WebException ex)
             {
-                try
+                if (ex.Status == WebExceptionStatus.NameResolutionFailure)
                 {
-                    var json = await client.GetStringAsync(url);
-                    if (filePath != null)
-                    {
-                        if (!File.Exists(filePath))
-                        {
-                            using (File.Create(filePath))
-                            {
-                                // the using statement will dispose the stream after it's done
-                            }
-                        }
-                        File.WriteAllText(filePath, json);
-                    }
-                    return JToken.Parse(json);
+                    Console.WriteLine("Error: Internet Connection not available.");
+                    return default;
                 }
-                catch (WebException ex)
+                else
                 {
-                    if (ex.Status == WebExceptionStatus.NameResolutionFailure)
-                    {
-                        Console.WriteLine("Error: Internet Connection not available.");
-                        return default;
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
             }
         }
-
 
         public static async Task<Image?> DownloadImage(string url, string subFolder, string fileName)
         {

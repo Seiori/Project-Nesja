@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
 using Project_Nesja.Data;
-using System.Reflection.Metadata.Ecma335;
 
 public class ChampionData
 {
@@ -19,12 +18,11 @@ public class ChampionData
 
     public async Task<ChampionData> FetchChampionImages()
     {
-        var task1 = FetchChampionSplash();
-        var task2 = FetchChampionSprite();
-        var task3 = FetchChampionJson();
-
-        await Task.WhenAll(task1, task2, task3);
-
+        await Task.WhenAll(
+            FetchChampionSplash(),
+            FetchChampionSprite(),
+            FetchChampionJson()
+        );
         return this;
     }
     private async Task FetchChampionSplash()
@@ -39,15 +37,26 @@ public class ChampionData
 
     private async Task FetchChampionJson()
     {
-        var championJson = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/data/en_US/champion/" + NameID + ".json", Path.Combine("Data", "ChampionJson", NameID + ".json"))).SelectToken("data").SelectToken(NameID).SelectToken("spells");
+        string filePath = Path.Combine("Data", "ChampionJson", NameID + ".json");
+        JToken championJson;
+        if (!File.Exists(filePath))
+        {
+            championJson = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/data/en_US/champion/" + NameID + ".json")).SelectToken("data").SelectToken(NameID).SelectToken("spells");
+            File.WriteAllText(filePath, championJson.ToString());
+        }
+        else
+        {
+            string jsonString = File.ReadAllText(filePath);
+            championJson = JToken.Parse(jsonString);
+        }
         JArray championJsonObject = JArray.Parse(championJson.ToString());
-        
-        var task1 = FetchChampionQImage(championJsonObject);
-        var task2 = FetchChampionWImage(championJsonObject);
-        var task3 = FetchChampionEImage(championJsonObject);
-        var task4 = FetchChampionRImage(championJsonObject);
 
-        await Task.WhenAll(task1, task2, task3, task4);
+        await Task.WhenAll(
+            FetchChampionQImage(championJsonObject),
+            FetchChampionWImage(championJsonObject),
+            FetchChampionEImage(championJsonObject),
+            FetchChampionRImage(championJsonObject)
+        );
     }
 
     private async Task FetchChampionQImage(JArray championJsonObject)

@@ -204,7 +204,6 @@ namespace Project_Nesja
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            GameData.SaveGameData();
             Application.Exit();
         }
 

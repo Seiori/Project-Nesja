@@ -1,6 +1,6 @@
 ﻿public class ChampionRoleData
 { 
-    public ChampionData ChampionData { get; set; }
+    public ChampionData? ChampionData { get; set; }
     public int TotalGames { get; set; }
     public int GamesWon { get; set; }
     public int GamesLost { get; set; }
