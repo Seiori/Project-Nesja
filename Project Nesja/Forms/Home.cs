@@ -1,5 +1,6 @@
 ﻿using Project_Nesja.Data;
-using System.Runtime.CompilerServices;
+using Project_Nesja.Recommenders;
+using System.Diagnostics;
 
 namespace Project_Nesja.Forms
 {
@@ -26,6 +27,11 @@ namespace Project_Nesja.Forms
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;
             championImage.Image = selectedChampion.SplashImage;
+            qAbilityPicture.Image = selectedChampion.QAbility;
+            wAbilityPicture.Image = selectedChampion.WAbility;
+            eAbilityPicture.Image = selectedChampion.EAbility;
+            RankedPerformance djiwi = new RankedPerformance();
+            var test = djiwi.SortRankedData(GameData.RankedQueue.All.All);
         }
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)

@@ -33,7 +33,13 @@
             this.championTitle = new System.Windows.Forms.Label();
             this.searchChampionTextBox = new System.Windows.Forms.TextBox();
             this.searchChampionListBox = new System.Windows.Forms.ListBox();
+            this.qAbilityPicture = new System.Windows.Forms.PictureBox();
+            this.eAbilityPicture = new System.Windows.Forms.PictureBox();
+            this.wAbilityPicture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.championImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.qAbilityPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eAbilityPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wAbilityPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // championImage
@@ -90,11 +96,41 @@
             this.searchChampionListBox.TabIndex = 4;
             this.searchChampionListBox.SelectedIndexChanged += new System.EventHandler(this.searchChampionListBox_SelectedIndexChanged);
             // 
+            // qAbilityPicture
+            // 
+            this.qAbilityPicture.Location = new System.Drawing.Point(12, 326);
+            this.qAbilityPicture.Name = "qAbilityPicture";
+            this.qAbilityPicture.Size = new System.Drawing.Size(47, 50);
+            this.qAbilityPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.qAbilityPicture.TabIndex = 5;
+            this.qAbilityPicture.TabStop = false;
+            // 
+            // eAbilityPicture
+            // 
+            this.eAbilityPicture.Location = new System.Drawing.Point(140, 326);
+            this.eAbilityPicture.Name = "eAbilityPicture";
+            this.eAbilityPicture.Size = new System.Drawing.Size(47, 50);
+            this.eAbilityPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.eAbilityPicture.TabIndex = 6;
+            this.eAbilityPicture.TabStop = false;
+            // 
+            // wAbilityPicture
+            // 
+            this.wAbilityPicture.Location = new System.Drawing.Point(75, 326);
+            this.wAbilityPicture.Name = "wAbilityPicture";
+            this.wAbilityPicture.Size = new System.Drawing.Size(47, 50);
+            this.wAbilityPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.wAbilityPicture.TabIndex = 7;
+            this.wAbilityPicture.TabStop = false;
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(854, 472);
+            this.Controls.Add(this.wAbilityPicture);
+            this.Controls.Add(this.eAbilityPicture);
+            this.Controls.Add(this.qAbilityPicture);
             this.Controls.Add(this.searchChampionListBox);
             this.Controls.Add(this.searchChampionTextBox);
             this.Controls.Add(this.championTitle);
@@ -104,6 +140,9 @@
             this.Text = "Home";
             this.Load += new System.EventHandler(this.Home_Load);
             ((System.ComponentModel.ISupportInitialize)(this.championImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.qAbilityPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eAbilityPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wAbilityPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,5 +155,8 @@
         private Label championTitle;
         private TextBox searchChampionTextBox;
         private ListBox searchChampionListBox;
+        private PictureBox qAbilityPicture;
+        private PictureBox eAbilityPicture;
+        private PictureBox wAbilityPicture;
     }
 }

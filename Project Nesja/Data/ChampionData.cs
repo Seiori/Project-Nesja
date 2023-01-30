@@ -8,7 +8,7 @@ public class ChampionData
     public string? Title { get; set; }
     public string? NameID { get; set; }
     public int ID { get; set; }
-    public int? Difficulty { get; set; }
+    public int Difficulty { get; set; }
     public Image? SplashImage { get; set; }
     public Image? SpriteImage { get; set; }
     public Image? QAbility { get; set; }
@@ -30,7 +30,7 @@ public class ChampionData
         SplashImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg", "Splash", NameID);
     }
 
-    private async Task FetchChampionSprite()
+    public async Task FetchChampionSprite()
     {
         SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID);
     }

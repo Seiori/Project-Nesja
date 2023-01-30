@@ -2,6 +2,7 @@
 { 
     public ChampionData? ChampionData { get; set; }
     public int TotalGames { get; set; }
+    public float WinRate { get; set; }
     public int GamesWon { get; set; }
     public int GamesLost { get; set; }
     public int TotalKills { get; set; }

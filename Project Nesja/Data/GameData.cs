@@ -118,7 +118,8 @@ namespace Project_Nesja.Data
                     TotalCS = champion.SelectToken("cs").ToObject<int>(),
                     PickRate = champion.SelectToken("pick_rate").ToObject<float>()
                 };
-
+                // Calculates the Winrate
+                championRoleData.WinRate = (float)championRoleData.GamesWon / (float)championRoleData.TotalGames;
                 // Checks for Null value. This value is Null when looking at Aram Data
                 int.TryParse(champion.SelectToken("neutral_cs")?.ToString(), out int neutralCS);
                 championRoleData.TotalNeutralCS = neutralCS;
