@@ -1,17 +1,19 @@
-﻿public class RankedPerformance
+﻿using Project_Nesja.Data;
+
+public class AramPerformance
 {
     private readonly float totalGamesWeight = 0.6f;
     private readonly float winRateWeight = 0.4f;
 
-    public Dictionary<int, ChampionRoleData> SortRankedData(Dictionary<int, ChampionRoleData> champions)
+    public Dictionary<int, ChampionRoleData> SortAramData(Dictionary<int, ChampionRoleData> champions)
     {
         int TotalGames = 0;
-        
+
         foreach (var champion in champions)
         {
             TotalGames += champion.Value.TotalGames;
-        }    
-        
+        }
+
         var sortedChampions = champions.OrderByDescending(x =>
         {
             float sum = 0;

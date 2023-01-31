@@ -17,13 +17,14 @@ namespace Project_Nesja.Forms
         private void Home_Load(object sender, EventArgs e)
         {
             LoadChamptionData();
+            searchChampionListBox.Visible = false;
         }
 
         private async void LoadChamptionData()
         {
             if (selectedChampion == null)
                 selectedChampion = GameData.ChampionList.Values.First();
-            await selectedChampion.FetchChampionImages();
+            await selectedChampion.FetchChampionData();
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;
             championImage.Image = selectedChampion.SplashImage;

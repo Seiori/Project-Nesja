@@ -146,7 +146,6 @@ namespace Project_Nesja.Data
                     Title = champion.First.SelectToken("title").ToString(),
                     NameID = champion.First.SelectToken("id").ToString(),
                     ID = (int)champion.First.SelectToken("key"),
-                    Difficulty = (int)champion.First.SelectToken("info").Last()
                 };
                 ChampionList.Add(championData.ID, championData);
             }

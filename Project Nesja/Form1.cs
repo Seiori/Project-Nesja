@@ -61,13 +61,13 @@ namespace Project_Nesja
         private void RankedButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Ranked());
+            OpenChildForm(new Ranked(this));
         }
 
         private void AramButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Aram());
+            OpenChildForm(new Aram(this));
         }
 
         private void GameButton_Click(object sender, EventArgs e)
@@ -135,7 +135,7 @@ namespace Project_Nesja
             WindowState = FormWindowState.Minimized;
         }
         
-        private void OpenChildForm(Form childForm)
+        public void OpenChildForm(Form childForm)
         {
             if (currentChildForm != null)
             {

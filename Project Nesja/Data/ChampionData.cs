@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
 using Project_Nesja.Data;
+using System.Data;
 
 public class ChampionData
 {
@@ -8,7 +9,6 @@ public class ChampionData
     public string? Title { get; set; }
     public string? NameID { get; set; }
     public int ID { get; set; }
-    public int Difficulty { get; set; }
     public Image? SplashImage { get; set; }
     public Image? SpriteImage { get; set; }
     public Image? QAbility { get; set; }
@@ -16,23 +16,15 @@ public class ChampionData
     public Image? EAbility { get; set; }
     public Image? RAbility { get; set; }
 
-    public async Task<ChampionData> FetchChampionImages()
+    public async Task<ChampionData> FetchChampionData()
     {
         await Task.WhenAll(
             FetchChampionSplash(),
             FetchChampionSprite(),
-            FetchChampionJson()
+            FetchChampionJson(),
+            FetchBuildData("top")
         );
         return this;
-    }
-    private async Task FetchChampionSplash()
-    {
-        SplashImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg", "Splash", NameID);
-    }
-
-    public async Task FetchChampionSprite()
-    {
-        SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID);
     }
 
     private async Task FetchChampionJson()
@@ -57,6 +49,23 @@ public class ChampionData
             FetchChampionEImage(championJsonObject),
             FetchChampionRImage(championJsonObject)
         );
+    }
+    
+    private async Task<JObject> FetchBuildData(string role)
+    {
+        // TODO IMPLEMENT A WAY TO GRAB DATA TO RECOMMEND BUILDS FOR THE USER
+        JObject buildData = (JObject)await WebRequests.GetJsonObject("https://www.op.gg/_next/data/8R0-II0deUa4IPAQkgqQ5/champions/ " + NameID + " / " + role + " /runes.json?");
+        return buildData;
+    }
+    
+    private async Task FetchChampionSplash()
+    {
+        SplashImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg", "Splash", NameID);
+    }
+
+    public async Task FetchChampionSprite()
+    {
+        SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID);
     }
 
     private async Task FetchChampionQImage(JArray championJsonObject)

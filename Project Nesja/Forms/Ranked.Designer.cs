@@ -40,6 +40,7 @@
             this.Winrate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Pickrate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Banrate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.roleSelection = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.rankedDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,6 +94,7 @@
             this.rankedDataGrid.RowTemplate.Height = 60;
             this.rankedDataGrid.Size = new System.Drawing.Size(783, 402);
             this.rankedDataGrid.TabIndex = 0;
+            this.rankedDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rankedDataGrid_CellClick);
             // 
             // ChampionImage
             // 
@@ -128,11 +130,28 @@
             this.Banrate.HeaderText = "Banrate";
             this.Banrate.Name = "Banrate";
             // 
+            // roleSelection
+            // 
+            this.roleSelection.FormattingEnabled = true;
+            this.roleSelection.Items.AddRange(new object[] {
+            "All",
+            "Top",
+            "Jungle",
+            "Mid",
+            "Adc",
+            "Support"});
+            this.roleSelection.Location = new System.Drawing.Point(26, 10);
+            this.roleSelection.Name = "roleSelection";
+            this.roleSelection.Size = new System.Drawing.Size(121, 23);
+            this.roleSelection.TabIndex = 1;
+            this.roleSelection.SelectedIndexChanged += new System.EventHandler(this.roleSelection_SelectedIndexChanged);
+            // 
             // Ranked
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(854, 472);
+            this.Controls.Add(this.roleSelection);
             this.Controls.Add(this.rankedDataGrid);
             this.Name = "Ranked";
             this.Text = "Ranked";
@@ -151,5 +170,6 @@
         private DataGridViewTextBoxColumn Winrate;
         private DataGridViewTextBoxColumn Pickrate;
         private DataGridViewTextBoxColumn Banrate;
+        private ComboBox roleSelection;
     }
 }
