@@ -21,8 +21,7 @@ public class ChampionData
         await Task.WhenAll(
             FetchChampionSplash(),
             FetchChampionSprite(),
-            FetchChampionJson(),
-            FetchBuildData("top")
+            FetchChampionJson()
         );
         return this;
     }
@@ -49,13 +48,6 @@ public class ChampionData
             FetchChampionEImage(championJsonObject),
             FetchChampionRImage(championJsonObject)
         );
-    }
-    
-    private async Task<JObject> FetchBuildData(string role)
-    {
-        // TODO IMPLEMENT A WAY TO GRAB DATA TO RECOMMEND BUILDS FOR THE USER
-        JObject buildData = (JObject)await WebRequests.GetJsonObject("https://www.op.gg/_next/data/8R0-II0deUa4IPAQkgqQ5/champions/ " + NameID + " / " + role + " /runes.json?");
-        return buildData;
     }
     
     private async Task FetchChampionSplash()
