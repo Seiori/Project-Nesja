@@ -59,13 +59,21 @@ public class ChampionBuild
 
     private async Task FetchSkillPriority(JToken buildData)
     {
+        string[][] SkillPriorityData = new string[4][];
+        SkillPriorityData[0] = new string[3];
+        SkillPriorityData[1] = new string[3];
+        SkillPriorityData[2] = new string[3];
+        SkillPriorityData[3] = new string[3];
+
         var skillPriority = buildData["skill_masteries"].Count();
         if (skillPriority != 0)
         {
-            // TODO THINK OF A SYSTEM TO STORE THE SKILL ORDERS AND COMPARE THEM
-            SkillPriority[0] = buildData.ElementAt(5);
-            SkillPriority[1] = buildData.ElementAt(5);
-            SkillPriority[2] = buildData.ElementAt(5);
+            for (int i = 0; i < 4; i++)
+            {
+                SkillPriorityData[i][0] = buildData.ElementAt(6).First().ElementAt(i).First().First().First().ToString();
+                SkillPriorityData[i][1] = buildData.ElementAt(6).First().ElementAt(i).First().First().ElementAt(1).ToString();
+                SkillPriorityData[i][2] = buildData.ElementAt(6).First().ElementAt(i).First().First().Last().ToString();
+            }
         }
     }
     
