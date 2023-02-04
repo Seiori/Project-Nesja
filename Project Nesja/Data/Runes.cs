@@ -1,16 +1,7 @@
-﻿using Project_Nesja;
-
-public class Runes
+﻿public class Runes
 {
-    public string Name { get; set; }
-    public string NameID { get; set; }
-    public int ID { get; set; }
-    public Image? Image { get; set; }
-    
-    public async Task<Runes> FetchRuneImages()
-    {
-        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png", "Runes", NameID);
-
-        return this;
-    }
+    public Asset Rune { get; set; }
+    public float Winrate { get; set; }
+    public float Pickrate { get; set; }
+    public int TotalGames { get; set; }
 }

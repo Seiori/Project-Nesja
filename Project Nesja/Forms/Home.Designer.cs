@@ -36,10 +36,12 @@
             this.qAbilityPicture = new System.Windows.Forms.PictureBox();
             this.eAbilityPicture = new System.Windows.Forms.PictureBox();
             this.wAbilityPicture = new System.Windows.Forms.PictureBox();
+            this.itemTest1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.championImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.qAbilityPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eAbilityPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wAbilityPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemTest1)).BeginInit();
             this.SuspendLayout();
             // 
             // championImage
@@ -123,11 +125,20 @@
             this.wAbilityPicture.TabIndex = 7;
             this.wAbilityPicture.TabStop = false;
             // 
+            // itemTest1
+            // 
+            this.itemTest1.Location = new System.Drawing.Point(558, 229);
+            this.itemTest1.Name = "itemTest1";
+            this.itemTest1.Size = new System.Drawing.Size(100, 50);
+            this.itemTest1.TabIndex = 8;
+            this.itemTest1.TabStop = false;
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(854, 472);
+            this.Controls.Add(this.itemTest1);
             this.Controls.Add(this.wAbilityPicture);
             this.Controls.Add(this.eAbilityPicture);
             this.Controls.Add(this.qAbilityPicture);
@@ -143,6 +154,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.qAbilityPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eAbilityPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.wAbilityPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemTest1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,5 +170,6 @@
         private PictureBox qAbilityPicture;
         private PictureBox eAbilityPicture;
         private PictureBox wAbilityPicture;
+        private PictureBox itemTest1;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Data;
 
 namespace Project_Nesja.Data
 {
@@ -10,13 +9,7 @@ namespace Project_Nesja.Data
         public static Dictionary<int, ChampionData> ChampionList { get; set; }
         public static Ranks RankedQueue { get; set; }
         public static Dictionary<int, ChampionRoleData> Aram { get; set; }
-        public static Dictionary<int, Item> ItemsList { get; set; }
-        public static Dictionary<int, Runes> RunesList { get; set; }
-        public static Dictionary<int, RunePages> RunePagesList { get; set; }
-        public static Dictionary<int, StatMods> StatModsList { get; set; }
-        public static Dictionary<int, SummonerSpells> SummonerSpellsList { get; set; }
-
-
+        public static Dictionary<int, Asset> Assets { get; set; }
 
         static GameData()
         {
@@ -30,11 +23,7 @@ namespace Project_Nesja.Data
             RankedQueue.All.ADC = new Dictionary<int, ChampionRoleData>();
             RankedQueue.All.Support = new Dictionary<int, ChampionRoleData>();
             Aram = new Dictionary<int, ChampionRoleData>();
-            ItemsList = new Dictionary<int, Item>();
-            RunesList = new Dictionary<int, Runes>();
-            RunePagesList = new Dictionary<int, RunePages>();
-            StatModsList = new Dictionary<int, StatMods>();
-            SummonerSpellsList = new Dictionary<int, SummonerSpells>();
+            Assets = new Dictionary<int, Asset>();
         }
         
         public static async Task FetchGameData()
@@ -56,6 +45,7 @@ namespace Project_Nesja.Data
                     FetchAllRuneData(),
                     FetchSummonerSpellData()
                 );
+                await SaveGameData();
             }
         }
         
@@ -111,18 +101,10 @@ namespace Project_Nesja.Data
                     ChampionData = ChampionList.First(x => x.Key == champion.SelectToken("champion_id").ToObject<int>()).Value,
                     TotalGames = champion.SelectToken("play").ToObject<int>(),
                     GamesWon = champion.SelectToken("win").ToObject<int>(),
-                    GamesLost = champion.SelectToken("lose").ToObject<int>(),
-                    TotalKills = champion.SelectToken("kill").ToObject<int>(),
-                    TotalDeaths = champion.SelectToken("death").ToObject<int>(),
-                    TotalAssists = champion.SelectToken("assist").ToObject<int>(),
-                    TotalCS = champion.SelectToken("cs").ToObject<int>(),
                     PickRate = champion.SelectToken("pick_rate").ToObject<float>()
                 };
                 // Calculates the Winrate
                 championRoleData.WinRate = (float)championRoleData.GamesWon / (float)championRoleData.TotalGames;
-                // Checks for Null value. This value is Null when looking at Aram Data
-                int.TryParse(champion.SelectToken("neutral_cs")?.ToString(), out int neutralCS);
-                championRoleData.TotalNeutralCS = neutralCS;
 
                 // Checks for Null value. This value is Null when looking at Aram Data
                 float.TryParse(champion.SelectToken("ban_rate")?.ToString(), out float banRate);
@@ -160,20 +142,19 @@ namespace Project_Nesja.Data
             // Parses the Item Data into a Easily Accessible Dictionary of Relevant ItemData
             foreach (var item in Items.Children())
             {
-                Item ItemData = new()
+                Asset ItemData = new()
                 {
                     Name = item.First.ToString(),
-                    ID = int.Parse(item.First.SelectToken("image").SelectToken("full").ToString().Split('.')[0])
+                    ID = int.Parse(item.First.SelectToken("image").SelectToken("full").ToString().Split('.')[0]),
+                    AssetType = "Items"
                 };
-                ItemsList.Add(ItemData.ID, ItemData);
+                Assets.Add(ItemData.ID, ItemData);
             }
-
-            File.WriteAllText(Path.Combine("Data", "Items"), JsonConvert.SerializeObject(ItemsList));
         }
 
         private static async Task FetchAllRuneData()
         {
-            var allRuneData = await WebRequests.GetJsonObject("https://www.op.gg/_next/data/8R0-II0deUa4IPAQkgqQ5/champions/aatrox/top/runes.json?region=global&tier=platinum_plus&champion=aatrox&position=top");
+            var allRuneData = await WebRequests.GetJsonObject("https://www.op.gg/_next/data/0gDq3PqZvdVUaHBVGp5wk/champions/aatrox/top/runes.json?region=global&tier=platinum_plus&champion=aatrox&position=top");
 
             var runeData = allRuneData.SelectToken("pageProps")?.SelectToken("data")?.SelectToken("meta")?.SelectToken("runes");
             var runePageData = allRuneData.SelectToken("pageProps")?.SelectToken("data")?.SelectToken("meta")?.SelectToken("runePages");
@@ -182,40 +163,39 @@ namespace Project_Nesja.Data
             // Parses the Rune Data into an Easily Accessible Dictionary of Relevant RuneData
             foreach (var rune in runeData.Children())
             {
-                Runes runes = new()
+                Asset runes = new()
                 {
                     Name = (string)rune.ElementAt(5),
                     NameID = (string)rune.ElementAt(4),
-                    ID = (int)rune.First
+                    ID = (int)rune.First,
+                    AssetType = "Runes"
                 };
-                RunesList.Add(runes.ID, runes);
+                Assets.Add(runes.ID, runes);
             }
 
             // Parses the Rune Page Data into an Easily Accessible Dictionary of Relevant RunePageData
             foreach (var runePage in runePageData.Children())
             {
-                RunePages runePages = new()
+                Asset runePages = new()
                 {
                     Name = (string)runePage.ElementAt(1),
-                    ID = (int)runePage.First
+                    ID = (int)runePage.First,
+                    AssetType = "RunePages"
                 };
-                RunePagesList.Add(runePages.ID, runePages);
+                Assets.Add(runePages.ID, runePages);
             }
 
             // Parses the Stat Mod Data into an Easily Accessible Dictionart of Relevant StatModData
             foreach (var statMod in statModData)
             {
-                StatMods statMods = new()
+                Asset statMods = new()
                 {
                     Name = (string)statMod.ElementAt(1),
-                    ID = (int)statMod.First
+                    ID = (int)statMod.First,
+                    AssetType = "StatMods"
                 };
-                StatModsList.Add(statMods.ID, statMods);
+                Assets.Add(statMods.ID, statMods);
             }
-
-            File.WriteAllText(Path.Combine("Data", "Runes"), JsonConvert.SerializeObject(RunesList));
-            File.WriteAllText(Path.Combine("Data", "RunePages"), JsonConvert.SerializeObject(RunePagesList));
-            File.WriteAllText(Path.Combine("Data", "StatMods"), JsonConvert.SerializeObject(StatModsList));
         }
 
         private static async Task FetchSummonerSpellData()
@@ -226,15 +206,15 @@ namespace Project_Nesja.Data
             // Parses the Summoner Spell Data into an Easily Accessible Dictionary of Relevant SummonerSpellData
             foreach (var summonerSpell in summonerSpellData.Children())
             {
-                SummonerSpells summonerSpells = new()
+                Asset summonerSpells = new()
                 {
                     Name = (string)summonerSpell.First.ElementAt(1),
                     NameID = (string)summonerSpell.First.First,
-                    ID = (int)summonerSpell.First.ElementAt(13)
+                    ID = (int)summonerSpell.First.ElementAt(13),
+                    AssetType = "SummonerSpells"
                 };
-                SummonerSpellsList.Add(summonerSpells.ID, summonerSpells);
+                Assets.Add(summonerSpells.ID, summonerSpells);
             }
-            File.WriteAllText(Path.Combine("Data", "SummonerSpells"), JsonConvert.SerializeObject(SummonerSpellsList));
         }
 
         private static bool GetCurrentVersion()
@@ -250,6 +230,17 @@ namespace Project_Nesja.Data
             else
                 CurrentVersion = currentDataVersion;
             return false;
+        }
+        
+        private static Task SaveGameData()
+        {
+            foreach (var asset in Assets)
+            {
+                asset.Value.Image = null;
+            }
+            File.WriteAllText(Path.Combine("Data", "Assets"), JsonConvert.SerializeObject(Assets));
+
+            return Task.CompletedTask;
         }
         
         private static Task LoadGameData()
@@ -296,46 +287,13 @@ namespace Project_Nesja.Data
                 }
             }
 
-            ItemsList = JsonConvert.DeserializeObject<Dictionary<int, Item>>(File.ReadAllText(Path.Combine("Data", "Items")));
+            Assets = JsonConvert.DeserializeObject<Dictionary<int, Asset>>(File.ReadAllText(Path.Combine("Data", "Assets")));
 
-            foreach (var item in ItemsList)
+            foreach (var asset in Assets)
             {
-                if (File.Exists(Path.Combine(rootFolder, "Items", item.Value.ID + ".jpg")))
-                    item.Value.Image = Image.FromFile(Path.Combine(rootFolder, "Items", item.Value.ID + ".jpg"));
+                if (File.Exists(Path.Combine(rootFolder, asset.Value.AssetType, asset.Value.ID + ".jpg")))
+                    asset.Value.Image = Image.FromFile(Path.Combine(rootFolder, asset.Value.AssetType, asset.Value.ID + ".jpg"));
             }
-            
-            RunesList = JsonConvert.DeserializeObject<Dictionary<int, Runes>>(File.ReadAllText(Path.Combine("Data", "Runes")));
-
-            foreach (var rune in RunesList)
-            {
-                if (File.Exists(Path.Combine(rootFolder, "Runes", rune.Value.ID + ".jpg")))
-                    rune.Value.Image = Image.FromFile(Path.Combine(rootFolder, "Runes", rune.Value.ID + ".jpg"));
-            }
-            
-            RunePagesList = JsonConvert.DeserializeObject<Dictionary<int, RunePages>>(File.ReadAllText(Path.Combine("Data", "RunePages")));
-
-            foreach (var runePage in RunePagesList)
-            {
-                if (File.Exists(Path.Combine(rootFolder, "RunePages", runePage.Value.ID + ".jpg")))
-                    runePage.Value.Image = Image.FromFile(Path.Combine(rootFolder, "RunePages", runePage.Value.ID + ".jpg"));
-            }
-            
-            StatModsList = JsonConvert.DeserializeObject<Dictionary<int, StatMods>>(File.ReadAllText(Path.Combine("Data", "StatMods")));
-
-            foreach (var statMod in StatModsList)
-            {
-                if (File.Exists(Path.Combine(rootFolder, "StatMods", statMod.Value.ID + ".jpg")))
-                    statMod.Value.Image = Image.FromFile(Path.Combine(rootFolder, "StatMods", statMod.Value.ID + ".jpg"));
-            }
-            
-            SummonerSpellsList = JsonConvert.DeserializeObject<Dictionary<int, SummonerSpells>>(File.ReadAllText(Path.Combine("Data", "SummonerSpells")));
-
-            foreach (var summonerSpell in SummonerSpellsList)
-            {
-                if (File.Exists(Path.Combine(rootFolder, "SummonerSpells", summonerSpell.Value.ID + ".jpg")))
-                    summonerSpell.Value.Image = Image.FromFile(Path.Combine(rootFolder, "SummonerSpells", summonerSpell.Value.ID + ".jpg"));
-            }
-
             return Task.CompletedTask;
         }
     }

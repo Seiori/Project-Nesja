@@ -32,10 +32,12 @@ namespace Project_Nesja.Forms
             wAbilityPicture.Image = selectedChampion.WAbility;
             eAbilityPicture.Image = selectedChampion.EAbility;
 
-            ChampionBuild championBuild = new ChampionBuild(selectedChampion, "top");
+            ChampionBuild championBuild = new ChampionBuild(selectedChampion);
             championBuild = await championBuild.FetchChampionBuild();
 
-            championName.Text = championBuild.Test;
+            if (GameData.Assets.ElementAt(300).Value.Image == null)
+                await GameData.Assets.ElementAt(300).Value.FetchAssetImage();
+            itemTest1.Image = GameData.Assets.ElementAt(300).Value.Image;
         }
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)

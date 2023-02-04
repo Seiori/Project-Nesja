@@ -1,94 +1,147 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
+using Project_Nesja.Data;
+using System.Linq;
+using System.Runtime.ExceptionServices;
 
 public class ChampionBuild
 {
     private readonly ChampionData championData;
-    private readonly string role;
-    public string Test { get; set; }
+    private string role;
     public int[] Runes { get; set; }
-    public string[] SummonerSpells { get; set; }
+    public SummonerSpellSet SummonerSpells { get; set; }
     public string[] Items { get; set; }
-    public string[] SkillPriority { get; set; }
-    public string[] SkillOrder { get; set; }
-    public ChampionData[] WeakAgainst { get; set; }
-    public ChampionData[] StrongAgainst { get; set; }
+    public SkillPriority SkillPriority { get; set; }
+    public SkillOrder SkillOrder { get; set; }
+    public List<ChampionRoleData> Matchups { get; set; }
 
-    public ChampionBuild(ChampionData championData, string role)
+    public ChampionBuild(ChampionData championData, string role = "default")
     {
         this.championData = championData;
         Runes = new int[6];
-        SummonerSpells = new string[2];
+        SummonerSpells = new SummonerSpellSet();
         Items = new string[0];
-        SkillPriority = new string[3];
-        SkillOrder = new string[18];
-        WeakAgainst = new ChampionData[0];
-        StrongAgainst = new ChampionData[0];
+        SkillPriority = new SkillPriority();
+        SkillOrder = new SkillOrder();
+        Matchups = new List<ChampionRoleData>();
     }
     
     public async Task<ChampionBuild> FetchChampionBuild()
     {
-        JToken buildData = (await WebRequests.GetJsonObject("https://www.op.gg/_next/data/8R0-II0deUa4IPAQkgqQ5/champions/lux/support/build.json?")).SelectToken("pageProps").SelectToken("data");
+        JToken buildData = await WebRequests.GetJsonObject("https://axe.lolalytics.com/mega/?ep=champion&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all");
+        JToken buildDataExtra = await WebRequests.GetJsonObject("https://axe.lolalytics.com/mega/?ep=champion2&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all");
 
         await Task.WhenAll(
             FetchRunes(buildData),
             FetchSummonerSpells(buildData),
-            FetchItems(buildData),
-            FetchSkillPriority(buildData),
-            FetchSkillOrder(buildData),
-            FetchWeakAgainst(buildData),
-            FetchStrongAgainst(buildData)
+            FetchItems(buildData, buildDataExtra),
+            FetchSkillOrder(buildData, buildDataExtra),
+            FetchMatchups(buildData)
         );
         return this;
     }
     
-    private async Task FetchRunes(JToken buildData)
+    private static async Task FetchRunes(JToken buildData)
     {
+        var runeData = buildData.SelectToken("runes").SelectToken("stats");
+    }
+
+    private static async Task FetchSummonerSpells(JToken buildData)
+    {
+        List<SummonerSpellSet> summonerSpells = new List<SummonerSpellSet>();
         
-    }
+        var spellData = buildData.SelectToken("spells");
 
-    private async Task FetchSummonerSpells(JToken buildData)
-    {
-
-    }
-
-    private async Task FetchItems(JToken buildData)
-    {
-
-    }
-
-    private async Task FetchSkillPriority(JToken buildData)
-    {
-        string[][] SkillPriorityData = new string[4][];
-        SkillPriorityData[0] = new string[3];
-        SkillPriorityData[1] = new string[3];
-        SkillPriorityData[2] = new string[3];
-        SkillPriorityData[3] = new string[3];
-
-        var skillPriority = buildData["skill_masteries"].Count();
-        if (skillPriority != 0)
+        foreach (var summonerSpellSet in spellData)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                SkillPriorityData[i][0] = buildData.ElementAt(6).First().ElementAt(i).First().First().First().ToString();
-                SkillPriorityData[i][1] = buildData.ElementAt(6).First().ElementAt(i).First().First().ElementAt(1).ToString();
-                SkillPriorityData[i][2] = buildData.ElementAt(6).First().ElementAt(i).First().First().Last().ToString();
-            }
+            SummonerSpellSet tempSet = new SummonerSpellSet();
+            int[] parts = summonerSpellSet.First().ToString().Split('_').Select(x => int.Parse(x)).ToArray();
+
+            tempSet.FirstSpellData = GameData.Assets.FirstOrDefault(x => x.Value.ID == parts[0]).Value;
+            tempSet.SecondSpellData = GameData.Assets.FirstOrDefault(x => x.Value.ID == parts[1]).Value;
+            tempSet.Winrate = summonerSpellSet.ElementAt(1).ToObject<float>();
+            tempSet.Pickrate = summonerSpellSet.ElementAt(2).ToObject<float>();
+            tempSet.TotalGames = summonerSpellSet.ElementAt(3).ToObject<int>();
+
+            summonerSpells.Add(tempSet);
         }
     }
     
-    private async Task FetchSkillOrder(JToken buildData)
+    private async Task FetchItems(JToken buildData, JToken buildDataExtra)
     {
+        List<Items> itemSets = new List<Items>();
 
+        var itemData = buildDataExtra.SelectToken("itemSets").SelectToken("itemSet5");
+
+        foreach (var item in itemData)
+        {
+            Items itemSet = new Items();
+            string[] parts = item.ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
+            string itemName = parts[0].TrimStart('\"').TrimEnd('\"');
+            parts = itemName.Split('_');
+
+            itemSet.FirstItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+            itemSet.SecondItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[1])).Value;
+            itemSet.ThirdItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[2])).Value;
+            itemSet.FourthItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[3])).Value;
+            itemSet.FifthItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[4])).Value;
+            itemSet.Winrate = item.First().Last().ToObject<float>() / item.First().First().ToObject<float>() * 100;
+            itemSet.TotalGames = item.First().First().ToObject<int>();
+
+            itemSets.Add(itemSet);
+        }
+
+        List<Boots> boots = new List<Boots>();
+
+        var bootItemData = buildData.SelectToken("boots");
+
+        foreach (var boot in bootItemData)
+        {
+            Boots bootData = new Boots();
+            bootData.BootItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse((string)boot.First())).Value;
+            bootData.Winrate = boot.ElementAt(1).ToObject<float>();
+            bootData.Pickrate = boot.ElementAt(2).ToObject<float>();
+            bootData.TotalGames = boot.ElementAt(3).ToObject<int>();
+
+            boots.Add(bootData);
+        }
     }
 
-    private async Task FetchWeakAgainst(JToken buildData)
+    private static async Task FetchSkillOrder(JToken buildData, JToken buildDataExtra)
     {
+        List<SkillPriority> skillPrioritySets = new List<SkillPriority>();
 
+        var skillPriorityData = buildDataExtra.SelectToken("skills").SelectToken("skillOrder");
+
+        foreach (var skillPrioritySet in skillPriorityData)
+        {
+            SkillPriority skillPrioritySetData = new SkillPriority();
+            skillPrioritySetData.Priority = skillPrioritySet.First().ToString();
+            skillPrioritySetData.Winrate = skillPrioritySet.ElementAt(2).ToObject<float>() / skillPrioritySet.ElementAt(1).ToObject<float>() * 100;
+            skillPrioritySetData.Pickrate = skillPrioritySet.ElementAt(1).ToObject<float>() / buildData.SelectToken("n").ToObject<float>() * 100;
+            skillPrioritySetData.TotalGames = skillPrioritySet.ElementAt(1).ToObject<int>();
+
+            skillPrioritySets.Add(skillPrioritySetData);
+        }
+
+        List<SkillOrder> skillOrderSets = new List<SkillOrder>();
+
+        var skillOrderData = buildDataExtra.SelectToken("skills").SelectToken("skill15");
+
+        foreach (var skillOrderSet in skillOrderData)
+        {
+            SkillOrder skillOrderSetData = new SkillOrder();
+            skillOrderSetData.Order = skillOrderSet.First().ToString();
+            skillOrderSetData.Winrate = skillOrderSet.ElementAt(2).ToObject<float>() / skillOrderSet.ElementAt(1).ToObject<float>() * 100;
+            skillOrderSetData.Pickrate = skillOrderSet.ElementAt(1).ToObject<float>() / buildData.SelectToken("n").ToObject<float>() * 100;
+            skillOrderSetData.TotalGames = skillOrderSet.ElementAt(1).ToObject<int>();
+
+            skillOrderSets.Add(skillOrderSetData);
+        }
     }
 
-    private async Task FetchStrongAgainst(JToken buildData)
+    private static async Task FetchMatchups(JToken buildData)
     {
-
+        var matchupData = buildData.SelectToken("enemy_" + buildData.SelectToken("header").SelectToken("lane").ToString());
     }
 }
