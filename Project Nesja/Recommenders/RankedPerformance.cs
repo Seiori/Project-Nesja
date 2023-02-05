@@ -16,7 +16,7 @@
         {
             float sum = 0;
             sum += (float)x.Value.TotalGames / TotalGames * totalGamesWeight;
-            sum += x.Value.WinRate * winRateWeight;
+            sum += x.Value.Winrate * winRateWeight;
 
             return sum;
         }).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);

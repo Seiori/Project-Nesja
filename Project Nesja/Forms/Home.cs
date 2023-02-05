@@ -23,21 +23,29 @@ namespace Project_Nesja.Forms
             if (selectedChampion == null)
                 selectedChampion = GameData.ChampionList.Values.First();
             await selectedChampion.FetchChampionData();
+            
+            ChampionBuild championBuild = new ChampionBuild(selectedChampion);
+            await championBuild.FetchChampionBuild();
+            await championBuild.SummonerSpells.GetImages();
+            
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;
             championImage.Image = selectedChampion.SplashImage;
 
+            firstAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[0].ToString());
+            secondAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[1].ToString());
+            thirdAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[2].ToString());
 
-            qAbilityPicture.Image = selectedChampion.QAbility;
-            wAbilityPicture.Image = selectedChampion.WAbility;
-            eAbilityPicture.Image = selectedChampion.EAbility;
+            summonerSpell1.Image = championBuild.SummonerSpells.FirstSpellData.Image;
+            summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData.Image;
 
-            ChampionBuild championBuild = new ChampionBuild(selectedChampion);
-            championBuild = await championBuild.FetchChampionBuild();
+            firstItem.Image = championBuild.Items.FirstItem.Image;
+            secondItem.Image = championBuild.Items.SecondItem.Image;
+            thirdItem.Image = championBuild.Items.ThirdItem.Image;
+            fourthItem.Image = championBuild.Items.FourthItem.Image;
+            fifthItem.Image = championBuild.Items.FifthItem.Image;
 
-            if (GameData.Assets.ElementAt(300).Value.Image == null)
-                await GameData.Assets.ElementAt(300).Value.FetchAssetImage();
-            itemTest1.Image = GameData.Assets.ElementAt(300).Value.Image;
+            // IMPLEMENT A CLASS TO COMMUNICATE WITH BACKEND DATA
         }
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)

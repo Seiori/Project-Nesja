@@ -28,7 +28,7 @@ namespace Project_Nesja.Forms
             foreach (var champion in rankedData)
             {
                 await champion.Value.ChampionData.FetchChampionSprite();
-                rankedDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, champion.Value.WinRate * 100, champion.Value.PickRate * 100 ,champion.Value.BanRate * 100);
+                rankedDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, champion.Value.Winrate * 100, champion.Value.Pickrate * 100 ,champion.Value.Banrate * 100);
             }
         }
 

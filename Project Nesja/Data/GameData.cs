@@ -101,14 +101,14 @@ namespace Project_Nesja.Data
                     ChampionData = ChampionList.First(x => x.Key == champion.SelectToken("champion_id").ToObject<int>()).Value,
                     TotalGames = champion.SelectToken("play").ToObject<int>(),
                     GamesWon = champion.SelectToken("win").ToObject<int>(),
-                    PickRate = champion.SelectToken("pick_rate").ToObject<float>()
+                    Pickrate = champion.SelectToken("pick_rate").ToObject<float>()
                 };
                 // Calculates the Winrate
-                championRoleData.WinRate = (float)championRoleData.GamesWon / (float)championRoleData.TotalGames;
+                championRoleData.Winrate = (float)championRoleData.GamesWon / (float)championRoleData.TotalGames;
 
                 // Checks for Null value. This value is Null when looking at Aram Data
                 float.TryParse(champion.SelectToken("ban_rate")?.ToString(), out float banRate);
-                championRoleData.BanRate = banRate;
+                championRoleData.Banrate = banRate;
 
                 ChampRoleDataList.Add(championRoleData.ChampionData.ID, championRoleData);
             }

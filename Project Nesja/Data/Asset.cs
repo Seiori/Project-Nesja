@@ -30,13 +30,20 @@ public class Asset
         return this;
     }
 
-    private async Task<Asset> FetchChampionStatMods()
+    private async Task<Asset> FetchStatModImages()
     {
         Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png", "StatMods", ID.ToString());
 
         return this;
     }
 
+    private async Task<Asset> FetchSummonerSpellImages()
+    {
+        Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + NameID + ".png", "SummonerSpells", NameID);
+
+        return this;
+    }
+    
     public async Task<Asset>FetchAssetImage()
     {
         switch (AssetType)
@@ -48,10 +55,11 @@ public class Asset
             case "RunePages":
                 return await FetchRunePageImages();
             case "StatMods":
-                return await FetchChampionStatMods();
+                return await FetchStatModImages();
+            case "SummonerSpells":
+                return await FetchSummonerSpellImages();
             default:
                 return this;
         }
-        return this;
     }
 }

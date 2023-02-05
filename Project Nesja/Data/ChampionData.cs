@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
 using Project_Nesja.Data;
-using System.Data;
 
 public class ChampionData
 {
@@ -58,6 +57,23 @@ public class ChampionData
     public async Task FetchChampionSprite()
     {
         SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID);
+    }
+    
+    public Image FetchChampionAbility(string abilityName)
+    {
+        switch (abilityName)
+        {
+            case "Q":
+                return QAbility;
+            case "W":
+                return WAbility;
+            case "E":
+                return EAbility;
+            case "R":
+                return RAbility;
+            default:
+                return null;
+        }
     }
 
     private async Task FetchChampionQImage(JArray championJsonObject)
