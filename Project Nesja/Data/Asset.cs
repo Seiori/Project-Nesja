@@ -9,38 +9,9 @@ public class Asset
     public string? AssetType { get; set; }
     public Image? Image { get; set; }
 
-    public async Task<Asset> FetchItemImages()
+    private async Task<Asset> DownloadImage(string Url, string subFolder, string fileName)
     {
-        Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/item/" + ID + ".png", "Items", ID.ToString());
-
-        return this;
-    }
-
-    private async Task<Asset> FetchRuneImages()
-    {
-        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png", "Runes", NameID);
-
-        return this;
-    }
-
-    private async Task<Asset> FetchRunePageImages()
-    {
-        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkStyle/" + ID + ".png", "RunePages", ID.ToString());
-
-        return this;
-    }
-
-    private async Task<Asset> FetchStatModImages()
-    {
-        Image = await WebRequests.DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png", "StatMods", ID.ToString());
-
-        return this;
-    }
-
-    private async Task<Asset> FetchSummonerSpellImages()
-    {
-        Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + NameID + ".png", "SummonerSpells", NameID);
-
+        Image = await WebRequests.DownloadImage(Url, subFolder, fileName);
         return this;
     }
     
@@ -49,15 +20,15 @@ public class Asset
         switch (AssetType)
         {
             case "Items":
-                return await FetchItemImages();
+                return await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/item/" + ID + ".png", "Items", ID.ToString());
             case "Runes":
-                return await FetchRuneImages();
+                return await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png", "Runes", NameID);
             case "RunePages":
-                return await FetchRunePageImages();
+                return await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkStyle/" + ID + ".png", "RunePages", ID.ToString());
             case "StatMods":
-                return await FetchStatModImages();
+                return await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png", "StatMods", ID.ToString());
             case "SummonerSpells":
-                return await FetchSummonerSpellImages();
+                return await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + NameID + ".png", "SummonerSpells", NameID);
             default:
                 return this;
         }

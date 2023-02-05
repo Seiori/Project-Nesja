@@ -38,6 +38,15 @@ public class ChampionBuild
             FetchSkillOrder(buildData, buildDataExtra),
             FetchMatchups(buildData)
         );
+
+        await Task.WhenAll(
+            Items.FirstItem.FetchAssetImage(),
+            Items.SecondItem.FetchAssetImage(),
+            Items.ThirdItem.FetchAssetImage(),
+            Items.FourthItem.FetchAssetImage(),
+            Items.FifthItem.FetchAssetImage(),
+            SummonerSpells.GetImages()
+        );
         return this;
     }
     
@@ -65,8 +74,8 @@ public class ChampionBuild
 
             summonerSpells.Add(tempSet);
         }
-        float winRateWeight = 0.5f;
-        float pickRateWeight = 0.5f;
+        float winRateWeight = 0.46f;
+        float pickRateWeight = 0.54f;
         
         SummonerSpells = summonerSpells.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
     }

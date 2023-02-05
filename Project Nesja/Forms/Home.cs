@@ -1,4 +1,5 @@
 ﻿using Project_Nesja.Data;
+using Project_Nesja.Properties;
 
 namespace Project_Nesja.Forms
 {
@@ -20,32 +21,33 @@ namespace Project_Nesja.Forms
 
         private async void LoadChamptionData()
         {
+            ChampionBuild championBuild = new ChampionBuild(selectedChampion);
+            
             if (selectedChampion == null)
                 selectedChampion = GameData.ChampionList.Values.First();
-            await selectedChampion.FetchChampionData();
             
-            ChampionBuild championBuild = new ChampionBuild(selectedChampion);
+            await selectedChampion.FetchChampionData();
             await championBuild.FetchChampionBuild();
-            await championBuild.SummonerSpells.GetImages();
             
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;
             championImage.Image = selectedChampion.SplashImage;
-
+            
+            // Adds the Images of the Abilities to the Form
             firstAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[0].ToString());
             secondAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[1].ToString());
             thirdAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[2].ToString());
 
+            // Adds the Images of the Summoner Spells to the Form
             summonerSpell1.Image = championBuild.SummonerSpells.FirstSpellData.Image;
             summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData.Image;
 
+            // Adds the Images of the Items to the Form
             firstItem.Image = championBuild.Items.FirstItem.Image;
             secondItem.Image = championBuild.Items.SecondItem.Image;
             thirdItem.Image = championBuild.Items.ThirdItem.Image;
             fourthItem.Image = championBuild.Items.FourthItem.Image;
             fifthItem.Image = championBuild.Items.FifthItem.Image;
-
-            // IMPLEMENT A CLASS TO COMMUNICATE WITH BACKEND DATA
         }
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)
