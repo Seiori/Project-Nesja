@@ -49,7 +49,7 @@ namespace Project_Nesja
         private void HomeButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Home(GameData.ChampionList.Where(x => x.Value.Name == "Aatrox").FirstOrDefault().Value));
+            OpenChildForm(new Home(null, null));
         }
 
         private void ProfileButton_Click(object sender, EventArgs e)
@@ -80,21 +80,6 @@ namespace Project_Nesja
         {
             ActiveButton(sender, Color.White);
             OpenChildForm(new Misc());
-        }
-
-        private void IconCurrentForm_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void LabelFormTitle_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PanelDesktop_Paint(object sender, PaintEventArgs e)
-        {
-            
         }
 
         private void PanelTitleBar_MouseDown(object sender, MouseEventArgs e)
@@ -240,7 +225,7 @@ namespace Project_Nesja
             string selectedChampion = searchChampionListBox.SelectedItem.ToString();
 
             // Open the new form and pass the selected champion as a parameter
-            OpenChildForm(new Home(GameData.ChampionList.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value));
+            OpenChildForm(new Home(GameData.ChampionList.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value, null));
         }
     }
 }

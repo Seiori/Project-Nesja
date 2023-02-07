@@ -287,7 +287,6 @@
             this.LabelFormTitle.Size = new System.Drawing.Size(40, 15);
             this.LabelFormTitle.TabIndex = 1;
             this.LabelFormTitle.Text = "Home";
-            this.LabelFormTitle.Click += new System.EventHandler(this.LabelFormTitle_Click);
             // 
             // IconCurrentForm
             // 
@@ -301,7 +300,6 @@
             this.IconCurrentForm.Size = new System.Drawing.Size(32, 32);
             this.IconCurrentForm.TabIndex = 0;
             this.IconCurrentForm.TabStop = false;
-            this.IconCurrentForm.Click += new System.EventHandler(this.IconCurrentForm_Click);
             // 
             // PanelDesktop
             // 
@@ -313,7 +311,6 @@
             this.PanelDesktop.Name = "PanelDesktop";
             this.PanelDesktop.Size = new System.Drawing.Size(870, 511);
             this.PanelDesktop.TabIndex = 4;
-            this.PanelDesktop.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelDesktop_Paint);
             // 
             // searchChampionListBox
             // 

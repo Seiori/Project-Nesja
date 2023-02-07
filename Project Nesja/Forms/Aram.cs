@@ -21,11 +21,13 @@ namespace Project_Nesja.Forms
 
         private async void LoadAramData()
         {
-            GameData.Aram = new AramPerformance().SortAramData(GameData.Aram);
+            int TotalGames = GameData.Aram.Sum(x => x.Value.TotalGames);
+            GameData.Aram = GameData.Aram.OrderByDescending(x => x.Value.Winrate * 0.45f + (float)x.Value.TotalGames / TotalGames * 0.55f).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            
             foreach (var champion in GameData.Aram)
             {
                 await champion.Value.ChampionData.FetchChampionSprite();
-                aramDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, champion.Value.Winrate * 100, champion.Value.Pickrate * 100);
+                aramDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%");
             }
         }
 
@@ -38,7 +40,7 @@ namespace Project_Nesja.Forms
                 {
                     Debug.WriteLine("Image Clicked");
                     ChampionData champion = GameData.ChampionList.Where(x => x.Value.Name == aramDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
-                    this.mainForm.OpenChildForm(new Home(champion));
+                    this.mainForm.OpenChildForm(new Home(champion, null));
                 }
             }
         }

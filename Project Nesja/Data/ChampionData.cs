@@ -25,6 +25,16 @@ public class ChampionData
         return this;
     }
 
+    private async Task FetchChampionSplash()
+    {
+        SplashImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg", "Splash", NameID);
+    }
+
+    public async Task FetchChampionSprite()
+    {
+        SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID);
+    }
+    
     private async Task FetchChampionJson()
     {
         string filePath = Path.Combine("Data", "ChampionJson", NameID + ".json");
@@ -47,16 +57,6 @@ public class ChampionData
             FetchChampionEImage(championJsonObject),
             FetchChampionRImage(championJsonObject)
         );
-    }
-    
-    private async Task FetchChampionSplash()
-    {
-        SplashImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg", "Splash", NameID);
-    }
-
-    public async Task FetchChampionSprite()
-    {
-        SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID);
     }
     
     public Image FetchChampionAbility(string abilityName)

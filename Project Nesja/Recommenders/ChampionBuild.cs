@@ -1,26 +1,32 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
 using Project_Nesja.Data;
-using System.Linq;
-using System.Runtime.ExceptionServices;
 
 public class ChampionBuild
 {
     private readonly ChampionData championData;
-    private readonly string role;
+    public string role;
+    public int TotalGames;
+    public double Winrate;
+    public double Pickrate;
+    public double Banrate;
     public int[] Runes { get; set; }
     public SummonerSpellSet SummonerSpells { get; set; }
-    public Items Items { get; set; }
+    public Items StartingItems { get; set; }
+    public Items CoreItems { get; set; }
+    public Items FourthItemChoice { get; set; }
+    public Items  FifthItemChoice { get; set; }
+    public Items SixthItemChoice { get; set; }
     public SkillPriority SkillPriority { get; set; }
     public SkillOrder SkillOrder { get; set; }
     public List<ChampionRoleData> Matchups { get; set; }
 
-    public ChampionBuild(ChampionData championData, string role = "default")
+    public ChampionBuild(ChampionData championData, string role)
     {
         this.championData = championData;
+        this.role = role;
         Runes = new int[6];
         SummonerSpells = new SummonerSpellSet();
-        Items = new Items();
         SkillPriority = new SkillPriority();
         SkillOrder = new SkillOrder();
         Matchups = new List<ChampionRoleData>();
@@ -31,7 +37,9 @@ public class ChampionBuild
         JToken buildData = await WebRequests.GetJsonObject("https://axe.lolalytics.com/mega/?ep=champion&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all");
         JToken buildDataExtra = await WebRequests.GetJsonObject("https://axe.lolalytics.com/mega/?ep=champion2&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all");
 
+        role = buildData.SelectToken("header").SelectToken("lane").ToString();
         await Task.WhenAll(
+            FetchChampionStats(buildData),
             FetchRunes(buildData),
             FetchSummonerSpells(buildData),
             FetchItems(buildData, buildDataExtra),
@@ -40,14 +48,24 @@ public class ChampionBuild
         );
 
         await Task.WhenAll(
-            Items.FirstItem.FetchAssetImage(),
-            Items.SecondItem.FetchAssetImage(),
-            Items.ThirdItem.FetchAssetImage(),
-            Items.FourthItem.FetchAssetImage(),
-            Items.FifthItem.FetchAssetImage(),
+            StartingItems.FirstItem.FetchAssetImage(),
+            StartingItems.SecondItem.FetchAssetImage(),
+            CoreItems.FirstItem.FetchAssetImage(),
+            CoreItems.SecondItem.FetchAssetImage(),
+            CoreItems.ThirdItem.FetchAssetImage(),
             SummonerSpells.GetImages()
         );
         return this;
+    }
+    
+    private async Task FetchChampionStats(JToken buildData)
+    {
+        var statData = buildData.SelectToken("header");
+        
+        TotalGames = statData.First().ToObject<int>();
+        Winrate = statData.SelectToken("wr").ToObject<double>();
+        Pickrate = statData.SelectToken("pr").ToObject<double>();
+        Banrate = statData.SelectToken("br").ToObject<double>();
     }
     
     private async Task FetchRunes(JToken buildData)
@@ -82,35 +100,60 @@ public class ChampionBuild
     
     private async Task FetchItems(JToken buildData, JToken buildDataExtra)
     {
-        List<Items> itemSets = new List<Items>();
+        List<Items> startSets = new List<Items>();
 
-        var itemData = buildDataExtra.SelectToken("itemSets").SelectToken("itemBootSet5");
+        var startItemData = buildDataExtra.SelectToken("startSet");
 
-        int TotalGames = 0;
-        
-        foreach (var item in itemData)
+        foreach (var startItem in startItemData)
         {
-            Items itemSet = new Items();
-            string[] parts = item.ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
+            Items startSet = new Items();
+            string[] parts = startItem.First().ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
             string itemName = parts[0].TrimStart('\"').TrimEnd('\"');
             parts = itemName.Split('_');
 
-            itemSet.FirstItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
-            itemSet.SecondItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[1])).Value;
-            itemSet.ThirdItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[2])).Value;
-            itemSet.FourthItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[3])).Value;
-            itemSet.FifthItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[4])).Value;
-            itemSet.Winrate = item.First().Last().ToObject<float>() / item.First().First().ToObject<float>();
-            itemSet.Pickrate = item.First().First().ToObject<float>() / buildData.SelectToken("header").SelectToken("n").ToObject<float>() * 100;
-            itemSet.TotalGames = item.First().First().ToObject<int>();
+            if (!string.IsNullOrEmpty(parts[0]))
+                startSet.FirstItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+            if (parts.Length > 1)
+                startSet.SecondItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[1])).Value;
+            if (parts.Length > 2)
+                startSet.ThirdItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[2])).Value;
+            if (parts.Length > 3)
+                startSet.SecondItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[3])).Value;
+            if (parts.Length > 4)
+                startSet.SecondItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[4])).Value;
+            startSet.Winrate = startItem.ElementAt(1).ToObject<float>() / 100;
+            startSet.Pickrate = startItem.ElementAt(2).ToObject<float>() / 100;
+            startSet.TotalGames = startItem.Last().ToObject<int>();
 
-            itemSets.Add(itemSet);
+            startSets.Add(startSet);
         }
 
+        List<Items> coreSets = new List<Items>();
+
+        var coreItemData = buildDataExtra.SelectToken("itemSets").SelectToken("itemBootSet3");
+
+        foreach (var coreItem in coreItemData)
+        {
+            Items coreSet = new Items();
+            string[] parts = coreItem.ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
+            string itemName = parts[0].TrimStart('\"').TrimEnd('\"');
+            parts = itemName.Split('_');
+
+            coreSet.FirstItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+            coreSet.SecondItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[1])).Value;
+            coreSet.ThirdItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[2])).Value;
+            coreSet.Winrate = coreItem.First().Last().ToObject<float>() / coreItem.First().First().ToObject<float>();
+            coreSet.Pickrate = coreItem.First().First().ToObject<float>() / buildData.SelectToken("header").SelectToken("n").ToObject<float>() * 100;
+            coreSet.TotalGames = coreItem.First().First().ToObject<int>();
+
+            coreSets.Add(coreSet);
+        }
+ 
         float winRateWeight = 0.4f;
         float pickRateWeight = 0.6f;
 
-        Items = itemSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
+        StartingItems = startSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
+        CoreItems = coreSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
     }
 
     private async Task FetchSkillOrder(JToken buildData, JToken buildDataExtra)
@@ -158,11 +201,13 @@ public class ChampionBuild
 
         foreach (var matchup in allMatchupData)
         {
-            ChampionRoleData matchupData = new ChampionRoleData();
-            matchupData.ChampionData = GameData.ChampionList.FirstOrDefault(x => x.Value.ID == int.Parse((string)matchup.First())).Value;
-            matchupData.Winrate = matchup.ElementAt(3).ToObject<float>();
-            matchupData.TotalGames = matchup.ElementAt(1).ToObject<int>();
-            matchupData.Pickrate = matchup.ElementAt(1).ToObject<float>() / buildData.SelectToken("header").SelectToken("n").ToObject<float>() * 100;
+            ChampionRoleData matchupData = new()
+            {
+                ChampionData = GameData.ChampionList.FirstOrDefault(x => x.Value.ID == int.Parse((string)matchup.First())).Value,
+                Winrate = matchup.ElementAt(3).ToObject<float>(),
+                TotalGames = matchup.ElementAt(1).ToObject<int>(),
+                Pickrate = matchup.ElementAt(1).ToObject<float>() / buildData.SelectToken("header").SelectToken("n").ToObject<float>() * 100
+            };
 
             Matchups.Add(matchupData);
         }
