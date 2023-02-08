@@ -17,20 +17,14 @@ public class Asset
     
     public async Task<Asset>FetchAssetImage()
     {
-        switch (AssetType)
+        return AssetType switch
         {
-            case "Items":
-                return await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/item/" + ID + ".png", "Items", ID.ToString());
-            case "Runes":
-                return await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png", "Runes", NameID);
-            case "RunePages":
-                return await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkStyle/" + ID + ".png", "RunePages", ID.ToString());
-            case "StatMods":
-                return await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png", "StatMods", ID.ToString());
-            case "SummonerSpells":
-                return await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + NameID + ".png", "SummonerSpells", NameID);
-            default:
-                return this;
-        }
+            "Items" => await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/item/" + ID + ".png", "Items", ID.ToString()),
+            "Runes" => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png", "Runes", NameID),
+            "RunePages" => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkStyle/" + ID + ".png", "RunePages", ID.ToString()),
+            "StatMods" => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png", "StatMods", ID.ToString()),
+            "SummonerSpells" => await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + NameID + ".png", "SummonerSpells", NameID),
+            _ => this,
+        };
     }
 }

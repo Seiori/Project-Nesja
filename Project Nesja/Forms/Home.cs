@@ -24,7 +24,7 @@ namespace Project_Nesja.Forms
             SelectRole(role);
         }
 
-        private async void LoadChamptionData()
+        private void LoadChamptionData()
         {   
             // Display Selected Champion Information
             championName.Text = selectedChampion.Name;
@@ -38,21 +38,25 @@ namespace Project_Nesja.Forms
             banrateValue.Text = championBuild.Banrate.ToString() + "%";
 
             // Adds the Images of the Abilities to the Form
-            skillData.Text = championBuild.SkillPriority.Winrate.ToString() + "% WR (" + championBuild.SkillPriority.TotalGames + ")";
+            skillData.Text = System.Math.Round(championBuild.SkillPriority.Winrate,2 ).ToString() + "% WR (" + championBuild.SkillPriority.TotalGames + ")";
+            firstAbilityValue.Text = championBuild.SkillPriority.Priority[0].ToString();
             firstAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[0].ToString());
+            secondAbilityValue.Text = championBuild.SkillPriority.Priority[1].ToString();
             secondAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[1].ToString());
+            thirdAbilityValue.Text = championBuild.SkillPriority.Priority[2].ToString();
             thirdAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[2].ToString());
 
 
             // Adds the Images of the Summoner Spells to the Form
-            summonerSpellsData.Text = championBuild.SummonerSpells.Winrate.ToString() + "% WR (" + championBuild.SummonerSpells.TotalGames + ")";
+            summonerSpellsData.Text = System.Math.Round(championBuild.SummonerSpells.Winrate, 2).ToString() + "% WR (" + championBuild.SummonerSpells.TotalGames + ")";
             summonerSpell1.Image = championBuild.SummonerSpells.FirstSpellData.Image;
             summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData.Image;
 
             // Adds the Images of the Items to the Form
-            itemData.Text = championBuild.StartingItems.Winrate.ToString() + "% WR (" + championBuild.StartingItems.TotalGames + ")";
+            startItemData.Text = System.Math.Round(championBuild.StartingItems.Winrate * 100, 2).ToString() + "% WR (" + championBuild.StartingItems.TotalGames + ")";
             firstStartItem.Image = championBuild.StartingItems.FirstItem.Image;
-            secondStartItem.Image = championBuild.StartingItems.SecondItem.Image;
+            if (championBuild.StartingItems.SecondItem != null)
+                secondStartItem.Image = championBuild.StartingItems.SecondItem.Image;
             firstCoreItem.Image = championBuild.CoreItems.FirstItem.Image;
             secondCoreItem.Image = championBuild.CoreItems.SecondItem.Image;
             thirdCoreItem.Image = championBuild.CoreItems.ThirdItem.Image;

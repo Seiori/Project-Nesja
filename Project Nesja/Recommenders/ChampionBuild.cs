@@ -38,27 +38,26 @@ public class ChampionBuild
         JToken buildDataExtra = await WebRequests.GetJsonObject("https://axe.lolalytics.com/mega/?ep=champion2&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all");
 
         role = buildData.SelectToken("header").SelectToken("lane").ToString();
-        await Task.WhenAll(
-            FetchChampionStats(buildData),
-            FetchRunes(buildData),
-            FetchSummonerSpells(buildData),
-            FetchItems(buildData, buildDataExtra),
-            FetchSkillOrder(buildData, buildDataExtra),
-            FetchMatchups(buildData)
-        );
+        FetchChampionStats(buildData);
+        FetchRunes(buildData);
+        FetchSummonerSpells(buildData);
+        FetchItems(buildData, buildDataExtra);
+        FetchSkillOrder(buildData, buildDataExtra);
+        FetchMatchups(buildData);
+        
 
-        await Task.WhenAll(
-            StartingItems.FirstItem.FetchAssetImage(),
-            StartingItems.SecondItem.FetchAssetImage(),
-            CoreItems.FirstItem.FetchAssetImage(),
-            CoreItems.SecondItem.FetchAssetImage(),
-            CoreItems.ThirdItem.FetchAssetImage(),
-            SummonerSpells.GetImages()
-        );
+        StartingItems.FirstItem.FetchAssetImage();
+        if (StartingItems.SecondItem != null)
+            StartingItems.SecondItem.FetchAssetImage();
+        CoreItems.FirstItem.FetchAssetImage();
+        CoreItems.SecondItem.FetchAssetImage();
+        CoreItems.ThirdItem.FetchAssetImage();
+        SummonerSpells.FirstSpellData.FetchAssetImage();
+        SummonerSpells.SecondSpellData.FetchAssetImage();
         return this;
     }
     
-    private async Task FetchChampionStats(JToken buildData)
+    private void FetchChampionStats(JToken buildData)
     {
         var statData = buildData.SelectToken("header");
         
@@ -68,12 +67,12 @@ public class ChampionBuild
         Banrate = statData.SelectToken("br").ToObject<double>();
     }
     
-    private async Task FetchRunes(JToken buildData)
+    private void FetchRunes(JToken buildData)
     {
         var runeData = buildData.SelectToken("runes").SelectToken("stats");
     }
 
-    private async Task FetchSummonerSpells(JToken buildData)
+    private void FetchSummonerSpells(JToken buildData)
     {
         List<SummonerSpellSet> summonerSpells = new List<SummonerSpellSet>();
         
@@ -98,7 +97,7 @@ public class ChampionBuild
         SummonerSpells = summonerSpells.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
     }
     
-    private async Task FetchItems(JToken buildData, JToken buildDataExtra)
+    private void FetchItems(JToken buildData, JToken buildDataExtra)
     {
         List<Items> startSets = new List<Items>();
 
@@ -149,14 +148,14 @@ public class ChampionBuild
             coreSets.Add(coreSet);
         }
  
-        float winRateWeight = 0.4f;
-        float pickRateWeight = 0.6f;
+        float winRateWeight = 0.3f;
+        float pickRateWeight = 0.7f;
 
         StartingItems = startSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
         CoreItems = coreSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
     }
 
-    private async Task FetchSkillOrder(JToken buildData, JToken buildDataExtra)
+    private void FetchSkillOrder(JToken buildData, JToken buildDataExtra)
     {
         List<SkillPriority> skillPrioritySets = new List<SkillPriority>();
 
@@ -195,7 +194,7 @@ public class ChampionBuild
         SkillOrder = skillOrderSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).FirstOrDefault();
     }
 
-    public async Task FetchMatchups(JToken buildData)
+    private void FetchMatchups(JToken buildData)
     {
         var allMatchupData = buildData.SelectToken("enemy_" + buildData.SelectToken("header").SelectToken("lane").ToString());
 
