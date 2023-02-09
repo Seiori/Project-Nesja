@@ -1,4 +1,4 @@
-﻿public class ChampionRoleData
+﻿public class ChampionRole
 { 
     public ChampionData? ChampionData { get; set; }
     public int TotalGames { get; set; }

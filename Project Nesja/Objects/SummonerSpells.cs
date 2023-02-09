@@ -1,4 +1,4 @@
-﻿public class SummonerSpellSet
+﻿public class SummonerSpells
 {
     public Asset FirstSpellData { get; set; }
     public Asset SecondSpellData { get; set; }

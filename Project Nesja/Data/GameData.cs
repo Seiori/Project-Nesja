@@ -8,7 +8,7 @@ namespace Project_Nesja.Data
         public static string? CurrentVersion { get; set; }
         public static Dictionary<int, ChampionData> ChampionList { get; set; }
         public static Ranks RankedQueue { get; set; }
-        public static Dictionary<int, ChampionRoleData> Aram { get; set; }
+        public static Dictionary<int, ChampionRole> Aram { get; set; }
         public static Dictionary<int, Asset> Assets { get; set; }
 
         static GameData()
@@ -16,13 +16,13 @@ namespace Project_Nesja.Data
             CurrentVersion = "";
             ChampionList = new Dictionary<int, ChampionData>();
             RankedQueue = new Ranks();
-            RankedQueue.All.All = new Dictionary<int, ChampionRoleData>();
-            RankedQueue.All.Top = new Dictionary<int, ChampionRoleData>();
-            RankedQueue.All.Jungle = new Dictionary<int, ChampionRoleData>();
-            RankedQueue.All.Mid = new Dictionary<int, ChampionRoleData>();
-            RankedQueue.All.ADC = new Dictionary<int, ChampionRoleData>();
-            RankedQueue.All.Support = new Dictionary<int, ChampionRoleData>();
-            Aram = new Dictionary<int, ChampionRoleData>();
+            RankedQueue.All.All = new Dictionary<int, ChampionRole>();
+            RankedQueue.All.Top = new Dictionary<int, ChampionRole>();
+            RankedQueue.All.Jungle = new Dictionary<int, ChampionRole>();
+            RankedQueue.All.Mid = new Dictionary<int, ChampionRole>();
+            RankedQueue.All.ADC = new Dictionary<int, ChampionRole>();
+            RankedQueue.All.Support = new Dictionary<int, ChampionRole>();
+            Aram = new Dictionary<int, ChampionRole>();
             Assets = new Dictionary<int, Asset>();
         }
         
@@ -91,12 +91,12 @@ namespace Project_Nesja.Data
             ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/aram?period=month&tier=all"), Aram);
         }
 
-        private static void ParseChampRoleData(JObject rankedData, Dictionary<int, ChampionRoleData> ChampRoleDataList)
+        private static void ParseChampRoleData(JObject rankedData, Dictionary<int, ChampionRole> ChampRoleDataList)
         {
             foreach (var champion in rankedData.SelectToken("data"))
             {
                 // Parses the relevant Data into the ChampionRoleData object and adds it to a Dictionary for that Role
-                ChampionRoleData championRoleData = new()
+                ChampionRole championRoleData = new()
                 {
                     ChampionData = ChampionList.First(x => x.Key == champion.SelectToken("champion_id").ToObject<int>()).Value,
                     TotalGames = champion.SelectToken("play").ToObject<int>(),

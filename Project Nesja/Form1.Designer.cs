@@ -44,6 +44,7 @@
             this.LabelFormTitle = new System.Windows.Forms.Label();
             this.IconCurrentForm = new FontAwesome.Sharp.IconPictureBox();
             this.PanelDesktop = new System.Windows.Forms.Panel();
+            this.currentVersionLabel = new System.Windows.Forms.Label();
             this.searchChampionListBox = new System.Windows.Forms.ListBox();
             this.searchChampionTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
@@ -304,6 +305,7 @@
             // PanelDesktop
             // 
             this.PanelDesktop.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.PanelDesktop.Controls.Add(this.currentVersionLabel);
             this.PanelDesktop.Controls.Add(this.searchChampionListBox);
             this.PanelDesktop.Controls.Add(this.searchChampionTextBox);
             this.PanelDesktop.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -311,6 +313,16 @@
             this.PanelDesktop.Name = "PanelDesktop";
             this.PanelDesktop.Size = new System.Drawing.Size(870, 511);
             this.PanelDesktop.TabIndex = 4;
+            // 
+            // currentVersionLabel
+            // 
+            this.currentVersionLabel.AutoSize = true;
+            this.currentVersionLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.currentVersionLabel.Location = new System.Drawing.Point(3, 1);
+            this.currentVersionLabel.Name = "currentVersionLabel";
+            this.currentVersionLabel.Size = new System.Drawing.Size(85, 15);
+            this.currentVersionLabel.TabIndex = 2;
+            this.currentVersionLabel.Text = "CurrentVersion";
             // 
             // searchChampionListBox
             // 
@@ -385,5 +397,6 @@
         private FontAwesome.Sharp.IconButton MaximiseButton;
         private ListBox searchChampionListBox;
         private TextBox searchChampionTextBox;
+        private Label currentVersionLabel;
     }
 }

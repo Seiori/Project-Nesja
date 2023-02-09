@@ -52,14 +52,27 @@ namespace Project_Nesja.Forms
             summonerSpell1.Image = championBuild.SummonerSpells.FirstSpellData.Image;
             summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData.Image;
 
-            // Adds the Images of the Items to the Form
+            // Adds the Images/Data of the Starting Items to the Form
             startItemData.Text = System.Math.Round(championBuild.StartingItems.Winrate * 100, 2).ToString() + "% WR (" + championBuild.StartingItems.TotalGames + ")";
             firstStartItem.Image = championBuild.StartingItems.FirstItem.Image;
             if (championBuild.StartingItems.SecondItem != null)
                 secondStartItem.Image = championBuild.StartingItems.SecondItem.Image;
+            else
+                secondStartItem.Image = null;
+
+            // Adds the Images/Data of the Core Items to the Form
             firstCoreItem.Image = championBuild.CoreItems.FirstItem.Image;
             secondCoreItem.Image = championBuild.CoreItems.SecondItem.Image;
             thirdCoreItem.Image = championBuild.CoreItems.ThirdItem.Image;
+
+            // Adds the Images/Data of the Fourth Item choices to the Form
+            firstFourthChoice.Image = championBuild.FourthItemChoice.First().ItemAsset.Image;
+            secondFourthChoice.Image = championBuild.FourthItemChoice.ElementAt(1).ItemAsset.Image;
+            thirdFourthChoice.Image = championBuild.FourthItemChoice.Last().ItemAsset.Image;
+
+            // Adds the Images/Data of the Fifth Item choices to the Form
+
+            // Adds the Images/Data of the Sixth Item choices to the Form
         }
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)

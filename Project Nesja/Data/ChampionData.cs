@@ -30,7 +30,7 @@ public class ChampionData
         SplashImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg", "Splash", NameID);
     }
 
-    public async Task FetchChampionSprite()
+    private async Task FetchChampionSprite()
     {
         SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID);
     }

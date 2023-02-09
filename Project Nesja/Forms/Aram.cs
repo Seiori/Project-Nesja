@@ -26,7 +26,7 @@ namespace Project_Nesja.Forms
             
             foreach (var champion in GameData.Aram)
             {
-                await champion.Value.ChampionData.FetchChampionSprite();
+                await champion.Value.ChampionData.FetchChampionData();
                 aramDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%");
             }
         }

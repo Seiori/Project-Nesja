@@ -57,7 +57,7 @@
             this.jungleSelection = new System.Windows.Forms.PictureBox();
             this.midSelection = new System.Windows.Forms.PictureBox();
             this.bottomSelection = new System.Windows.Forms.PictureBox();
-            this.sixthItem = new System.Windows.Forms.PictureBox();
+            this.firstFourthChoice = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.summonerSpellsTitle = new System.Windows.Forms.Label();
             this.summonerSpellsData = new System.Windows.Forms.Label();
@@ -79,14 +79,14 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.secondFourthChoice = new System.Windows.Forms.PictureBox();
+            this.thirdFourthChoice = new System.Windows.Forms.PictureBox();
+            this.thirdFifthChoice = new System.Windows.Forms.PictureBox();
+            this.secondFifthChoice = new System.Windows.Forms.PictureBox();
+            this.firstFifthChoice = new System.Windows.Forms.PictureBox();
+            this.thirdSixthChoice = new System.Windows.Forms.PictureBox();
+            this.secondSixthChoice = new System.Windows.Forms.PictureBox();
+            this.firstSixthChoice = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.championImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstAbility)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondCoreItem)).BeginInit();
@@ -104,15 +104,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.jungleSelection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.midSelection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomSelection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sixthItem)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstFourthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondFourthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thirdFourthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thirdFifthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondFifthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstFifthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thirdSixthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondSixthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstSixthChoice)).BeginInit();
             this.SuspendLayout();
             // 
             // championImage
@@ -439,14 +439,14 @@
             this.bottomSelection.TabStop = false;
             this.bottomSelection.Click += new System.EventHandler(this.bottomSelection_Click);
             // 
-            // sixthItem
+            // firstFourthChoice
             // 
-            this.sixthItem.Location = new System.Drawing.Point(321, 371);
-            this.sixthItem.Name = "sixthItem";
-            this.sixthItem.Size = new System.Drawing.Size(24, 24);
-            this.sixthItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.sixthItem.TabIndex = 30;
-            this.sixthItem.TabStop = false;
+            this.firstFourthChoice.Location = new System.Drawing.Point(321, 371);
+            this.firstFourthChoice.Name = "firstFourthChoice";
+            this.firstFourthChoice.Size = new System.Drawing.Size(24, 24);
+            this.firstFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.firstFourthChoice.TabIndex = 30;
+            this.firstFourthChoice.TabStop = false;
             // 
             // panel2
             // 
@@ -652,91 +652,91 @@
             this.label8.TabIndex = 51;
             this.label8.Text = "6th Item Options";
             // 
-            // pictureBox1
+            // secondFourthChoice
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(321, 401);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 52;
-            this.pictureBox1.TabStop = false;
+            this.secondFourthChoice.Location = new System.Drawing.Point(321, 401);
+            this.secondFourthChoice.Name = "secondFourthChoice";
+            this.secondFourthChoice.Size = new System.Drawing.Size(24, 24);
+            this.secondFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.secondFourthChoice.TabIndex = 52;
+            this.secondFourthChoice.TabStop = false;
             // 
-            // pictureBox2
+            // thirdFourthChoice
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(321, 431);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 53;
-            this.pictureBox2.TabStop = false;
+            this.thirdFourthChoice.Location = new System.Drawing.Point(321, 431);
+            this.thirdFourthChoice.Name = "thirdFourthChoice";
+            this.thirdFourthChoice.Size = new System.Drawing.Size(24, 24);
+            this.thirdFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.thirdFourthChoice.TabIndex = 53;
+            this.thirdFourthChoice.TabStop = false;
             // 
-            // pictureBox3
+            // thirdFifthChoice
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(466, 431);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox3.TabIndex = 54;
-            this.pictureBox3.TabStop = false;
+            this.thirdFifthChoice.Location = new System.Drawing.Point(466, 431);
+            this.thirdFifthChoice.Name = "thirdFifthChoice";
+            this.thirdFifthChoice.Size = new System.Drawing.Size(24, 24);
+            this.thirdFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.thirdFifthChoice.TabIndex = 54;
+            this.thirdFifthChoice.TabStop = false;
             // 
-            // pictureBox4
+            // secondFifthChoice
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(466, 401);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox4.TabIndex = 55;
-            this.pictureBox4.TabStop = false;
+            this.secondFifthChoice.Location = new System.Drawing.Point(466, 401);
+            this.secondFifthChoice.Name = "secondFifthChoice";
+            this.secondFifthChoice.Size = new System.Drawing.Size(24, 24);
+            this.secondFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.secondFifthChoice.TabIndex = 55;
+            this.secondFifthChoice.TabStop = false;
             // 
-            // pictureBox5
+            // firstFifthChoice
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(466, 371);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox5.TabIndex = 56;
-            this.pictureBox5.TabStop = false;
+            this.firstFifthChoice.Location = new System.Drawing.Point(466, 371);
+            this.firstFifthChoice.Name = "firstFifthChoice";
+            this.firstFifthChoice.Size = new System.Drawing.Size(24, 24);
+            this.firstFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.firstFifthChoice.TabIndex = 56;
+            this.firstFifthChoice.TabStop = false;
             // 
-            // pictureBox6
+            // thirdSixthChoice
             // 
-            this.pictureBox6.Location = new System.Drawing.Point(596, 431);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox6.TabIndex = 57;
-            this.pictureBox6.TabStop = false;
+            this.thirdSixthChoice.Location = new System.Drawing.Point(596, 431);
+            this.thirdSixthChoice.Name = "thirdSixthChoice";
+            this.thirdSixthChoice.Size = new System.Drawing.Size(24, 24);
+            this.thirdSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.thirdSixthChoice.TabIndex = 57;
+            this.thirdSixthChoice.TabStop = false;
             // 
-            // pictureBox7
+            // secondSixthChoice
             // 
-            this.pictureBox7.Location = new System.Drawing.Point(595, 401);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox7.TabIndex = 58;
-            this.pictureBox7.TabStop = false;
+            this.secondSixthChoice.Location = new System.Drawing.Point(595, 401);
+            this.secondSixthChoice.Name = "secondSixthChoice";
+            this.secondSixthChoice.Size = new System.Drawing.Size(24, 24);
+            this.secondSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.secondSixthChoice.TabIndex = 58;
+            this.secondSixthChoice.TabStop = false;
             // 
-            // pictureBox8
+            // firstSixthChoice
             // 
-            this.pictureBox8.Location = new System.Drawing.Point(595, 371);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox8.TabIndex = 59;
-            this.pictureBox8.TabStop = false;
+            this.firstSixthChoice.Location = new System.Drawing.Point(595, 371);
+            this.firstSixthChoice.Name = "firstSixthChoice";
+            this.firstSixthChoice.Size = new System.Drawing.Size(24, 24);
+            this.firstSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.firstSixthChoice.TabIndex = 59;
+            this.firstSixthChoice.TabStop = false;
             // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(854, 472);
-            this.Controls.Add(this.pictureBox8);
-            this.Controls.Add(this.pictureBox7);
-            this.Controls.Add(this.pictureBox6);
-            this.Controls.Add(this.pictureBox5);
-            this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.firstSixthChoice);
+            this.Controls.Add(this.secondSixthChoice);
+            this.Controls.Add(this.thirdSixthChoice);
+            this.Controls.Add(this.firstFifthChoice);
+            this.Controls.Add(this.secondFifthChoice);
+            this.Controls.Add(this.thirdFifthChoice);
+            this.Controls.Add(this.thirdFourthChoice);
+            this.Controls.Add(this.secondFourthChoice);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.panel8);
             this.Controls.Add(this.panel7);
@@ -758,7 +758,7 @@
             this.Controls.Add(this.summonerSpellsData);
             this.Controls.Add(this.summonerSpellsTitle);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.sixthItem);
+            this.Controls.Add(this.firstFourthChoice);
             this.Controls.Add(this.bottomSelection);
             this.Controls.Add(this.midSelection);
             this.Controls.Add(this.jungleSelection);
@@ -801,15 +801,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.jungleSelection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.midSelection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomSelection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sixthItem)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstFourthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondFourthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thirdFourthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thirdFifthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondFifthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstFifthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thirdSixthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.secondSixthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.firstSixthChoice)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -839,7 +839,7 @@
         private PictureBox jungleSelection;
         private PictureBox midSelection;
         private PictureBox bottomSelection;
-        private PictureBox sixthItem;
+        private PictureBox firstFourthChoice;
         private Label banrateValue;
         private Label totalgamesValue;
         private Label pickrateValue;
@@ -868,13 +868,13 @@
         private Panel panel7;
         private Panel panel8;
         private Label label8;
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
-        private PictureBox pictureBox5;
-        private PictureBox pictureBox6;
-        private PictureBox pictureBox7;
-        private PictureBox pictureBox8;
+        private PictureBox secondFourthChoice;
+        private PictureBox thirdFourthChoice;
+        private PictureBox thirdFifthChoice;
+        private PictureBox secondFifthChoice;
+        private PictureBox firstFifthChoice;
+        private PictureBox thirdSixthChoice;
+        private PictureBox secondSixthChoice;
+        private PictureBox firstSixthChoice;
     }
 }
