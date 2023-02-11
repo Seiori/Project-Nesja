@@ -67,12 +67,36 @@ namespace Project_Nesja.Forms
 
             // Adds the Images/Data of the Fourth Item choices to the Form
             firstFourthChoice.Image = championBuild.FourthItemChoice.First().ItemAsset.Image;
+            firstFourthWinrate.Text = System.Math.Round((championBuild.FourthItemChoice.First().Winrate * 100), 2).ToString() + "% WR";
+            firstFourthMatches.Text = championBuild.FourthItemChoice.First().TotalGames.ToString() + " Matches";
             secondFourthChoice.Image = championBuild.FourthItemChoice.ElementAt(1).ItemAsset.Image;
+            secondFourthWinrate.Text = System.Math.Round((championBuild.FourthItemChoice.ElementAt(1).Winrate * 100), 2).ToString() + "% WR";
+            secondFourthMatches.Text = championBuild.FourthItemChoice.ElementAt(1).TotalGames.ToString() + " Matches";
             thirdFourthChoice.Image = championBuild.FourthItemChoice.Last().ItemAsset.Image;
+            thirdFourthWinrate.Text = System.Math.Round((championBuild.FourthItemChoice.Last().Winrate * 100), 2).ToString() + "% WR";
+            thirdFourthMatches.Text = championBuild.FourthItemChoice.Last().TotalGames.ToString() + " Matches";
 
             // Adds the Images/Data of the Fifth Item choices to the Form
+            firstFifthChoice.Image = championBuild.FifthItemChoice.First().ItemAsset.Image;
+            firstFifthWinrate.Text = System.Math.Round((championBuild.FifthItemChoice.First().Winrate * 100), 2).ToString() + "% WR";
+            firstFifthMatches.Text = championBuild.FifthItemChoice.First().TotalGames.ToString() + " Matches";
+            secondFifthChoice.Image = championBuild.FifthItemChoice.ElementAt(1).ItemAsset.Image;
+            secondFifthWinrate.Text = System.Math.Round((championBuild.FifthItemChoice.ElementAt(1).Winrate * 100), 2).ToString() + "% WR";
+            secondFifthMatches.Text = championBuild.FifthItemChoice.ElementAt(1).TotalGames.ToString() + " Matches";
+            thirdFifthChoice.Image = championBuild.FifthItemChoice.Last().ItemAsset.Image;
+            thirdFifthWinrate.Text = System.Math.Round((championBuild.FifthItemChoice.Last().Winrate * 100), 2).ToString() + "% WR";
+            thirdFifthMatches.Text = championBuild.FifthItemChoice.Last().TotalGames.ToString() + " Matches";
 
             // Adds the Images/Data of the Sixth Item choices to the Form
+            firstSixthChoice.Image = championBuild.SixthItemChoice.First().ItemAsset.Image;
+            firstSixthWinrate.Text = System.Math.Round((championBuild.SixthItemChoice.First().Winrate * 100), 2).ToString() + "% WR";
+            firstSixthMatches.Text = championBuild.SixthItemChoice.First().TotalGames.ToString() + " Matches";
+            secondSixthChoice.Image = championBuild.SixthItemChoice.ElementAt(1).ItemAsset.Image;
+            secondSixthWinrate.Text = System.Math.Round((championBuild.SixthItemChoice.ElementAt(1).Winrate * 100), 2).ToString() + "% WR";
+            secondSixthMatches.Text = championBuild.SixthItemChoice.ElementAt(1).TotalGames.ToString() + " Matches";
+            thirdSixthChoice.Image = championBuild.SixthItemChoice.Last().ItemAsset.Image;
+            thirdSixthWinrate.Text = System.Math.Round((championBuild.SixthItemChoice.Last().Winrate * 100), 2).ToString() + "% WR";
+            thirdSixthMatches.Text = championBuild.SixthItemChoice.Last().TotalGames.ToString() + " Matches";
         }
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)

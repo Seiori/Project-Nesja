@@ -59,6 +59,15 @@ public class ChampionBuild
         CoreItems.ThirdItem.FetchAssetImage();
         SummonerSpells.FirstSpellData.FetchAssetImage();
         SummonerSpells.SecondSpellData.FetchAssetImage();
+        FourthItemChoice.First().ItemAsset.FetchAssetImage();
+        FourthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage();
+        FourthItemChoice.Last().ItemAsset.FetchAssetImage();
+        FifthItemChoice.First().ItemAsset.FetchAssetImage();
+        FifthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage();
+        FifthItemChoice.Last().ItemAsset.FetchAssetImage();
+        SixthItemChoice.First().ItemAsset.FetchAssetImage();
+        SixthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage();
+        SixthItemChoice.Last().ItemAsset.FetchAssetImage();
         return this;
     }
     
@@ -151,7 +160,6 @@ public class ChampionBuild
 
         var fourthItemData = buildData.SelectToken("item3");
 
-        int fourthTotalGames = 0;
         foreach (var fourthItem in fourthItemData)
         {
             Item fourthItemSet = new Item();
@@ -162,7 +170,6 @@ public class ChampionBuild
             fourthItemSet.Pickrate = fourthItem.ElementAt(2).ToObject<float>() / 100;
             fourthItemSet.TotalGames = fourthItem.ElementAt(3).ToObject<int>();
 
-            fourthTotalGames += fourthItemSet.TotalGames;
             fourthItemSets.Add(fourthItemSet);
         }
 
@@ -200,14 +207,14 @@ public class ChampionBuild
             sixthItemSets.Add(sixthItemSet);
         }
         
-        float winRateWeight = 0.3f;
-        float pickRateWeight = 0.7f;
+        float winRateWeight = 0.7f;
+        float pickRateWeight = 0.3f;
 
         StartingItems = startSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
-        CoreItems = coreSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
-        FourthItemChoice.Add(fourthItemSets.OrderByDescending(x => x.Winrate * winRateWeight + x.TotalGames / fourthTotalGames).First());
-        FifthItemChoice.AddRange(fifthItemSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).Take(3));
-        SixthItemChoice.AddRange(sixthItemSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).Take(3));
+        CoreItems = coreSets.OrderByDescending(x => x.Winrate * winRateWeight).First();
+        FourthItemChoice.AddRange(fourthItemSets.OrderByDescending(x => x.TotalGames / (fourthItemSets.Sum(x => x.TotalGames))).Take(3));
+        FifthItemChoice.AddRange(fifthItemSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).Take(3));
+        SixthItemChoice.AddRange(sixthItemSets.OrderByDescending(x => x.TotalGames / (sixthItemSets.Sum(x => x.TotalGames))).Take(3));
     }
 
     private void FetchSkillOrder(JToken buildData, JToken buildDataExtra)
