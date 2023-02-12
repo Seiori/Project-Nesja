@@ -34,12 +34,12 @@ namespace Project_Nesja.Data
             if (GetCurrentVersion())
             {
                 await LoadGameData();
-                await FetchChampModeData();
+                await FetchAllRankedData();
             }
             else
             {
                 await Task.WhenAll(
-                    FetchChampModeData(),
+                    FetchAllRankedData(),
                     FetchChampionData(),
                     FetchItemData(),
                     FetchAllRuneData(),
@@ -48,69 +48,47 @@ namespace Project_Nesja.Data
                 await SaveGameData();
             }
         }
-        
-        private static async Task FetchChampModeData()
-        {
-            await Task.WhenAll(
-                FetchAllRankedData(),
-                FetchTopRankedData(),
-                FetchJungleRankedData(),
-                FetchMidRankedData(),
-                FetchAdcRankedData(),
-                FetchSupportRankedData(),
-                FetchAramData()
-            );
-        }
+       
         
         private static async Task FetchAllRankedData()
         {
-            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all"), RankedQueue.All.All);
-        }
-        
-        private static async Task FetchTopRankedData() {
-            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=top"), RankedQueue.All.Top);
+            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://axe.lolalytics.com/patch/1/?patch=" + CurrentVersion + "&tier=platinum_plus&queue=420&region=all"));
         }
 
-        private static async Task FetchJungleRankedData() {
-            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=jungle"), RankedQueue.All.Jungle);
-        }
-
-        private static async Task FetchMidRankedData() {
-            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=mid"), RankedQueue.All.Mid);
-        }
-
-        private static async Task FetchAdcRankedData() {
-            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=adc"), RankedQueue.All.ADC);
-        }
-
-        private static async Task FetchSupportRankedData() {
-            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/ranked?period=week&tier=all&position=support"), RankedQueue.All.Support);
-        }
-
-        private static async Task FetchAramData() {
-            ParseChampRoleData((JObject?)await WebRequests.GetJsonObject("https://op.gg/api/v1.0/internal/bypass/statistics/global/champions/aram?period=month&tier=all"), Aram);
-        }
-
-        private static void ParseChampRoleData(JObject rankedData, Dictionary<int, ChampionRole> ChampRoleDataList)
+        private static void ParseChampRoleData(JObject rankedData)
         {
-            foreach (var champion in rankedData.SelectToken("data"))
+            int totalRoleGames = 0;
+            
+            foreach (var championRankedData in rankedData.SelectToken("current").SelectToken("lane").SelectToken("default").SelectToken("cid"))
             {
-                // Parses the relevant Data into the ChampionRoleData object and adds it to a Dictionary for that Role
-                ChampionRole championRoleData = new()
+                ChampionRole championRoleData = new ChampionRole();
+                championRoleData.ChampionData = ChampionList.FirstOrDefault(x => x.Value.ID == int.Parse(championRankedData.ToString().Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries)[0].Trim().Split(" ").Last())).Value;
+                championRoleData.TotalGames = (int)championRankedData.First().ElementAt(4);
+                championRoleData.Winrate = (float)championRankedData.First().ElementAt(3) / championRoleData.TotalGames;
+                championRoleData.GamesWon = (int)championRankedData.First().ElementAt(3);
+                
+                switch((int)championRankedData.First().ElementAt(1))
                 {
-                    ChampionData = ChampionList.First(x => x.Key == champion.SelectToken("champion_id").ToObject<int>()).Value,
-                    TotalGames = champion.SelectToken("play").ToObject<int>(),
-                    GamesWon = champion.SelectToken("win").ToObject<int>(),
-                    Pickrate = champion.SelectToken("pick_rate").ToObject<float>()
-                };
-                // Calculates the Winrate
-                championRoleData.Winrate = (float)championRoleData.GamesWon / (float)championRoleData.TotalGames;
+                    case 1:
+                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(1);
+                    break;
+                    case 2:
+                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(2);
+                    break;
+                    case 3:
+                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(3);
+                    break;
+                    case 4:
+                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(4);
+                    break;
+                    case 5:
+                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(5);
+                        break;
+                }
+                championRoleData.Pickrate = ((float)championRoleData.TotalGames / (float)totalRoleGames) * 2;
+                championRoleData.Banrate = (float)championRankedData.First().Last();
 
-                // Checks for Null value. This value is Null when looking at Aram Data
-                float.TryParse(champion.SelectToken("ban_rate")?.ToString(), out float banRate);
-                championRoleData.Banrate = banRate;
-
-                ChampRoleDataList.Add(championRoleData.ChampionData.ID, championRoleData);
+                RankedQueue.All.All.Add(championRoleData.ChampionData.ID, championRoleData);
             }
         }
 
@@ -228,7 +206,7 @@ namespace Project_Nesja.Data
             if (currentDataVersion == CurrentVersion)
                 return true;
             else
-                CurrentVersion = currentDataVersion;
+            File.WriteAllText("CurrentVersion", JsonConvert.SerializeObject(CurrentVersion));
             return false;
         }
         

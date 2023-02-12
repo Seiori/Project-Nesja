@@ -206,12 +206,12 @@ public class ChampionBuild
 
             sixthItemSets.Add(sixthItemSet);
         }
-        
+
         float winRateWeight = 0.7f;
         float pickRateWeight = 0.3f;
 
-        StartingItems = startSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
-        CoreItems = coreSets.OrderByDescending(x => x.Winrate * winRateWeight).First();
+        StartingItems = startSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).First();
+        CoreItems = coreSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).First();
         FourthItemChoice.AddRange(fourthItemSets.OrderByDescending(x => x.TotalGames / (fourthItemSets.Sum(x => x.TotalGames))).Take(3));
         FifthItemChoice.AddRange(fifthItemSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).Take(3));
         SixthItemChoice.AddRange(sixthItemSets.OrderByDescending(x => x.TotalGames / (sixthItemSets.Sum(x => x.TotalGames))).Take(3));

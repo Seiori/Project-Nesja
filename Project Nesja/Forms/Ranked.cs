@@ -34,7 +34,7 @@ namespace Project_Nesja.Forms
             foreach (var champion in rankedData)
             {
                 await champion.Value.ChampionData.FetchChampionData();
-                rankedDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%", System.Math.Round(champion.Value.Banrate * 100, 2) + "%");
+                rankedDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%", System.Math.Round(champion.Value.Banrate, 2) + "%");
             }
         }
 
