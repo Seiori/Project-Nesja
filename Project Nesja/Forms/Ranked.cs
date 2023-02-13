@@ -8,6 +8,9 @@ namespace Project_Nesja.Forms
         private readonly MainMenu mainForm;
         private Dictionary<int, ChampionRole> rankedData;
         private string currentRole;
+        private float minLanerate = 2f;
+        private float minGamesPlayed = 100;
+        private float minPickrate = 2;
         
         public Ranked(MainMenu mainMenu)
         {
@@ -18,6 +21,9 @@ namespace Project_Nesja.Forms
         private void Ranked_Load(object sender, EventArgs e)
         {
             roleSelection.SelectedIndex = 0;
+            minLanePercentage.Text = minLanerate.ToString();
+            minGameCount.Text = minGamesPlayed.ToString();
+            minPickPercentage.Text = minPickrate.ToString();
             LoadRankedData();
         }
 
@@ -28,13 +34,39 @@ namespace Project_Nesja.Forms
             if (rankedData == null)
                 rankedData = GameData.RankedQueue.All.All;
 
-            int TotalGames = rankedData.Sum(x => x.Value.TotalGames);
-            rankedData = rankedData.OrderByDescending(x => x.Value.Winrate * 0.55f + (float)x.Value.TotalGames / TotalGames * 0.45f).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            
+            string role = "";
+            float PBI = 0;
+
+            rankedData = rankedData.Where(x => x.Value.RolePercentage * 100 >= minLanerate && x.Value.TotalGames * 100 >= minGamesPlayed && x.Value.Pickrate * 100 >= minPickrate)
+                .OrderByDescending(x => x.Value.Winrate * 0.7f + (float)x.Value.TotalGames / rankedData.Sum(x => x.Value.TotalGames) * 0.3f)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+
             foreach (var champion in rankedData)
             {
+                PBI = (champion.Value.Winrate - (rankedData.Sum(x => x.Value.Winrate) / rankedData.Count)) * 100 * champion.Value.Pickrate / (100 - champion.Value.Banrate);
+                
                 await champion.Value.ChampionData.FetchChampionData();
-                rankedDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%", System.Math.Round(champion.Value.Banrate, 2) + "%");
+                
+                switch(champion.Value.Role)
+                {
+                    case 1:
+                        role = "Top";
+                        break;
+                    case 2:
+                        role = "Jungle";
+                        break;
+                    case 3:
+                        role = "Middle";
+                        break;
+                    case 4:
+                        role = "Bottom";
+                        break;
+                    case 5:
+                        role = "Support";
+                        break;
+                }
+                rankedDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, role, System.Math.Round(champion.Value.RolePercentage * 100, 2) + "%", System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%", System.Math.Round(champion.Value.Banrate, 2) + "%", System.Math.Round(PBI * 10000, 0), champion.Value.TotalGames);
             }
         }
 
@@ -88,6 +120,102 @@ namespace Project_Nesja.Forms
                     break;
             }
             LoadRankedData();
+        }
+
+        private void minLanePercentage_TextChanged(object sender, EventArgs e)
+        {
+            if (float.TryParse(minLanePercentage.Text, out float result))
+            {
+                minLanerate = result;
+                LoadRankedData();
+            }
+            else if (minLanePercentage.Text == "")
+            {
+                minLanerate = 0;
+                LoadRankedData();
+            }
+            else
+            {
+                MessageBox.Show("Invalid Input! Please enter a valid float value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void minLanePercentage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void minGameCount_TextChanged(object sender, EventArgs e)
+        {
+            if (float.TryParse(minGameCount.Text, out float result))
+            {
+                minGamesPlayed = result;
+                LoadRankedData();
+            }
+            else if (minLanePercentage.Text == "")
+            {
+                minGamesPlayed = 0;
+                LoadRankedData();
+            }
+            else
+            {
+                MessageBox.Show("Invalid Input! Please enter a valid float value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void minGameCount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void minPickPercentage_TextChanged(object sender, EventArgs e)
+        {
+            if (float.TryParse(minPickPercentage.Text, out float result))
+            {
+                minPickrate = result;
+                LoadRankedData();
+            }
+            else if (minLanePercentage.Text == "")
+            {
+                minPickrate = 0;
+                LoadRankedData();
+            }
+            else
+            {
+                MessageBox.Show("Invalid Input! Please enter a valid float value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void minPickPercentage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
