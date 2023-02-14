@@ -1,13 +1,24 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Project_Nesja
 {
     public class WebRequests
     {
-        private static readonly HttpClient client = new HttpClient();
+        private static readonly HttpClientHandler handler = new HttpClientHandler();
+        private static readonly HttpClient client;
+
+        static WebRequests()
+        {
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+            client = new HttpClient(handler);
+        }
 
         public static async Task<JToken?> GetJsonObject(string url)
         {

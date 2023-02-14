@@ -71,6 +71,7 @@
             this.roleSelection.Name = "roleSelection";
             this.roleSelection.Size = new System.Drawing.Size(121, 23);
             this.roleSelection.TabIndex = 1;
+            this.roleSelection.Text = "All";
             this.roleSelection.SelectedIndexChanged += new System.EventHandler(this.roleSelection_SelectedIndexChanged);
             // 
             // Role
@@ -201,6 +202,7 @@
             this.minPickPercentage.Name = "minPickPercentage";
             this.minPickPercentage.Size = new System.Drawing.Size(100, 23);
             this.minPickPercentage.TabIndex = 3;
+            this.minPickPercentage.Text = "2";
             this.minPickPercentage.TextChanged += new System.EventHandler(this.minPickPercentage_TextChanged);
             this.minPickPercentage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.minPickPercentage_KeyPress);
             // 
@@ -210,6 +212,7 @@
             this.minGameCount.Name = "minGameCount";
             this.minGameCount.Size = new System.Drawing.Size(100, 23);
             this.minGameCount.TabIndex = 4;
+            this.minGameCount.Text = "100";
             this.minGameCount.TextChanged += new System.EventHandler(this.minGameCount_TextChanged);
             this.minGameCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.minGameCount_KeyPress);
             // 
@@ -219,6 +222,7 @@
             this.minLanePercentage.Name = "minLanePercentage";
             this.minLanePercentage.Size = new System.Drawing.Size(100, 23);
             this.minLanePercentage.TabIndex = 5;
+            this.minLanePercentage.Text = "2";
             this.minLanePercentage.TextChanged += new System.EventHandler(this.minLanePercentage_TextChanged);
             this.minLanePercentage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.minLanePercentage_KeyPress);
             // 

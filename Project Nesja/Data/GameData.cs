@@ -118,6 +118,8 @@ namespace Project_Nesja.Data
                 championRoleData.TotalGames = (int)championAramData.First().ElementAt(4);
                 championRoleData.Winrate = (float)championAramData.First().ElementAt(3) / championRoleData.TotalGames;
                 championRoleData.Pickrate = championRoleData.TotalGames / (float)aramData.SelectToken("totals").First();
+
+                Aram.Add(championRoleData.ChampionData.ID, championRoleData);
             }
         }
         

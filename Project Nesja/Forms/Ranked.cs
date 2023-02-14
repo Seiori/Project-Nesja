@@ -20,10 +20,6 @@ namespace Project_Nesja.Forms
 
         private void Ranked_Load(object sender, EventArgs e)
         {
-            roleSelection.SelectedIndex = 0;
-            minLanePercentage.Text = minLanerate.ToString();
-            minGameCount.Text = minGamesPlayed.ToString();
-            minPickPercentage.Text = minPickrate.ToString();
             LoadRankedData();
         }
 
