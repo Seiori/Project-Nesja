@@ -66,20 +66,6 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void rankedDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-            {
-                DataGridViewCell cell = rankedDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                if (cell.Value is Image)
-                {
-                    Debug.WriteLine("Image Clicked");
-                    ChampionData champion = GameData.ChampionList.Where(x => x.Value.Name == rankedDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
-                    this.mainForm.OpenChildForm(new Home(champion, currentRole));
-                }
-            }
-        }
-
         private void roleSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (roleSelection.SelectedIndex)
@@ -211,6 +197,19 @@ namespace Project_Nesja.Forms
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void rankedDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                DataGridViewCell cell = rankedDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (cell.Value is Image)
+                {
+                    ChampionData champion = GameData.ChampionList.Where(x => x.Value.Name == rankedDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
+                    this.mainForm.OpenChildForm(new Home(champion, currentRole));
+                }
             }
         }
     }

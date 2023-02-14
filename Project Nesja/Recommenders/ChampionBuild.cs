@@ -49,25 +49,25 @@ public class ChampionBuild
         FetchItems(buildData, buildDataExtra);
         FetchSkillOrder(buildData, buildDataExtra);
         FetchMatchups(buildData);
-        
 
-        StartingItems.FirstItem.FetchAssetImage();
-        if (StartingItems.SecondItem != null)
-            StartingItems.SecondItem.FetchAssetImage();
-        CoreItems.FirstItem.FetchAssetImage();
-        CoreItems.SecondItem.FetchAssetImage();
-        CoreItems.ThirdItem.FetchAssetImage();
-        SummonerSpells.FirstSpellData.FetchAssetImage();
-        SummonerSpells.SecondSpellData.FetchAssetImage();
-        FourthItemChoice.First().ItemAsset.FetchAssetImage();
-        FourthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage();
-        FourthItemChoice.Last().ItemAsset.FetchAssetImage();
-        FifthItemChoice.First().ItemAsset.FetchAssetImage();
-        FifthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage();
-        FifthItemChoice.Last().ItemAsset.FetchAssetImage();
-        SixthItemChoice.First().ItemAsset.FetchAssetImage();
-        SixthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage();
-        SixthItemChoice.Last().ItemAsset.FetchAssetImage();
+        await Task.WhenAll(
+        StartingItems.FirstItem.FetchAssetImage(),
+        CoreItems.FirstItem.FetchAssetImage(),
+        CoreItems.SecondItem.FetchAssetImage(),
+        CoreItems.ThirdItem.FetchAssetImage(),
+        SummonerSpells.FirstSpellData.FetchAssetImage(),
+        SummonerSpells.SecondSpellData.FetchAssetImage(),
+        FourthItemChoice.First().ItemAsset.FetchAssetImage(),
+        FourthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage(),
+        FourthItemChoice.Last().ItemAsset.FetchAssetImage(),
+        FifthItemChoice.First().ItemAsset.FetchAssetImage(),
+        FifthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage(),
+        FifthItemChoice.Last().ItemAsset.FetchAssetImage(),
+        SixthItemChoice.First().ItemAsset.FetchAssetImage(),
+        SixthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage(),
+        SixthItemChoice.Last().ItemAsset.FetchAssetImage()
+        );
+
         return this;
     }
     
@@ -206,9 +206,6 @@ public class ChampionBuild
 
             sixthItemSets.Add(sixthItemSet);
         }
-
-        float winRateWeight = 0.7f;
-        float pickRateWeight = 0.3f;
 
         StartingItems = startSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).First();
         CoreItems = coreSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).First();

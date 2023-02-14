@@ -142,6 +142,7 @@
             this.rankedDataGrid.RowTemplate.Height = 60;
             this.rankedDataGrid.Size = new System.Drawing.Size(783, 402);
             this.rankedDataGrid.TabIndex = 2;
+            this.rankedDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rankedDataGrid_CellClick);
             // 
             // ChampionImage
             // 
