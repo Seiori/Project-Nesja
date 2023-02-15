@@ -7,22 +7,12 @@ namespace Project_Nesja.Data
     {
         public static string? CurrentVersion { get; set; }
         public static Dictionary<int, ChampionData> ChampionList { get; set; }
-        public static Ranks RankedQueue { get; set; }
-        public static Dictionary<int, ChampionRole> Aram { get; set; }
         public static Dictionary<int, Asset> Assets { get; set; }
 
         static GameData()
         {
             CurrentVersion = "";
             ChampionList = new Dictionary<int, ChampionData>();
-            RankedQueue = new Ranks();
-            RankedQueue.All.All = new Dictionary<int, ChampionRole>();
-            RankedQueue.All.Top = new Dictionary<int, ChampionRole>();
-            RankedQueue.All.Jungle = new Dictionary<int, ChampionRole>();
-            RankedQueue.All.Mid = new Dictionary<int, ChampionRole>();
-            RankedQueue.All.ADC = new Dictionary<int, ChampionRole>();
-            RankedQueue.All.Support = new Dictionary<int, ChampionRole>();
-            Aram = new Dictionary<int, ChampionRole>();
             Assets = new Dictionary<int, Asset>();
         }
         
@@ -34,92 +24,16 @@ namespace Project_Nesja.Data
             if (GetCurrentVersion())
             {
                 await LoadGameData();
-                await FetchAllRankedData();
-                await FetchAramData();
             }
             else
             {
                 await Task.WhenAll(
-                    FetchAllRankedData(),
-                    FetchAramData(),
                     FetchChampionData(),
                     FetchItemData(),
                     FetchAllRuneData(),
                     FetchSummonerSpellData()
                 );
                 await SaveGameData();
-            }
-        }
-       
-        
-        private static async Task FetchAllRankedData()
-        {
-            var rankedData = (JObject?)await WebRequests.GetJsonObject("https://axe.lolalytics.com/patch/1/?patch=" + CurrentVersion + "&tier=platinum_plus&queue=420&region=all");
-
-            ParseChampRoleData(rankedData, RankedQueue.All.All, "default");
-            ParseChampRoleData(rankedData, RankedQueue.All.Top, "top");
-            ParseChampRoleData(rankedData, RankedQueue.All.Jungle, "jungle");
-            ParseChampRoleData(rankedData, RankedQueue.All.Mid, "middle");
-            ParseChampRoleData(rankedData, RankedQueue.All.ADC, "bottom");
-            ParseChampRoleData(rankedData, RankedQueue.All.Support, "support");
-        }
-        
-        private static void ParseChampRoleData(JObject rankedData, Dictionary<int, ChampionRole> rankedQueue, string role)
-        {
-            int totalRoleGames = 0;
-            
-            foreach (var championRankedData in rankedData.SelectToken("current").SelectToken("lane").SelectToken(role).SelectToken("cid"))
-            {
-                ChampionRole championRoleData = new ChampionRole();
-                championRoleData.ChampionData = ChampionList.FirstOrDefault(x => x.Value.ID == int.Parse(championRankedData.ToString().Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries)[0].Trim().Split(" ").Last())).Value;
-                championRoleData.Role = (int)championRankedData.First().ElementAt(1);
-                championRoleData.RolePercentage = (float)championRankedData.First().ElementAt(4) / (float)championRankedData.First().ElementAt(5);
-                championRoleData.TotalGames = (int)championRankedData.First().ElementAt(4);
-                championRoleData.Winrate = (float)championRankedData.First().ElementAt(3) / championRoleData.TotalGames;
-                
-                switch(championRoleData.Role)
-                {
-                    case 1:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(1);
-                    break;
-                    case 2:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(2);
-                    break;
-                    case 3:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(3);
-                    break;
-                    case 4:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(4);
-                    break;
-                    case 5:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(5);
-                        break;
-                }
-                championRoleData.Pickrate = ((float)championRoleData.TotalGames / (float)totalRoleGames) * 2;
-                championRoleData.Banrate = (float)championRankedData.First().Last();
-
-                rankedQueue.Add(championRoleData.ChampionData.ID, championRoleData);
-            }
-        }
-
-        private static async Task FetchAramData()
-        {
-            var aramData = (JObject?)await WebRequests.GetJsonObject("https://axe.lolalytics.com/tierlist/2/?lane=middle&patch=" + CurrentVersion + "&tier=platinum_plus&queue=450&region=all");
-
-            ParseAramData(aramData);
-        }
-
-        private static void ParseAramData(JObject aramData)
-        {
-            foreach (var championAramData in aramData.SelectToken("cid"))
-            {
-                ChampionRole championRoleData = new ChampionRole();
-                championRoleData.ChampionData = ChampionList.FirstOrDefault(x => x.Value.ID == int.Parse(championAramData.ToString().Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries)[0].Trim().Split(" ").Last())).Value;
-                championRoleData.TotalGames = (int)championAramData.First().ElementAt(4);
-                championRoleData.Winrate = (float)championAramData.First().ElementAt(3) / championRoleData.TotalGames;
-                championRoleData.Pickrate = championRoleData.TotalGames / (float)aramData.SelectToken("totals").First();
-
-                Aram.Add(championRoleData.ChampionData.ID, championRoleData);
             }
         }
         

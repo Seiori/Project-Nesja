@@ -36,13 +36,17 @@ public class ChampionBuild
         SummonerSpells = new SummonerSpells();
         Matchups = new List<ChampionRole>();
     }
-    
+
     public async Task<ChampionBuild> FetchChampionBuild()
     {
-        JToken buildData = await WebRequests.GetJsonObject("https://axe.lolalytics.com/mega/?ep=champion&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all");
-        JToken buildDataExtra = await WebRequests.GetJsonObject("https://axe.lolalytics.com/mega/?ep=champion2&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all");
+        string apiUrl = "https://axe.lolalytics.com/mega/?ep=champion&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all";
+        string apiExtraUrl = "https://axe.lolalytics.com/mega/?ep=champion2&p=d&v=1&patch=" + GameData.CurrentVersion + "&cid=" + championData.ID + "&lane=" + role + "&tier=platinum_plus&queue=420&region=all";
 
-        role = buildData.SelectToken("header").SelectToken("lane").ToString();
+        JToken buildData = await WebRequests.GetJsonObject(apiUrl);
+        JToken buildDataExtra = await WebRequests.GetJsonObject(apiExtraUrl);
+
+        this.role = buildData.SelectToken("header").SelectToken("lane").ToString();
+        
         FetchChampionStats(buildData);
         FetchRunes(buildData);
         FetchSummonerSpells(buildData);
@@ -50,25 +54,25 @@ public class ChampionBuild
         FetchSkillOrder(buildData, buildDataExtra);
         FetchMatchups(buildData);
 
-        await Task.WhenAll(
-        StartingItems.FirstItem.FetchAssetImage(),
-        CoreItems.FirstItem.FetchAssetImage(),
-        CoreItems.SecondItem.FetchAssetImage(),
-        CoreItems.ThirdItem.FetchAssetImage(),
-        SummonerSpells.FirstSpellData.FetchAssetImage(),
-        SummonerSpells.SecondSpellData.FetchAssetImage(),
-        FourthItemChoice.First().ItemAsset.FetchAssetImage(),
-        FourthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage(),
-        FourthItemChoice.Last().ItemAsset.FetchAssetImage(),
-        FifthItemChoice.First().ItemAsset.FetchAssetImage(),
-        FifthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage(),
-        FifthItemChoice.Last().ItemAsset.FetchAssetImage(),
-        SixthItemChoice.First().ItemAsset.FetchAssetImage(),
-        SixthItemChoice.ElementAt(1).ItemAsset.FetchAssetImage(),
-        SixthItemChoice.Last().ItemAsset.FetchAssetImage()
-        );
+        await FetchImageAssetsAsync();
 
         return this;
+    }
+
+    private async Task FetchImageAssetsAsync()
+    {
+        var tasks = new List<Task>();
+        tasks.Add(StartingItems.FirstItem.FetchAssetImage());
+        tasks.Add(CoreItems.FirstItem.FetchAssetImage());
+        tasks.Add(CoreItems.SecondItem.FetchAssetImage());
+        tasks.Add(CoreItems.ThirdItem.FetchAssetImage());
+        tasks.Add(SummonerSpells.FirstSpellData.FetchAssetImage());
+        tasks.Add(SummonerSpells.SecondSpellData.FetchAssetImage());
+        tasks.AddRange(FourthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
+        tasks.AddRange(FifthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
+        tasks.AddRange(SixthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
+
+        await Task.WhenAll(tasks).ConfigureAwait(false);
     }
     
     private void FetchChampionStats(JToken buildData)
@@ -106,8 +110,8 @@ public class ChampionBuild
             summonerSpells.Add(tempSet);
         }
         float winRateWeight = 0.46f;
-        float pickRateWeight = 0.54f;
-        
+        float pickRateWeight = 1 - winRateWeight;
+
         SummonerSpells = summonerSpells.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
     }
     
@@ -249,8 +253,8 @@ public class ChampionBuild
         float winRateWeight = 0.4f;
         float pickRateWeight = 0.6f;
 
-        SkillPriority = skillPrioritySets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).FirstOrDefault();
-        SkillOrder = skillOrderSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).FirstOrDefault();
+        SkillPriority = skillPrioritySets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
+        SkillOrder = skillOrderSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
     }
 
     private void FetchMatchups(JToken buildData)

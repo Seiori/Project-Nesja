@@ -16,6 +16,9 @@ namespace Project_Nesja
         {
             InitializeComponent();
 
+            // Fetches Data from the API sources
+            GameData.FetchGameData();
+            
             // Defines a new Panel and Button for the Navigation Menus Selection Highlight
             leftBorderButton = new Panel
             {
@@ -32,7 +35,7 @@ namespace Project_Nesja
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            GameData.FetchGameData();
+
         }
 
         private void Logo_Click(object sender, EventArgs e)
