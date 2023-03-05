@@ -105,6 +105,9 @@
             this.secondFourthMatches = new System.Windows.Forms.Label();
             this.thirdFourthWinrate = new System.Windows.Forms.Label();
             this.thirdFourthMatches = new System.Windows.Forms.Label();
+            this.championMatchupData = new System.Windows.Forms.DataGridView();
+            this.Image = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Winrate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.championImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstAbility)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondCoreItem)).BeginInit();
@@ -131,6 +134,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.thirdSixthChoice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondSixthChoice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstSixthChoice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.championMatchupData)).BeginInit();
             this.SuspendLayout();
             // 
             // championImage
@@ -940,11 +944,40 @@
             this.thirdFourthMatches.Text = "40.30% (323414) Matches";
             this.thirdFourthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // championMatchupData
+            // 
+            this.championMatchupData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.championMatchupData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Image,
+            this.Winrate});
+            this.championMatchupData.EnableHeadersVisualStyles = false;
+            this.championMatchupData.Location = new System.Drawing.Point(741, 9);
+            this.championMatchupData.Name = "championMatchupData";
+            this.championMatchupData.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.championMatchupData.RowHeadersVisible = false;
+            this.championMatchupData.RowTemplate.Height = 25;
+            this.championMatchupData.Size = new System.Drawing.Size(101, 359);
+            this.championMatchupData.TabIndex = 78;
+            // 
+            // Image
+            // 
+            this.Image.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Image.HeaderText = "Image";
+            this.Image.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Image.Name = "Image";
+            this.Image.Width = 35;
+            // 
+            // Winrate
+            // 
+            this.Winrate.HeaderText = "Winrate";
+            this.Winrate.Name = "Winrate";
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(854, 472);
+            this.Controls.Add(this.championMatchupData);
             this.Controls.Add(this.thirdFourthMatches);
             this.Controls.Add(this.thirdFourthWinrate);
             this.Controls.Add(this.secondFourthMatches);
@@ -1044,6 +1077,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.thirdSixthChoice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondSixthChoice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.firstSixthChoice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.championMatchupData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1128,5 +1162,8 @@
         private Label secondFourthMatches;
         private Label thirdFourthWinrate;
         private Label thirdFourthMatches;
+        private DataGridView championMatchupData;
+        private DataGridViewImageColumn Image;
+        private DataGridViewTextBoxColumn Winrate;
     }
 }

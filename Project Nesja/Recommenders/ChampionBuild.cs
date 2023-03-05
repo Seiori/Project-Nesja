@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
 using Project_Nesja.Data;
+using System.Text.Json;
 
 public class ChampionBuild
 {
@@ -88,6 +89,15 @@ public class ChampionBuild
     private void FetchRunes(JToken buildData)
     {
         var runeData = buildData.SelectToken("runes").SelectToken("stats");
+
+        foreach (JProperty rune in JObject.Parse(runeData.ToString()).Properties())
+        {
+            string runeID = rune.Name;
+            double runePickrate = (double)rune.Value[0][0];
+            double runeWinrate = (double)rune.Value[0][1];
+            int runeTotalgames = (int)rune.Value[0][2];
+        }
+
     }
 
     private void FetchSummonerSpells(JToken buildData)
@@ -275,7 +285,7 @@ public class ChampionBuild
         }
 
         float winRateWeight = 0.4f;
-        float pickRateWeight = 0.6f;
+        float pickRateWeight = 1 - winRateWeight;
 
         Matchups = Matchups.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).ToList();
     }

@@ -97,6 +97,14 @@ namespace Project_Nesja.Forms
             thirdSixthChoice.Image = championBuild.SixthItemChoice.Last().ItemAsset.Image;
             thirdSixthWinrate.Text = System.Math.Round((championBuild.SixthItemChoice.Last().Winrate * 100), 2).ToString() + "% WR";
             thirdSixthMatches.Text = championBuild.SixthItemChoice.Last().TotalGames.ToString() + " Matches";
+
+            // Adds Matchup Data
+            championMatchupData.Rows.Clear();
+
+            foreach (var champion in championBuild.Matchups)
+            {
+                championMatchupData.Rows.Add(champion.ChampionData.SpriteImage, champion.Winrate.ToString());
+            }
         }
 
         private void searchChampionTextBox_TextChanged(object sender, EventArgs e)
