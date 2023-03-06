@@ -21,6 +21,7 @@ public class ChampionBuild
     public SkillOrder SkillOrder { get; set; }
     public SummonerSpells SummonerSpells { get; set; }
     public List<ChampionRole> Matchups { get; set; }
+    private readonly Dictionary<int, Asset> _assets;
 
     public ChampionBuild(ChampionData championData, string role)
     {
@@ -36,6 +37,7 @@ public class ChampionBuild
         SkillOrder = new SkillOrder();
         SummonerSpells = new SummonerSpells();
         Matchups = new List<ChampionRole>();
+        _assets = GameData.Assets;
     }
 
     public async Task<ChampionBuild> FetchChampionBuild()
@@ -85,46 +87,48 @@ public class ChampionBuild
         Pickrate = statData.SelectToken("pr").ToObject<double>();
         Banrate = statData.SelectToken("br").ToObject<double>();
     }
-    
+
     private void FetchRunes(JToken buildData)
     {
         var runeData = buildData.SelectToken("runes").SelectToken("stats");
 
-        foreach (JProperty rune in JObject.Parse(runeData.ToString()).Properties())
-        {
-            string runeID = rune.Name;
-            double runePickrate = (double)rune.Value[0][0];
-            double runeWinrate = (double)rune.Value[0][1];
-            int runeTotalgames = (int)rune.Value[0][2];
-        }
 
     }
+
 
     private void FetchSummonerSpells(JToken buildData)
     {
         List<SummonerSpells> summonerSpells = new List<SummonerSpells>();
-        
-        var spellData = buildData.SelectToken("spells");
 
-        foreach (var summonerSpellSet in spellData)
-        {
-            SummonerSpells tempSet = new SummonerSpells();
-            int[] parts = summonerSpellSet.First().ToString().Split('_').Select(x => int.Parse(x)).ToArray();
+        JArray spellData = (JArray)buildData.SelectToken("spells");
 
-            tempSet.FirstSpellData = GameData.Assets.FirstOrDefault(x => x.Value.ID == parts[0]).Value;
-            tempSet.SecondSpellData = GameData.Assets.FirstOrDefault(x => x.Value.ID == parts[1]).Value;
-            tempSet.Winrate = summonerSpellSet.ElementAt(1).ToObject<float>();
-            tempSet.Pickrate = summonerSpellSet.ElementAt(2).ToObject<float>();
-            tempSet.TotalGames = summonerSpellSet.ElementAt(3).ToObject<int>();
-
-            summonerSpells.Add(tempSet);
-        }
         float winRateWeight = 0.46f;
         float pickRateWeight = 1 - winRateWeight;
 
+        for (int i = 0; i < spellData.Count; i++)
+        {
+            JToken summonerSpellSet = spellData[i];
+
+            int firstSpellId;
+            int secondSpellId;
+            string[] spellIds = summonerSpellSet[0].ToString().Split('_');
+            if (spellIds.Length == 2 && int.TryParse(spellIds[0], out firstSpellId) && int.TryParse(spellIds[1], out secondSpellId))
+            {
+                SummonerSpells summonerSpell = new SummonerSpells
+                {
+                    FirstSpellData = _assets.GetValueOrDefault(firstSpellId),
+                    SecondSpellData = _assets.GetValueOrDefault(secondSpellId),
+                    Winrate = (float)summonerSpellSet[1],
+                    Pickrate = (float)summonerSpellSet[2],
+                    TotalGames = (int)summonerSpellSet[3]
+                };
+
+                summonerSpells.Add(summonerSpell);
+            }
+        }
         SummonerSpells = summonerSpells.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
     }
-    
+
     private void FetchItems(JToken buildData, JToken buildDataExtra)
     {
         List<StartingItems> startSets = new List<StartingItems>();
@@ -169,7 +173,7 @@ public class ChampionBuild
 
             coreSets.Add(coreSet);
         }
-        
+
         List<Item> fourthItemSets = new List<Item>();
 
         var fourthItemData = buildData.SelectToken("item3");

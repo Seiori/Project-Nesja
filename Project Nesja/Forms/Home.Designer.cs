@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.championImage = new System.Windows.Forms.PictureBox();
             this.championName = new System.Windows.Forms.Label();
             this.championTitle = new System.Windows.Forms.Label();
@@ -193,7 +196,7 @@
             // 
             // firstAbility
             // 
-            this.firstAbility.Location = new System.Drawing.Point(368, 210);
+            this.firstAbility.Location = new System.Drawing.Point(193, 308);
             this.firstAbility.Name = "firstAbility";
             this.firstAbility.Size = new System.Drawing.Size(41, 38);
             this.firstAbility.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -202,7 +205,7 @@
             // 
             // secondCoreItem
             // 
-            this.secondCoreItem.Location = new System.Drawing.Point(210, 389);
+            this.secondCoreItem.Location = new System.Drawing.Point(169, 389);
             this.secondCoreItem.Name = "secondCoreItem";
             this.secondCoreItem.Size = new System.Drawing.Size(41, 39);
             this.secondCoreItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -211,7 +214,7 @@
             // 
             // secondAbility
             // 
-            this.secondAbility.Location = new System.Drawing.Point(417, 210);
+            this.secondAbility.Location = new System.Drawing.Point(242, 308);
             this.secondAbility.Name = "secondAbility";
             this.secondAbility.Size = new System.Drawing.Size(41, 38);
             this.secondAbility.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -256,7 +259,7 @@
             // 
             // firstCoreItem
             // 
-            this.firstCoreItem.Location = new System.Drawing.Point(161, 389);
+            this.firstCoreItem.Location = new System.Drawing.Point(120, 389);
             this.firstCoreItem.Name = "firstCoreItem";
             this.firstCoreItem.Size = new System.Drawing.Size(43, 39);
             this.firstCoreItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -265,7 +268,7 @@
             // 
             // thirdAbility
             // 
-            this.thirdAbility.Location = new System.Drawing.Point(466, 210);
+            this.thirdAbility.Location = new System.Drawing.Point(291, 308);
             this.thirdAbility.Name = "thirdAbility";
             this.thirdAbility.Size = new System.Drawing.Size(41, 39);
             this.thirdAbility.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -274,7 +277,7 @@
             // 
             // thirdCoreItem
             // 
-            this.thirdCoreItem.Location = new System.Drawing.Point(257, 389);
+            this.thirdCoreItem.Location = new System.Drawing.Point(216, 389);
             this.thirdCoreItem.Name = "thirdCoreItem";
             this.thirdCoreItem.Size = new System.Drawing.Size(43, 39);
             this.thirdCoreItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -294,7 +297,7 @@
             this.panel1.Controls.Add(this.winrateValue);
             this.panel1.Location = new System.Drawing.Point(12, 90);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(723, 77);
+            this.panel1.Size = new System.Drawing.Size(676, 77);
             this.panel1.TabIndex = 15;
             // 
             // label4
@@ -303,7 +306,7 @@
             this.label4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label4.Location = new System.Drawing.Point(598, 41);
+            this.label4.Location = new System.Drawing.Point(564, 41);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(91, 20);
             this.label4.TabIndex = 34;
@@ -316,7 +319,7 @@
             this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(481, 41);
+            this.label3.Location = new System.Drawing.Point(443, 41);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(68, 20);
             this.label3.TabIndex = 33;
@@ -329,7 +332,7 @@
             this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label2.Location = new System.Drawing.Point(337, 41);
+            this.label2.Location = new System.Drawing.Point(309, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 20);
             this.label2.TabIndex = 32;
@@ -343,7 +346,7 @@
             this.banrateValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.banrateValue.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.banrateValue.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.banrateValue.Location = new System.Drawing.Point(481, 16);
+            this.banrateValue.Location = new System.Drawing.Point(443, 14);
             this.banrateValue.Name = "banrateValue";
             this.banrateValue.Size = new System.Drawing.Size(126, 27);
             this.banrateValue.TabIndex = 31;
@@ -357,7 +360,7 @@
             this.totalgamesValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.totalgamesValue.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.totalgamesValue.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.totalgamesValue.Location = new System.Drawing.Point(598, 16);
+            this.totalgamesValue.Location = new System.Drawing.Point(564, 14);
             this.totalgamesValue.Name = "totalgamesValue";
             this.totalgamesValue.Size = new System.Drawing.Size(154, 27);
             this.totalgamesValue.TabIndex = 32;
@@ -371,7 +374,7 @@
             this.pickrateValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pickrateValue.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.pickrateValue.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.pickrateValue.Location = new System.Drawing.Point(337, 16);
+            this.pickrateValue.Location = new System.Drawing.Point(309, 14);
             this.pickrateValue.Name = "pickrateValue";
             this.pickrateValue.Size = new System.Drawing.Size(128, 27);
             this.pickrateValue.TabIndex = 35;
@@ -384,7 +387,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(202, 41);
+            this.label1.Location = new System.Drawing.Point(181, 41);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 20);
             this.label1.TabIndex = 31;
@@ -398,7 +401,7 @@
             this.winrateValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.winrateValue.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.winrateValue.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.winrateValue.Location = new System.Drawing.Point(202, 16);
+            this.winrateValue.Location = new System.Drawing.Point(181, 14);
             this.winrateValue.Name = "winrateValue";
             this.winrateValue.Size = new System.Drawing.Size(124, 27);
             this.winrateValue.TabIndex = 16;
@@ -463,7 +466,7 @@
             // 
             // firstFourthChoice
             // 
-            this.firstFourthChoice.Location = new System.Drawing.Point(321, 374);
+            this.firstFourthChoice.Location = new System.Drawing.Point(270, 371);
             this.firstFourthChoice.Name = "firstFourthChoice";
             this.firstFourthChoice.Size = new System.Drawing.Size(35, 35);
             this.firstFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -523,15 +526,14 @@
             this.startItemData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.startItemData.Location = new System.Drawing.Point(12, 371);
             this.startItemData.Name = "startItemData";
-            this.startItemData.Size = new System.Drawing.Size(139, 15);
+            this.startItemData.Size = new System.Drawing.Size(0, 15);
             this.startItemData.TabIndex = 36;
-            this.startItemData.Text = "40.30% (323414) Matches";
             this.startItemData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel4.Location = new System.Drawing.Point(368, 173);
+            this.panel4.Location = new System.Drawing.Point(193, 271);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(11, 16);
             this.panel4.TabIndex = 37;
@@ -540,7 +542,7 @@
             // 
             this.skillTitle.AutoSize = true;
             this.skillTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.skillTitle.Location = new System.Drawing.Point(385, 174);
+            this.skillTitle.Location = new System.Drawing.Point(210, 272);
             this.skillTitle.Name = "skillTitle";
             this.skillTitle.Size = new System.Drawing.Size(69, 15);
             this.skillTitle.TabIndex = 38;
@@ -550,7 +552,7 @@
             // 
             this.skillData.AutoSize = true;
             this.skillData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.skillData.Location = new System.Drawing.Point(368, 192);
+            this.skillData.Location = new System.Drawing.Point(193, 290);
             this.skillData.Name = "skillData";
             this.skillData.Size = new System.Drawing.Size(139, 15);
             this.skillData.TabIndex = 39;
@@ -561,7 +563,7 @@
             // 
             this.firstAbilityValue.AutoSize = true;
             this.firstAbilityValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstAbilityValue.Location = new System.Drawing.Point(368, 233);
+            this.firstAbilityValue.Location = new System.Drawing.Point(193, 331);
             this.firstAbilityValue.Name = "firstAbilityValue";
             this.firstAbilityValue.Size = new System.Drawing.Size(27, 15);
             this.firstAbilityValue.TabIndex = 40;
@@ -572,7 +574,7 @@
             // 
             this.secondAbilityValue.AutoSize = true;
             this.secondAbilityValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondAbilityValue.Location = new System.Drawing.Point(417, 234);
+            this.secondAbilityValue.Location = new System.Drawing.Point(242, 332);
             this.secondAbilityValue.Name = "secondAbilityValue";
             this.secondAbilityValue.Size = new System.Drawing.Size(45, 15);
             this.secondAbilityValue.TabIndex = 41;
@@ -584,7 +586,7 @@
             this.thirdAbilityValue.AutoSize = true;
             this.thirdAbilityValue.BackColor = System.Drawing.SystemColors.Control;
             this.thirdAbilityValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdAbilityValue.Location = new System.Drawing.Point(466, 234);
+            this.thirdAbilityValue.Location = new System.Drawing.Point(291, 332);
             this.thirdAbilityValue.Name = "thirdAbilityValue";
             this.thirdAbilityValue.Size = new System.Drawing.Size(32, 15);
             this.thirdAbilityValue.TabIndex = 42;
@@ -594,7 +596,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel5.Location = new System.Drawing.Point(161, 352);
+            this.panel5.Location = new System.Drawing.Point(120, 352);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(11, 16);
             this.panel5.TabIndex = 43;
@@ -603,7 +605,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label5.Location = new System.Drawing.Point(178, 353);
+            this.label5.Location = new System.Drawing.Point(137, 352);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(64, 15);
             this.label5.TabIndex = 44;
@@ -613,17 +615,16 @@
             // 
             this.coreItemData.AutoSize = true;
             this.coreItemData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.coreItemData.Location = new System.Drawing.Point(161, 371);
+            this.coreItemData.Location = new System.Drawing.Point(120, 371);
             this.coreItemData.Name = "coreItemData";
-            this.coreItemData.Size = new System.Drawing.Size(139, 15);
+            this.coreItemData.Size = new System.Drawing.Size(0, 15);
             this.coreItemData.TabIndex = 45;
-            this.coreItemData.Text = "40.30% (323414) Matches";
             this.coreItemData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel6.Location = new System.Drawing.Point(321, 352);
+            this.panel6.Location = new System.Drawing.Point(270, 351);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(11, 16);
             this.panel6.TabIndex = 46;
@@ -632,7 +633,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(338, 353);
+            this.label6.Location = new System.Drawing.Point(287, 351);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(96, 15);
             this.label6.TabIndex = 47;
@@ -642,7 +643,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(483, 353);
+            this.label7.Location = new System.Drawing.Point(415, 353);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(96, 15);
             this.label7.TabIndex = 48;
@@ -651,7 +652,7 @@
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel7.Location = new System.Drawing.Point(466, 352);
+            this.panel7.Location = new System.Drawing.Point(398, 352);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(11, 16);
             this.panel7.TabIndex = 49;
@@ -659,7 +660,7 @@
             // panel8
             // 
             this.panel8.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel8.Location = new System.Drawing.Point(596, 352);
+            this.panel8.Location = new System.Drawing.Point(527, 353);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(11, 16);
             this.panel8.TabIndex = 50;
@@ -668,7 +669,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(613, 353);
+            this.label8.Location = new System.Drawing.Point(544, 353);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(96, 15);
             this.label8.TabIndex = 51;
@@ -676,7 +677,7 @@
             // 
             // secondFourthChoice
             // 
-            this.secondFourthChoice.Location = new System.Drawing.Point(321, 407);
+            this.secondFourthChoice.Location = new System.Drawing.Point(270, 407);
             this.secondFourthChoice.Name = "secondFourthChoice";
             this.secondFourthChoice.Size = new System.Drawing.Size(35, 35);
             this.secondFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -685,7 +686,7 @@
             // 
             // thirdFourthChoice
             // 
-            this.thirdFourthChoice.Location = new System.Drawing.Point(321, 442);
+            this.thirdFourthChoice.Location = new System.Drawing.Point(270, 442);
             this.thirdFourthChoice.Name = "thirdFourthChoice";
             this.thirdFourthChoice.Size = new System.Drawing.Size(35, 35);
             this.thirdFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -694,7 +695,7 @@
             // 
             // thirdFifthChoice
             // 
-            this.thirdFifthChoice.Location = new System.Drawing.Point(466, 442);
+            this.thirdFifthChoice.Location = new System.Drawing.Point(398, 442);
             this.thirdFifthChoice.Name = "thirdFifthChoice";
             this.thirdFifthChoice.Size = new System.Drawing.Size(35, 35);
             this.thirdFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -703,7 +704,7 @@
             // 
             // secondFifthChoice
             // 
-            this.secondFifthChoice.Location = new System.Drawing.Point(466, 407);
+            this.secondFifthChoice.Location = new System.Drawing.Point(398, 407);
             this.secondFifthChoice.Name = "secondFifthChoice";
             this.secondFifthChoice.Size = new System.Drawing.Size(35, 35);
             this.secondFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -712,7 +713,7 @@
             // 
             // firstFifthChoice
             // 
-            this.firstFifthChoice.Location = new System.Drawing.Point(466, 374);
+            this.firstFifthChoice.Location = new System.Drawing.Point(398, 371);
             this.firstFifthChoice.Name = "firstFifthChoice";
             this.firstFifthChoice.Size = new System.Drawing.Size(35, 35);
             this.firstFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -721,7 +722,7 @@
             // 
             // thirdSixthChoice
             // 
-            this.thirdSixthChoice.Location = new System.Drawing.Point(596, 442);
+            this.thirdSixthChoice.Location = new System.Drawing.Point(527, 442);
             this.thirdSixthChoice.Name = "thirdSixthChoice";
             this.thirdSixthChoice.Size = new System.Drawing.Size(35, 35);
             this.thirdSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -730,7 +731,7 @@
             // 
             // secondSixthChoice
             // 
-            this.secondSixthChoice.Location = new System.Drawing.Point(596, 407);
+            this.secondSixthChoice.Location = new System.Drawing.Point(527, 407);
             this.secondSixthChoice.Name = "secondSixthChoice";
             this.secondSixthChoice.Size = new System.Drawing.Size(35, 35);
             this.secondSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -739,7 +740,7 @@
             // 
             // firstSixthChoice
             // 
-            this.firstSixthChoice.Location = new System.Drawing.Point(596, 374);
+            this.firstSixthChoice.Location = new System.Drawing.Point(527, 371);
             this.firstSixthChoice.Name = "firstSixthChoice";
             this.firstSixthChoice.Size = new System.Drawing.Size(35, 35);
             this.firstSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -750,227 +751,219 @@
             // 
             this.firstSixthWinrate.AutoSize = true;
             this.firstSixthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstSixthWinrate.Location = new System.Drawing.Point(637, 374);
+            this.firstSixthWinrate.Location = new System.Drawing.Point(562, 374);
             this.firstSixthWinrate.Name = "firstSixthWinrate";
-            this.firstSixthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.firstSixthWinrate.Size = new System.Drawing.Size(0, 15);
             this.firstSixthWinrate.TabIndex = 60;
-            this.firstSixthWinrate.Text = "40.30% (323414) Matches";
             this.firstSixthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // firstSixthMatches
             // 
             this.firstSixthMatches.AutoSize = true;
             this.firstSixthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstSixthMatches.Location = new System.Drawing.Point(637, 389);
+            this.firstSixthMatches.Location = new System.Drawing.Point(562, 389);
             this.firstSixthMatches.Name = "firstSixthMatches";
-            this.firstSixthMatches.Size = new System.Drawing.Size(139, 15);
+            this.firstSixthMatches.Size = new System.Drawing.Size(0, 15);
             this.firstSixthMatches.TabIndex = 61;
-            this.firstSixthMatches.Text = "40.30% (323414) Matches";
             this.firstSixthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // secondSixthWinrate
             // 
             this.secondSixthWinrate.AutoSize = true;
             this.secondSixthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondSixthWinrate.Location = new System.Drawing.Point(637, 407);
+            this.secondSixthWinrate.Location = new System.Drawing.Point(562, 407);
             this.secondSixthWinrate.Name = "secondSixthWinrate";
-            this.secondSixthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.secondSixthWinrate.Size = new System.Drawing.Size(0, 15);
             this.secondSixthWinrate.TabIndex = 62;
-            this.secondSixthWinrate.Text = "40.30% (323414) Matches";
             this.secondSixthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // secondSixthMatches
             // 
             this.secondSixthMatches.AutoSize = true;
             this.secondSixthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondSixthMatches.Location = new System.Drawing.Point(637, 422);
+            this.secondSixthMatches.Location = new System.Drawing.Point(562, 422);
             this.secondSixthMatches.Name = "secondSixthMatches";
-            this.secondSixthMatches.Size = new System.Drawing.Size(139, 15);
+            this.secondSixthMatches.Size = new System.Drawing.Size(0, 15);
             this.secondSixthMatches.TabIndex = 63;
-            this.secondSixthMatches.Text = "40.30% (323414) Matches";
             this.secondSixthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // thirdSixthWinrate
             // 
             this.thirdSixthWinrate.AutoSize = true;
             this.thirdSixthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdSixthWinrate.Location = new System.Drawing.Point(637, 442);
+            this.thirdSixthWinrate.Location = new System.Drawing.Point(562, 442);
             this.thirdSixthWinrate.Name = "thirdSixthWinrate";
-            this.thirdSixthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.thirdSixthWinrate.Size = new System.Drawing.Size(0, 15);
             this.thirdSixthWinrate.TabIndex = 64;
-            this.thirdSixthWinrate.Text = "40.30% (323414) Matches";
             this.thirdSixthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // thirdSixthMatches
             // 
             this.thirdSixthMatches.AutoSize = true;
             this.thirdSixthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdSixthMatches.Location = new System.Drawing.Point(637, 457);
+            this.thirdSixthMatches.Location = new System.Drawing.Point(562, 457);
             this.thirdSixthMatches.Name = "thirdSixthMatches";
-            this.thirdSixthMatches.Size = new System.Drawing.Size(139, 15);
+            this.thirdSixthMatches.Size = new System.Drawing.Size(0, 15);
             this.thirdSixthMatches.TabIndex = 65;
-            this.thirdSixthMatches.Text = "40.30% (323414) Matches";
             this.thirdSixthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // firstFifthWinrate
             // 
             this.firstFifthWinrate.AutoSize = true;
             this.firstFifthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstFifthWinrate.Location = new System.Drawing.Point(507, 374);
+            this.firstFifthWinrate.Location = new System.Drawing.Point(434, 374);
             this.firstFifthWinrate.Name = "firstFifthWinrate";
-            this.firstFifthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.firstFifthWinrate.Size = new System.Drawing.Size(0, 15);
             this.firstFifthWinrate.TabIndex = 66;
-            this.firstFifthWinrate.Text = "40.30% (323414) Matches";
             this.firstFifthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // firstFifthMatches
             // 
             this.firstFifthMatches.AutoSize = true;
             this.firstFifthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstFifthMatches.Location = new System.Drawing.Point(507, 389);
+            this.firstFifthMatches.Location = new System.Drawing.Point(434, 389);
             this.firstFifthMatches.Name = "firstFifthMatches";
-            this.firstFifthMatches.Size = new System.Drawing.Size(139, 15);
+            this.firstFifthMatches.Size = new System.Drawing.Size(0, 15);
             this.firstFifthMatches.TabIndex = 67;
-            this.firstFifthMatches.Text = "40.30% (323414) Matches";
             this.firstFifthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // secondFifthWinrate
             // 
             this.secondFifthWinrate.AutoSize = true;
             this.secondFifthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondFifthWinrate.Location = new System.Drawing.Point(507, 407);
+            this.secondFifthWinrate.Location = new System.Drawing.Point(434, 407);
             this.secondFifthWinrate.Name = "secondFifthWinrate";
-            this.secondFifthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.secondFifthWinrate.Size = new System.Drawing.Size(0, 15);
             this.secondFifthWinrate.TabIndex = 68;
-            this.secondFifthWinrate.Text = "40.30% (323414) Matches";
             this.secondFifthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // secondFifthMatches
             // 
             this.secondFifthMatches.AutoSize = true;
             this.secondFifthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondFifthMatches.Location = new System.Drawing.Point(507, 422);
+            this.secondFifthMatches.Location = new System.Drawing.Point(434, 422);
             this.secondFifthMatches.Name = "secondFifthMatches";
-            this.secondFifthMatches.Size = new System.Drawing.Size(139, 15);
+            this.secondFifthMatches.Size = new System.Drawing.Size(0, 15);
             this.secondFifthMatches.TabIndex = 69;
-            this.secondFifthMatches.Text = "40.30% (323414) Matches";
             this.secondFifthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // thirdFifthWinrate
             // 
             this.thirdFifthWinrate.AutoSize = true;
             this.thirdFifthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdFifthWinrate.Location = new System.Drawing.Point(507, 442);
+            this.thirdFifthWinrate.Location = new System.Drawing.Point(434, 445);
             this.thirdFifthWinrate.Name = "thirdFifthWinrate";
-            this.thirdFifthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.thirdFifthWinrate.Size = new System.Drawing.Size(0, 15);
             this.thirdFifthWinrate.TabIndex = 70;
-            this.thirdFifthWinrate.Text = "40.30% (323414) Matches";
             this.thirdFifthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // thirdFifthMatches
             // 
             this.thirdFifthMatches.AutoSize = true;
             this.thirdFifthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdFifthMatches.Location = new System.Drawing.Point(507, 457);
+            this.thirdFifthMatches.Location = new System.Drawing.Point(434, 460);
             this.thirdFifthMatches.Name = "thirdFifthMatches";
-            this.thirdFifthMatches.Size = new System.Drawing.Size(139, 15);
+            this.thirdFifthMatches.Size = new System.Drawing.Size(0, 15);
             this.thirdFifthMatches.TabIndex = 71;
-            this.thirdFifthMatches.Text = "40.30% (323414) Matches";
             this.thirdFifthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // firstFourthWinrate
             // 
             this.firstFourthWinrate.AutoSize = true;
             this.firstFourthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstFourthWinrate.Location = new System.Drawing.Point(362, 374);
+            this.firstFourthWinrate.Location = new System.Drawing.Point(305, 374);
             this.firstFourthWinrate.Name = "firstFourthWinrate";
-            this.firstFourthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.firstFourthWinrate.Size = new System.Drawing.Size(0, 15);
             this.firstFourthWinrate.TabIndex = 72;
-            this.firstFourthWinrate.Text = "40.30% (323414) Matches";
             this.firstFourthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // firstFourthMatches
             // 
             this.firstFourthMatches.AutoSize = true;
             this.firstFourthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstFourthMatches.Location = new System.Drawing.Point(362, 389);
+            this.firstFourthMatches.Location = new System.Drawing.Point(305, 389);
             this.firstFourthMatches.Name = "firstFourthMatches";
-            this.firstFourthMatches.Size = new System.Drawing.Size(139, 15);
+            this.firstFourthMatches.Size = new System.Drawing.Size(0, 15);
             this.firstFourthMatches.TabIndex = 73;
-            this.firstFourthMatches.Text = "40.30% (323414) Matches";
             this.firstFourthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // secondFourthWinrate
             // 
             this.secondFourthWinrate.AutoSize = true;
             this.secondFourthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondFourthWinrate.Location = new System.Drawing.Point(362, 407);
+            this.secondFourthWinrate.Location = new System.Drawing.Point(305, 407);
             this.secondFourthWinrate.Name = "secondFourthWinrate";
-            this.secondFourthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.secondFourthWinrate.Size = new System.Drawing.Size(0, 15);
             this.secondFourthWinrate.TabIndex = 74;
-            this.secondFourthWinrate.Text = "40.30% (323414) Matches";
             this.secondFourthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // secondFourthMatches
             // 
             this.secondFourthMatches.AutoSize = true;
             this.secondFourthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondFourthMatches.Location = new System.Drawing.Point(362, 422);
+            this.secondFourthMatches.Location = new System.Drawing.Point(305, 422);
             this.secondFourthMatches.Name = "secondFourthMatches";
-            this.secondFourthMatches.Size = new System.Drawing.Size(139, 15);
+            this.secondFourthMatches.Size = new System.Drawing.Size(0, 15);
             this.secondFourthMatches.TabIndex = 75;
-            this.secondFourthMatches.Text = "40.30% (323414) Matches";
             this.secondFourthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // thirdFourthWinrate
             // 
             this.thirdFourthWinrate.AutoSize = true;
             this.thirdFourthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdFourthWinrate.Location = new System.Drawing.Point(362, 442);
+            this.thirdFourthWinrate.Location = new System.Drawing.Point(305, 442);
             this.thirdFourthWinrate.Name = "thirdFourthWinrate";
-            this.thirdFourthWinrate.Size = new System.Drawing.Size(139, 15);
+            this.thirdFourthWinrate.Size = new System.Drawing.Size(0, 15);
             this.thirdFourthWinrate.TabIndex = 76;
-            this.thirdFourthWinrate.Text = "40.30% (323414) Matches";
             this.thirdFourthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // thirdFourthMatches
             // 
             this.thirdFourthMatches.AutoSize = true;
             this.thirdFourthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdFourthMatches.Location = new System.Drawing.Point(362, 457);
+            this.thirdFourthMatches.Location = new System.Drawing.Point(305, 457);
             this.thirdFourthMatches.Name = "thirdFourthMatches";
-            this.thirdFourthMatches.Size = new System.Drawing.Size(139, 15);
+            this.thirdFourthMatches.Size = new System.Drawing.Size(0, 15);
             this.thirdFourthMatches.TabIndex = 77;
-            this.thirdFourthMatches.Text = "40.30% (323414) Matches";
             this.thirdFourthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // championMatchupData
             // 
+            this.championMatchupData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.championMatchupData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.championMatchupData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Image,
             this.Winrate});
             this.championMatchupData.EnableHeadersVisualStyles = false;
-            this.championMatchupData.Location = new System.Drawing.Point(741, 9);
+            this.championMatchupData.Location = new System.Drawing.Point(704, 12);
             this.championMatchupData.Name = "championMatchupData";
             this.championMatchupData.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.championMatchupData.RowHeadersVisible = false;
+            this.championMatchupData.RowHeadersWidth = 20;
             this.championMatchupData.RowTemplate.Height = 25;
-            this.championMatchupData.Size = new System.Drawing.Size(101, 359);
+            this.championMatchupData.Size = new System.Drawing.Size(133, 451);
             this.championMatchupData.TabIndex = 78;
             // 
             // Image
             // 
             this.Image.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Image.DefaultCellStyle = dataGridViewCellStyle1;
             this.Image.HeaderText = "Image";
-            this.Image.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.Image.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
             this.Image.Name = "Image";
-            this.Image.Width = 35;
+            this.Image.Width = 40;
             // 
             // Winrate
             // 
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            this.Winrate.DefaultCellStyle = dataGridViewCellStyle2;
             this.Winrate.HeaderText = "Winrate";
             this.Winrate.Name = "Winrate";
+            this.Winrate.Width = 94;
             // 
             // Home
             // 
