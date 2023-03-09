@@ -31,20 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.Logo = new System.Windows.Forms.PictureBox();
             this.PanelMenu = new System.Windows.Forms.Panel();
-            this.MiscButton = new FontAwesome.Sharp.IconButton();
-            this.GameButton = new FontAwesome.Sharp.IconButton();
             this.AramButton = new FontAwesome.Sharp.IconButton();
             this.ProfileButton = new FontAwesome.Sharp.IconButton();
             this.RankedButton = new FontAwesome.Sharp.IconButton();
-            this.HomeButton = new FontAwesome.Sharp.IconButton();
+            this.ChampionButton = new FontAwesome.Sharp.IconButton();
             this.PanelTitleBar = new System.Windows.Forms.Panel();
             this.MinimiseButton = new FontAwesome.Sharp.IconButton();
-            this.MaximiseButton = new FontAwesome.Sharp.IconButton();
             this.ExitButton = new FontAwesome.Sharp.IconButton();
             this.LabelFormTitle = new System.Windows.Forms.Label();
             this.IconCurrentForm = new FontAwesome.Sharp.IconPictureBox();
             this.PanelDesktop = new System.Windows.Forms.Panel();
-            this.currentVersionLabel = new System.Windows.Forms.Label();
             this.searchChampionListBox = new System.Windows.Forms.ListBox();
             this.searchChampionTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
@@ -71,12 +67,10 @@
             this.PanelMenu.AutoSize = true;
             this.PanelMenu.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.PanelMenu.BackColor = System.Drawing.SystemColors.ControlText;
-            this.PanelMenu.Controls.Add(this.MiscButton);
-            this.PanelMenu.Controls.Add(this.GameButton);
             this.PanelMenu.Controls.Add(this.AramButton);
             this.PanelMenu.Controls.Add(this.ProfileButton);
             this.PanelMenu.Controls.Add(this.RankedButton);
-            this.PanelMenu.Controls.Add(this.HomeButton);
+            this.PanelMenu.Controls.Add(this.ChampionButton);
             this.PanelMenu.Controls.Add(this.Logo);
             this.PanelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelMenu.ForeColor = System.Drawing.SystemColors.Control;
@@ -84,50 +78,6 @@
             this.PanelMenu.Name = "PanelMenu";
             this.PanelMenu.Size = new System.Drawing.Size(189, 586);
             this.PanelMenu.TabIndex = 2;
-            // 
-            // MiscButton
-            // 
-            this.MiscButton.BackColor = System.Drawing.Color.Black;
-            this.MiscButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.MiscButton.FlatAppearance.BorderSize = 0;
-            this.MiscButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MiscButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.MiscButton.IconChar = FontAwesome.Sharp.IconChar.Infinity;
-            this.MiscButton.IconColor = System.Drawing.Color.White;
-            this.MiscButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.MiscButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MiscButton.Location = new System.Drawing.Point(0, 440);
-            this.MiscButton.Name = "MiscButton";
-            this.MiscButton.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.MiscButton.Size = new System.Drawing.Size(186, 56);
-            this.MiscButton.TabIndex = 6;
-            this.MiscButton.Text = "Misc";
-            this.MiscButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.MiscButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.MiscButton.UseVisualStyleBackColor = false;
-            this.MiscButton.Click += new System.EventHandler(this.MiscButton_Click);
-            // 
-            // GameButton
-            // 
-            this.GameButton.BackColor = System.Drawing.Color.Black;
-            this.GameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.GameButton.FlatAppearance.BorderSize = 0;
-            this.GameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GameButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.GameButton.IconChar = FontAwesome.Sharp.IconChar.ChartSimple;
-            this.GameButton.IconColor = System.Drawing.Color.White;
-            this.GameButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.GameButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.GameButton.Location = new System.Drawing.Point(0, 378);
-            this.GameButton.Name = "GameButton";
-            this.GameButton.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.GameButton.Size = new System.Drawing.Size(186, 56);
-            this.GameButton.TabIndex = 5;
-            this.GameButton.Text = "Game";
-            this.GameButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.GameButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.GameButton.UseVisualStyleBackColor = false;
-            this.GameButton.Click += new System.EventHandler(this.GameButton_Click);
             // 
             // AramButton
             // 
@@ -195,33 +145,32 @@
             this.RankedButton.UseVisualStyleBackColor = false;
             this.RankedButton.Click += new System.EventHandler(this.RankedButton_Click);
             // 
-            // HomeButton
+            // ChampionButton
             // 
-            this.HomeButton.BackColor = System.Drawing.Color.Black;
-            this.HomeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.HomeButton.FlatAppearance.BorderSize = 0;
-            this.HomeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.HomeButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.HomeButton.IconChar = FontAwesome.Sharp.IconChar.Home;
-            this.HomeButton.IconColor = System.Drawing.Color.White;
-            this.HomeButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.HomeButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.HomeButton.Location = new System.Drawing.Point(0, 130);
-            this.HomeButton.Name = "HomeButton";
-            this.HomeButton.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.HomeButton.Size = new System.Drawing.Size(186, 56);
-            this.HomeButton.TabIndex = 1;
-            this.HomeButton.Text = "Home";
-            this.HomeButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.HomeButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.HomeButton.UseVisualStyleBackColor = false;
-            this.HomeButton.Click += new System.EventHandler(this.HomeButton_Click);
+            this.ChampionButton.BackColor = System.Drawing.Color.Black;
+            this.ChampionButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ChampionButton.FlatAppearance.BorderSize = 0;
+            this.ChampionButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChampionButton.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ChampionButton.IconChar = FontAwesome.Sharp.IconChar.Home;
+            this.ChampionButton.IconColor = System.Drawing.Color.White;
+            this.ChampionButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.ChampionButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ChampionButton.Location = new System.Drawing.Point(0, 130);
+            this.ChampionButton.Name = "ChampionButton";
+            this.ChampionButton.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.ChampionButton.Size = new System.Drawing.Size(186, 56);
+            this.ChampionButton.TabIndex = 1;
+            this.ChampionButton.Text = "Champion";
+            this.ChampionButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ChampionButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.ChampionButton.UseVisualStyleBackColor = false;
+            this.ChampionButton.Click += new System.EventHandler(this.HomeButton_Click);
             // 
             // PanelTitleBar
             // 
             this.PanelTitleBar.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.PanelTitleBar.Controls.Add(this.MinimiseButton);
-            this.PanelTitleBar.Controls.Add(this.MaximiseButton);
             this.PanelTitleBar.Controls.Add(this.ExitButton);
             this.PanelTitleBar.Controls.Add(this.LabelFormTitle);
             this.PanelTitleBar.Controls.Add(this.IconCurrentForm);
@@ -241,28 +190,12 @@
             this.MinimiseButton.IconColor = System.Drawing.Color.White;
             this.MinimiseButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
             this.MinimiseButton.IconSize = 15;
-            this.MinimiseButton.Location = new System.Drawing.Point(753, -4);
+            this.MinimiseButton.Location = new System.Drawing.Point(804, -3);
             this.MinimiseButton.Name = "MinimiseButton";
             this.MinimiseButton.Size = new System.Drawing.Size(35, 29);
             this.MinimiseButton.TabIndex = 4;
             this.MinimiseButton.UseVisualStyleBackColor = false;
             this.MinimiseButton.Click += new System.EventHandler(this.MinimiseButton_Click);
-            // 
-            // MaximiseButton
-            // 
-            this.MaximiseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.MaximiseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MaximiseButton.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.MaximiseButton.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
-            this.MaximiseButton.IconColor = System.Drawing.Color.White;
-            this.MaximiseButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
-            this.MaximiseButton.IconSize = 15;
-            this.MaximiseButton.Location = new System.Drawing.Point(794, 0);
-            this.MaximiseButton.Name = "MaximiseButton";
-            this.MaximiseButton.Size = new System.Drawing.Size(35, 29);
-            this.MaximiseButton.TabIndex = 3;
-            this.MaximiseButton.UseVisualStyleBackColor = false;
-            this.MaximiseButton.Click += new System.EventHandler(this.MaximiseButton_Click);
             // 
             // ExitButton
             // 
@@ -285,9 +218,9 @@
             this.LabelFormTitle.AutoSize = true;
             this.LabelFormTitle.Location = new System.Drawing.Point(58, 26);
             this.LabelFormTitle.Name = "LabelFormTitle";
-            this.LabelFormTitle.Size = new System.Drawing.Size(40, 15);
+            this.LabelFormTitle.Size = new System.Drawing.Size(63, 15);
             this.LabelFormTitle.TabIndex = 1;
-            this.LabelFormTitle.Text = "Home";
+            this.LabelFormTitle.Text = "Champion";
             // 
             // IconCurrentForm
             // 
@@ -305,7 +238,6 @@
             // PanelDesktop
             // 
             this.PanelDesktop.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.PanelDesktop.Controls.Add(this.currentVersionLabel);
             this.PanelDesktop.Controls.Add(this.searchChampionListBox);
             this.PanelDesktop.Controls.Add(this.searchChampionTextBox);
             this.PanelDesktop.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -313,16 +245,6 @@
             this.PanelDesktop.Name = "PanelDesktop";
             this.PanelDesktop.Size = new System.Drawing.Size(870, 511);
             this.PanelDesktop.TabIndex = 4;
-            // 
-            // currentVersionLabel
-            // 
-            this.currentVersionLabel.AutoSize = true;
-            this.currentVersionLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.currentVersionLabel.Location = new System.Drawing.Point(3, 1);
-            this.currentVersionLabel.Name = "currentVersionLabel";
-            this.currentVersionLabel.Size = new System.Drawing.Size(85, 15);
-            this.currentVersionLabel.TabIndex = 2;
-            this.currentVersionLabel.Text = "CurrentVersion";
             // 
             // searchChampionListBox
             // 
@@ -382,9 +304,7 @@
 
         private PictureBox Logo;
         private Panel PanelMenu;
-        private FontAwesome.Sharp.IconButton HomeButton;
-        private FontAwesome.Sharp.IconButton MiscButton;
-        private FontAwesome.Sharp.IconButton GameButton;
+        private FontAwesome.Sharp.IconButton ChampionButton;
         private FontAwesome.Sharp.IconButton AramButton;
         private FontAwesome.Sharp.IconButton ProfileButton;
         private FontAwesome.Sharp.IconButton RankedButton;
@@ -394,9 +314,7 @@
         private Panel PanelDesktop;
         private FontAwesome.Sharp.IconButton ExitButton;
         private FontAwesome.Sharp.IconButton MinimiseButton;
-        private FontAwesome.Sharp.IconButton MaximiseButton;
         private ListBox searchChampionListBox;
         private TextBox searchChampionTextBox;
-        private Label currentVersionLabel;
     }
 }

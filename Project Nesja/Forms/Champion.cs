@@ -2,13 +2,13 @@
 
 namespace Project_Nesja.Forms
 {
-    public partial class Home : Form
+    public partial class Champion : Form
     {
         private ChampionData selectedChampion;
         private ChampionBuild championBuild;
         private string role;
         
-        public Home(ChampionData chosenChampion, string role)
+        public Champion(ChampionData chosenChampion, string role)
         {
             InitializeComponent();
             this.selectedChampion = chosenChampion;

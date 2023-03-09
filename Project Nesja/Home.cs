@@ -52,7 +52,7 @@ namespace Project_Nesja
         private void HomeButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Home(null, null));
+            OpenChildForm(new Champion(null, null));
         }
 
         private void ProfileButton_Click(object sender, EventArgs e)
@@ -73,18 +73,6 @@ namespace Project_Nesja
             OpenChildForm(new Aram(this));
         }
 
-        private void GameButton_Click(object sender, EventArgs e)
-        {
-            ActiveButton(sender, Color.White);
-            OpenChildForm(new Game());
-        }
-
-        private void MiscButton_Click(object sender, EventArgs e)
-        {
-            ActiveButton(sender, Color.White);
-            OpenChildForm(new Misc());
-        }
-
         private void PanelTitleBar_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -103,18 +91,6 @@ namespace Project_Nesja
             else
             {
                 FormBorderStyle = FormBorderStyle.Sizable;
-            }
-        }
-
-        private void MaximiseButton_Click(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Normal)
-            {
-                WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                WindowState = FormWindowState.Normal;
             }
         }
 
@@ -188,6 +164,7 @@ namespace Project_Nesja
         [DllImportAttribute("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
+
         private static extern bool ReleaseCapture();
 
         private void ExitButton_Click(object sender, EventArgs e)
@@ -228,7 +205,7 @@ namespace Project_Nesja
             string selectedChampion = searchChampionListBox.SelectedItem.ToString();
 
             // Open the new form and pass the selected champion as a parameter
-            OpenChildForm(new Home(GameData.ChampionList.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value, null));
+            OpenChildForm(new Champion(GameData.ChampionList.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value, null));
         }
     }
 }

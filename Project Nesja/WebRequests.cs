@@ -18,6 +18,7 @@ namespace Project_Nesja
         {
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
             client = new HttpClient(handler);
+            client.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue() { NoCache = true };
         }
 
         public static async Task<JToken?> GetJsonObject(string url)

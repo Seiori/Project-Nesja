@@ -63,7 +63,7 @@ namespace Project_Nesja.Forms
                 {
                     Debug.WriteLine("Image Clicked");
                     ChampionData champion = GameData.ChampionList.Where(x => x.Value.Name == aramDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
-                    this.mainForm.OpenChildForm(new Home(champion, null));
+                    this.mainForm.OpenChildForm(new Champion(champion, null));
                 }
             }
         }

@@ -57,6 +57,23 @@ namespace Project_Nesja.Data
             File.WriteAllText(Path.Combine("Data", "ChampionList"), JsonConvert.SerializeObject(ChampionList));
         }
 
+        private static async Task FetchIconData()
+        {
+            // Grabs All Icon Data
+            var Icons = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/profileicon.json")).SelectToken("data");
+
+            // Parses the Icon Data into a Easily Accessible Dictionary of Relevant IconData
+            foreach (var icon in Icons.Children())
+            {
+                Asset iconData = new()
+                {
+                    ID = (int)icon.First,
+                    AssetType = "Icons"
+                };
+                Assets.Add(iconData.ID, iconData);
+            }
+        }
+
         private static async Task FetchItemData()
         {
             // Grabs All Item Data

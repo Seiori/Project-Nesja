@@ -36,7 +36,7 @@ namespace Project_Nesja.Forms
             ParseRankedData();
         }
         
-        private async void ParseRankedData(string role = "default")
+        private void ParseRankedData()
         {
             rankedQueue.Clear();
 
@@ -254,7 +254,7 @@ namespace Project_Nesja.Forms
                 if (cell.Value is Image)
                 {
                     ChampionData champion = GameData.ChampionList.Where(x => x.Value.Name == rankedDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
-                    this.mainForm.OpenChildForm(new Home(champion, currentRole));
+                    this.mainForm.OpenChildForm(new Champion(champion, currentRole));
                 }
             }
         }
