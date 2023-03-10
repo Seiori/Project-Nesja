@@ -180,58 +180,52 @@ public class ChampionBuild
         List<Item> fourthItemSets = new();
 
         var fourthItemData = buildData.SelectToken("item3");
-        
-        List<Item> fifthItemSets = new();
+
+        foreach (var fourthItem in fourthItemData)
+        {
+            Item fourthItemSet = new ();
+            string[] parts = fourthItem.First().ToString().Split('_');
+
+            fourthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+            fourthItemSet.Winrate = fourthItem.ElementAt(1).ToObject<float>() / 100;
+            fourthItemSet.Pickrate = fourthItem.ElementAt(2).ToObject<float>() / 100;
+            fourthItemSet.TotalGames = fourthItem.ElementAt(3).ToObject<int>();
+
+            fourthItemSets.Add(fourthItemSet);
+        }
+
+        List<Item> fifthItemSets = new ();
 
         var fifthItemData = buildData.SelectToken("item4");
-        
-        List<Item> sixthItemSets = new();
+
+        foreach (var fifthItem in fifthItemData)
+        {
+            Item fifthItemSet = new ();
+            string[] parts = fifthItem.First().ToString().Split('_');
+
+            fifthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+            fifthItemSet.Winrate = fifthItem.ElementAt(1).ToObject<float>() / 100;
+            fifthItemSet.Pickrate = fifthItem.ElementAt(2).ToObject<float>() / 100;
+            fifthItemSet.TotalGames = fifthItem.ElementAt(3).ToObject<int>();
+
+            fifthItemSets.Add(fifthItemSet);
+        }
+
+        List<Item> sixthItemSets = new ();
 
         var sixthItemData = buildData.SelectToken("item5");
-        try
+
+        foreach (var sixthItem in sixthItemData)
         {
-            foreach (var fourthItem in fourthItemData)
-            {
-                Item fourthItemSet = new();
-                string[] parts = fourthItem.First().ToString().Split('_');
+            Item sixthItemSet = new ();
+            string[] parts = sixthItem.First().ToString().Split('_');
 
-                fourthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
-                fourthItemSet.Winrate = fourthItem.ElementAt(1).ToObject<float>() / 100;
-                fourthItemSet.Pickrate = fourthItem.ElementAt(2).ToObject<float>() / 100;
-                fourthItemSet.TotalGames = fourthItem.ElementAt(3).ToObject<int>();
+            sixthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+            sixthItemSet.Winrate = sixthItem.ElementAt(1).ToObject<float>() / 100;
+            sixthItemSet.Pickrate = sixthItem.ElementAt(2).ToObject<float>() / 100;
+            sixthItemSet.TotalGames = sixthItem.ElementAt(3).ToObject<int>();
 
-                fourthItemSets.Add(fourthItemSet);
-            }
-
-            foreach (var fifthItem in fifthItemData)
-            {
-                Item fifthItemSet = new();
-                string[] parts = fifthItem.First().ToString().Split('_');
-
-                fifthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
-                fifthItemSet.Winrate = fifthItem.ElementAt(1).ToObject<float>() / 100;
-                fifthItemSet.Pickrate = fifthItem.ElementAt(2).ToObject<float>() / 100;
-                fifthItemSet.TotalGames = fifthItem.ElementAt(3).ToObject<int>();
-
-                fifthItemSets.Add(fifthItemSet);
-            }
-
-            foreach (var sixthItem in sixthItemData)
-            {
-                Item sixthItemSet = new();
-                string[] parts = sixthItem.First().ToString().Split('_');
-
-                sixthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
-                sixthItemSet.Winrate = sixthItem.ElementAt(1).ToObject<float>() / 100;
-                sixthItemSet.Pickrate = sixthItem.ElementAt(2).ToObject<float>() / 100;
-                sixthItemSet.TotalGames = sixthItem.ElementAt(3).ToObject<int>();
-
-                sixthItemSets.Add(sixthItemSet);
-            }
-        }
-        catch (Exception)
-        {
-            MessageBox.Show("Not enough data!");
+            sixthItemSets.Add(sixthItemSet);
         }
 
         StartingItems = startSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).First();
