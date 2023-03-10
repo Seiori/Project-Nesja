@@ -11,7 +11,6 @@ namespace Project_Nesja.Data
 
         static GameData()
         {
-            CurrentVersion = "";
             ChampionList = new Dictionary<int, ChampionData>();
             Assets = new Dictionary<int, Asset>();
         }

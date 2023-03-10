@@ -7,14 +7,4 @@ public class StartingItems
     public float Winrate { get; set; }
     public float Pickrate { get; set; }
     public int TotalGames { get; set; }
-
-    public async Task<StartingItems> FetchAssetImages()
-    {
-        await Task.WhenAll(
-            FirstItem.FetchAssetImage(),
-            SecondItem.FetchAssetImage()
-            );
-
-        return this;
-    }
 }

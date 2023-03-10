@@ -12,8 +12,8 @@ public class ChampionBuild
     public double Pickrate;
     public double Banrate;
     public int[] Runes { get; set; }
-    public StartingItems StartingItems { get; set; }
-    public CoreItems CoreItems { get; set; }
+    public ItemSet StartingItems { get; set; }
+    public ItemSet CoreItems { get; set; }
     public List<Item> FourthItemChoice { get; set; }
     public List<Item>  FifthItemChoice { get; set; }
     public List<Item> SixthItemChoice { get; set; }
@@ -28,8 +28,8 @@ public class ChampionBuild
         this.championData = championData;
         this.role = role;
         Runes = new int[6];
-        StartingItems = new StartingItems();
-        CoreItems = new CoreItems();
+        StartingItems = new ItemSet();
+        CoreItems = new ItemSet();
         FourthItemChoice = new List<Item>(3);
         FifthItemChoice = new List<Item>(3);
         SixthItemChoice = new List<Item>(3);
@@ -64,13 +64,16 @@ public class ChampionBuild
 
     private async Task FetchImageAssetsAsync()
     {
-        var tasks = new List<Task>();
-        tasks.Add(StartingItems.FirstItem.FetchAssetImage());
-        tasks.Add(CoreItems.FirstItem.FetchAssetImage());
-        tasks.Add(CoreItems.SecondItem.FetchAssetImage());
-        tasks.Add(CoreItems.ThirdItem.FetchAssetImage());
-        tasks.Add(SummonerSpells.FirstSpellData.FetchAssetImage());
-        tasks.Add(SummonerSpells.SecondSpellData.FetchAssetImage());
+        var tasks = new List<Task>
+        {
+            StartingItems.FirstItem.FetchAssetImage(),
+            CoreItems.FirstItem.FetchAssetImage(),
+            CoreItems.SecondItem.FetchAssetImage(),
+            CoreItems.ThirdItem.FetchAssetImage(),
+            SummonerSpells.FirstSpellData.FetchAssetImage(),
+            SummonerSpells.SecondSpellData.FetchAssetImage()
+        };
+        
         tasks.AddRange(FourthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
         tasks.AddRange(FifthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
         tasks.AddRange(SixthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
@@ -98,7 +101,7 @@ public class ChampionBuild
 
     private void FetchSummonerSpells(JToken buildData)
     {
-        List<SummonerSpells> summonerSpells = new List<SummonerSpells>();
+        List<SummonerSpells> summonerSpells = new ();
 
         JArray spellData = (JArray)buildData.SelectToken("spells");
 
@@ -114,7 +117,7 @@ public class ChampionBuild
             string[] spellIds = summonerSpellSet[0].ToString().Split('_');
             if (spellIds.Length == 2 && int.TryParse(spellIds[0], out firstSpellId) && int.TryParse(spellIds[1], out secondSpellId))
             {
-                SummonerSpells summonerSpell = new SummonerSpells
+                SummonerSpells summonerSpell = new()
                 {
                     FirstSpellData = _assets.GetValueOrDefault(firstSpellId),
                     SecondSpellData = _assets.GetValueOrDefault(secondSpellId),
@@ -131,13 +134,13 @@ public class ChampionBuild
 
     private void FetchItems(JToken buildData, JToken buildDataExtra)
     {
-        List<StartingItems> startSets = new List<StartingItems>();
+        List<ItemSet> startSets = new ();
 
         var startItemData = buildDataExtra.SelectToken("startSet");
 
         foreach (var startItem in startItemData)
         {
-            StartingItems startSet = new StartingItems();
+            ItemSet startSet = new ();
             string[] parts = startItem.First().ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
             string itemName = parts[0].TrimStart('\"').TrimEnd('\"');
             parts = itemName.Split('_');
@@ -153,13 +156,13 @@ public class ChampionBuild
             startSets.Add(startSet);
         }
 
-        List<CoreItems> coreSets = new List<CoreItems>();
+        List<ItemSet> coreSets = new ();
 
         var coreItemData = buildDataExtra.SelectToken("itemSets").SelectToken("itemBootSet3");
 
         foreach (var coreItem in coreItemData)
         {
-            CoreItems coreSet = new CoreItems();
+            ItemSet coreSet = new ();
             string[] parts = coreItem.ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
             string itemName = parts[0].TrimStart('\"').TrimEnd('\"');
             parts = itemName.Split('_');
@@ -174,55 +177,61 @@ public class ChampionBuild
             coreSets.Add(coreSet);
         }
 
-        List<Item> fourthItemSets = new List<Item>();
+        List<Item> fourthItemSets = new();
 
         var fourthItemData = buildData.SelectToken("item3");
-
-        foreach (var fourthItem in fourthItemData)
-        {
-            Item fourthItemSet = new Item();
-            string[] parts = fourthItem.First().ToString().Split('_');
-
-            fourthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
-            fourthItemSet.Winrate = fourthItem.ElementAt(1).ToObject<float>() / 100;
-            fourthItemSet.Pickrate = fourthItem.ElementAt(2).ToObject<float>() / 100;
-            fourthItemSet.TotalGames = fourthItem.ElementAt(3).ToObject<int>();
-
-            fourthItemSets.Add(fourthItemSet);
-        }
-
-        List<Item> fifthItemSets = new List<Item>();
+        
+        List<Item> fifthItemSets = new();
 
         var fifthItemData = buildData.SelectToken("item4");
-
-        foreach (var fifthItem in fifthItemData)
-        {
-            Item fifthItemSet = new Item();
-            string[] parts = fifthItem.First().ToString().Split('_');
-
-            fifthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
-            fifthItemSet.Winrate = fifthItem.ElementAt(1).ToObject<float>() / 100;
-            fifthItemSet.Pickrate = fifthItem.ElementAt(2).ToObject<float>() / 100;
-            fifthItemSet.TotalGames = fifthItem.ElementAt(3).ToObject<int>();
-
-            fifthItemSets.Add(fifthItemSet);
-        }
-
-        List<Item> sixthItemSets = new List<Item>();
+        
+        List<Item> sixthItemSets = new();
 
         var sixthItemData = buildData.SelectToken("item5");
-
-        foreach (var sixthItem in sixthItemData)
+        try
         {
-            Item sixthItemSet = new Item();
-            string[] parts = sixthItem.First().ToString().Split('_');
+            foreach (var fourthItem in fourthItemData)
+            {
+                Item fourthItemSet = new();
+                string[] parts = fourthItem.First().ToString().Split('_');
 
-            sixthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
-            sixthItemSet.Winrate = sixthItem.ElementAt(1).ToObject<float>() / 100;
-            sixthItemSet.Pickrate = sixthItem.ElementAt(2).ToObject<float>() / 100;
-            sixthItemSet.TotalGames = sixthItem.ElementAt(3).ToObject<int>();
+                fourthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+                fourthItemSet.Winrate = fourthItem.ElementAt(1).ToObject<float>() / 100;
+                fourthItemSet.Pickrate = fourthItem.ElementAt(2).ToObject<float>() / 100;
+                fourthItemSet.TotalGames = fourthItem.ElementAt(3).ToObject<int>();
 
-            sixthItemSets.Add(sixthItemSet);
+                fourthItemSets.Add(fourthItemSet);
+            }
+
+            foreach (var fifthItem in fifthItemData)
+            {
+                Item fifthItemSet = new();
+                string[] parts = fifthItem.First().ToString().Split('_');
+
+                fifthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+                fifthItemSet.Winrate = fifthItem.ElementAt(1).ToObject<float>() / 100;
+                fifthItemSet.Pickrate = fifthItem.ElementAt(2).ToObject<float>() / 100;
+                fifthItemSet.TotalGames = fifthItem.ElementAt(3).ToObject<int>();
+
+                fifthItemSets.Add(fifthItemSet);
+            }
+
+            foreach (var sixthItem in sixthItemData)
+            {
+                Item sixthItemSet = new();
+                string[] parts = sixthItem.First().ToString().Split('_');
+
+                sixthItemSet.ItemAsset = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[0])).Value;
+                sixthItemSet.Winrate = sixthItem.ElementAt(1).ToObject<float>() / 100;
+                sixthItemSet.Pickrate = sixthItem.ElementAt(2).ToObject<float>() / 100;
+                sixthItemSet.TotalGames = sixthItem.ElementAt(3).ToObject<int>();
+
+                sixthItemSets.Add(sixthItemSet);
+            }
+        }
+        catch (Exception)
+        {
+            MessageBox.Show("Not enough data!");
         }
 
         StartingItems = startSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).First();
@@ -234,13 +243,13 @@ public class ChampionBuild
 
     private void FetchSkillOrder(JToken buildData, JToken buildDataExtra)
     {
-        List<SkillPriority> skillPrioritySets = new List<SkillPriority>();
+        List<SkillPriority> skillPrioritySets = new ();
 
         var skillPriorityData = buildDataExtra.SelectToken("skills").SelectToken("skillOrder");
 
         foreach (var skillPrioritySet in skillPriorityData)
         {
-            SkillPriority skillPrioritySetData = new SkillPriority();
+            SkillPriority skillPrioritySetData = new ();
             skillPrioritySetData.Priority = skillPrioritySet.First().ToString();
             skillPrioritySetData.Winrate = skillPrioritySet.ElementAt(2).ToObject<float>() / skillPrioritySet.ElementAt(1).ToObject<float>() * 100;
             skillPrioritySetData.Pickrate = skillPrioritySet.ElementAt(1).ToObject<float>() / buildData.SelectToken("header").SelectToken("n").ToObject<float>() * 100;
@@ -249,13 +258,13 @@ public class ChampionBuild
             skillPrioritySets.Add(skillPrioritySetData);
         }
 
-        List<SkillOrder> skillOrderSets = new List<SkillOrder>();
+        List<SkillOrder> skillOrderSets = new ();
 
         var skillOrderData = buildDataExtra.SelectToken("skills").SelectToken("skill15");
 
         foreach (var skillOrderSet in skillOrderData)
         {
-            SkillOrder skillOrderSetData = new SkillOrder();
+            SkillOrder skillOrderSetData = new ();
             skillOrderSetData.Order = skillOrderSet.First().ToString();
             skillOrderSetData.Winrate = skillOrderSet.ElementAt(2).ToObject<float>() / skillOrderSet.ElementAt(1).ToObject<float>() * 100;
             skillOrderSetData.Pickrate = skillOrderSet.ElementAt(1).ToObject<float>() / buildData.SelectToken("n").ToObject<float>() * 100;

@@ -2,7 +2,11 @@
 {
     public class SummonerData
     {
+        public string? PUUID;
+        public int AccountID;
+        public int SummonerID;
         public string? Name;
+        public string? InternalName;
         public string? Region;
         public int Level;
         public int IconID;

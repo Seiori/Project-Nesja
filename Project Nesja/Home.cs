@@ -3,22 +3,26 @@ using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
 using Project_Nesja.Data;
 using Project_Nesja.Forms;
+using PoniLCU;
+using static PoniLCU.LeagueClient;
+using Project_Nesja.Objects;
+using Newtonsoft.Json.Linq;
 
 namespace Project_Nesja
 {
     public partial class MainMenu : Form
     {
+        public static LeagueClient leagueClient = new(credentials.cmd);
+        public static SummonerData CurrentSummoner;
+
         private IconButton? currentButton;
         private readonly Panel leftBorderButton;
         private Form? currentChildForm;
-        
+
         public MainMenu()
         {
             InitializeComponent();
 
-            // Fetches Data from the API sources
-            GameData.FetchGameData();
-            
             // Defines a new Panel and Button for the Navigation Menus Selection Highlight
             leftBorderButton = new Panel
             {
@@ -33,9 +37,35 @@ namespace Project_Nesja
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
+            // Fetches Data from the API sources
+            await GameData.FetchGameData();
 
+            try
+            {
+                var data = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner"));
+                var region = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"));
+                CurrentSummoner = new()
+                {
+                    PUUID = data["puuid"].ToString(),
+                    AccountID = (int)data["accountId"],
+                    SummonerID = (int)data["summonerId"],
+                    Name = data["displayName"].ToString(),
+                    InternalName = data["internalName"].ToString(),
+                    Region = region["region"].ToString(),
+                    Level = (int)data["summonerLevel"],
+                    IconID = (int)data["profileIconId"]
+                };
+
+                ActiveSummoner.Text = "Current Summoner: " + CurrentSummoner.Name;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failed to find active client session. Please open the client to use the related features!");
+            }
+
+            CurrentPatch.Text = "v" + GameData.CurrentVersion;
         }
 
         private void Logo_Click(object sender, EventArgs e)
@@ -58,7 +88,7 @@ namespace Project_Nesja
         private void ProfileButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Profile());
+            OpenChildForm(new Profile(CurrentSummoner));
         }
 
         private void RankedButton_Click(object sender, EventArgs e)
@@ -98,7 +128,7 @@ namespace Project_Nesja
         {
             WindowState = FormWindowState.Minimized;
         }
-        
+
         public void OpenChildForm(Form childForm)
         {
             if (currentChildForm != null)
@@ -196,7 +226,7 @@ namespace Project_Nesja
                 {
                     searchChampionListBox.Visible = false;
                 }
-            }  
+            }
         }
 
         private void searchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
