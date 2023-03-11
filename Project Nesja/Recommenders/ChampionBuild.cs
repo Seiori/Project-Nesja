@@ -219,23 +219,6 @@ public class ChampionBuild
                 }
             }
         }
-
-        foreach (Rune runeData in primaryRunes.Concat(secondaryRunes))
-        {
-            double weight = runeData.Winrate * runeData.Pickrate;
-            runeWeights[runeData.RuneAsset.Name] = weight;
-        }
-
-        primaryRunes.OrderByDescending(rune => runeWeights[rune.RuneAsset.Name]);
-        secondaryRunes.OrderByDescending(rune => runeWeights[rune.RuneAsset.Name]);
-
-        RunePageChoice.Keystone = primaryRunes.First(x => x.RuneType == RuneType.Keystone);
-        RunePageChoice.PrimTreeFirstRow = primaryRunes.First(x => x.RuneType == RuneType.FirstRow);
-        RunePageChoice.PrimTreeSecondRow = primaryRunes.First(x => x.RuneType == RuneType.SecondRow);
-        RunePageChoice.PrimTreeThirdRow = primaryRunes.First(x => x.RuneType == RuneType.ThirdRow);
-        RunePageChoice.SecTreeFirstOption = secondaryRunes.First();
-        RunePageChoice.SecTreeSecondOption = secondaryRunes.First(x => x.RuneType != secondaryRunes.First().RuneType);
-
         return Task.CompletedTask;
     }
 
