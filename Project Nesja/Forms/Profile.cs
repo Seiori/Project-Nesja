@@ -9,7 +9,7 @@ namespace Project_Nesja.Forms
 {
     public partial class Profile : Form
     {
-        static LeagueClient leagueClient = new (credentials.cmd);
+        static readonly LeagueClient leagueClient = new (credentials.cmd);
         private SummonerData Summoner;
         
         public Profile(SummonerData summonerData)
@@ -57,30 +57,31 @@ namespace Project_Nesja.Forms
             RankedFlexWinrate.Text = "Winrate " + System.Math.Round(((float)Summoner.FlexWins / ((float)Summoner.FlexWins + (float)Summoner.FlexLosses) * 100), 2).ToString() + "%";
         }
         
-        private async Task<JObject> FetchSummonerData(string apiUrl)
+        private static async Task<JObject?> FetchSummonerData(string apiUrl)
         {
-            return (JObject)await WebRequests.GetJsonObject(apiUrl);
+            return await WebRequests.GetJsonObject(apiUrl) as JObject;
         }
 
-        private SummonerData ParseSummonerData(JObject summonerData)
+        private static SummonerData ParseSummonerData(JObject summonerData)
         {
-            SummonerData summoner = new SummonerData();
-
-            summoner.Name = summonerData["name"]?.ToString();
-            summoner.Region = summonerData["region"]?.ToString();
-            summoner.Level = int.TryParse(summonerData["level"]?.ToString(), out int level) ? level : 0;
-            summoner.IconID = int.TryParse(summonerData["icon"]?.ToString(), out int iconID) ? iconID : 0;
-            summoner.SoloRank = int.TryParse(summonerData["solo-rank"]?.ToString(), out int soloRank) ? soloRank : 0;
-            summoner.SoloTier = string.IsNullOrEmpty(summonerData["solo-tier"]?.ToString()) ? "unranked" : summonerData["solo-tier"].ToString().ToLower();
-            summoner.SoloDivision = summonerData["solo-division"]?.ToString();
-            summoner.SoloLP = int.TryParse(summonerData["solo-lp"]?.ToString(), out int soloLP) ? soloLP : 0;
-            summoner.SoloWins = int.TryParse(summonerData["solo-wins"]?.ToString(), out int soloWins) ? soloWins : 0;
-            summoner.SoloLosses = int.TryParse(summonerData["solo-losses"]?.ToString(), out int soloLosses) ? soloLosses : 0;
-            summoner.FlexTier = string.IsNullOrEmpty(summonerData["flex-tier"]?.ToString()) ? "unranked" : summonerData["flex-tier"].ToString().ToLower();
-            summoner.FlexDivision = summonerData["flex-division"]?.ToString();
-            summoner.FlexLP = int.TryParse(summonerData["flex-lp"]?.ToString(), out int flexLP) ? flexLP : 0;
-            summoner.FlexWins = int.TryParse(summonerData["flex-wins"]?.ToString(), out int flexWins) ? flexWins : 0;
-            summoner.FlexLosses = int.TryParse(summonerData["flex-losses"]?.ToString(), out int flexLosses) ? flexLosses : 0;
+            SummonerData summoner = new()
+            {
+                Name = summonerData["name"]?.ToString(),
+                Region = summonerData["region"]?.ToString(),
+                Level = int.TryParse(summonerData["level"]?.ToString(), out int level) ? level : 0,
+                IconID = int.TryParse(summonerData["icon"]?.ToString(), out int iconID) ? iconID : 0,
+                SoloRank = int.TryParse(summonerData["solo-rank"]?.ToString(), out int soloRank) ? soloRank : 0,
+                SoloTier = string.IsNullOrEmpty(summonerData["solo-tier"]?.ToString()) ? "unranked" : summonerData["solo-tier"]?.ToString().ToLower(),
+                SoloDivision = summonerData["solo-division"]?.ToString(),
+                SoloLP = int.TryParse(summonerData["solo-lp"]?.ToString(), out int soloLP) ? soloLP : 0,
+                SoloWins = int.TryParse(summonerData["solo-wins"]?.ToString(), out int soloWins) ? soloWins : 0,
+                SoloLosses = int.TryParse(summonerData["solo-losses"]?.ToString(), out int soloLosses) ? soloLosses : 0,
+                FlexTier = string.IsNullOrEmpty(summonerData["flex-tier"]?.ToString()) ? "unranked" : summonerData["flex-tier"]?.ToString().ToLower(),
+                FlexDivision = summonerData["flex-division"]?.ToString(),
+                FlexLP = int.TryParse(summonerData["flex-lp"]?.ToString(), out int flexLP) ? flexLP : 0,
+                FlexWins = int.TryParse(summonerData["flex-wins"]?.ToString(), out int flexWins) ? flexWins : 0,
+                FlexLosses = int.TryParse(summonerData["flex-losses"]?.ToString(), out int flexLosses) ? flexLosses : 0
+            };
 
             return summoner;
         }

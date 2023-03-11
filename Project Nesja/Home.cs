@@ -44,18 +44,25 @@ namespace Project_Nesja
 
             try
             {
-                var data = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner"));
-                var region = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"));
+                var data = JObject.Parse("");
+                var region = JObject.Parse("");
+
+                Parallel.Invoke(
+                    async () => data = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner")),
+                    async () => region = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"))
+                );
+
+
                 CurrentSummoner = new()
                 {
-                    PUUID = data["puuid"].ToString(),
-                    AccountID = (int)data["accountId"],
-                    SummonerID = (int)data["summonerId"],
-                    Name = data["displayName"].ToString(),
-                    InternalName = data["internalName"].ToString(),
-                    Region = region["region"].ToString(),
-                    Level = (int)data["summonerLevel"],
-                    IconID = (int)data["profileIconId"]
+                    PUUID = data["puuid"]!.ToString(),
+                    AccountID = (int)data["accountId"]!,
+                    SummonerID = (int)data["summonerId"]!,
+                    Name = data["displayName"]!.ToString(),
+                    InternalName = data["internalName"]!.ToString(),
+                    Region = region["region"]!.ToString(),
+                    Level = (int)data["summonerLevel"]!,
+                    IconID = (int)data["profileIconId"]!
                 };
 
                 ActiveSummoner.Text = "Current Summoner: " + CurrentSummoner.Name;
@@ -79,10 +86,10 @@ namespace Project_Nesja
             Process.Start(psi);
         }
 
-        private void HomeButton_Click(object sender, EventArgs e)
+        private void ChampionButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Champion(null, null));
+            OpenChildForm(new Champion(null!, null!));
         }
 
         private void ProfileButton_Click(object sender, EventArgs e)
@@ -202,7 +209,7 @@ namespace Project_Nesja
             Application.Exit();
         }
 
-        private void searchChampionTextBox_TextChanged(object sender, EventArgs e)
+        private void SearchChampionTextBox_TextChanged(object sender, EventArgs e)
         {
             if (GameData.ChampionList != null)
             {
@@ -229,7 +236,7 @@ namespace Project_Nesja
             }
         }
 
-        private void searchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void SearchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Get the selected champion from the list box
             string selectedChampion = searchChampionListBox.SelectedItem.ToString();

@@ -28,1052 +28,1048 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Champion));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.championImage = new System.Windows.Forms.PictureBox();
-            this.championName = new System.Windows.Forms.Label();
-            this.championTitle = new System.Windows.Forms.Label();
-            this.searchChampionTextBox = new System.Windows.Forms.TextBox();
-            this.searchChampionListBox = new System.Windows.Forms.ListBox();
-            this.firstAbility = new System.Windows.Forms.PictureBox();
-            this.secondCoreItem = new System.Windows.Forms.PictureBox();
-            this.secondAbility = new System.Windows.Forms.PictureBox();
-            this.summonerSpell1 = new System.Windows.Forms.PictureBox();
-            this.summonerSpell2 = new System.Windows.Forms.PictureBox();
-            this.firstStartItem = new System.Windows.Forms.PictureBox();
-            this.secondStartItem = new System.Windows.Forms.PictureBox();
-            this.firstCoreItem = new System.Windows.Forms.PictureBox();
-            this.thirdAbility = new System.Windows.Forms.PictureBox();
-            this.thirdCoreItem = new System.Windows.Forms.PictureBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.banrateValue = new System.Windows.Forms.Label();
-            this.totalgamesValue = new System.Windows.Forms.Label();
-            this.pickrateValue = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.winrateValue = new System.Windows.Forms.Label();
-            this.supportSelection = new System.Windows.Forms.PictureBox();
-            this.topSelection = new System.Windows.Forms.PictureBox();
-            this.jungleSelection = new System.Windows.Forms.PictureBox();
-            this.midSelection = new System.Windows.Forms.PictureBox();
-            this.bottomSelection = new System.Windows.Forms.PictureBox();
-            this.firstFourthChoice = new System.Windows.Forms.PictureBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.summonerSpellsTitle = new System.Windows.Forms.Label();
-            this.summonerSpellsData = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.ItemTitle = new System.Windows.Forms.Label();
-            this.startItemData = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.skillTitle = new System.Windows.Forms.Label();
-            this.skillData = new System.Windows.Forms.Label();
-            this.firstAbilityValue = new System.Windows.Forms.Label();
-            this.secondAbilityValue = new System.Windows.Forms.Label();
-            this.thirdAbilityValue = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.coreItemData = new System.Windows.Forms.Label();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.secondFourthChoice = new System.Windows.Forms.PictureBox();
-            this.thirdFourthChoice = new System.Windows.Forms.PictureBox();
-            this.thirdFifthChoice = new System.Windows.Forms.PictureBox();
-            this.secondFifthChoice = new System.Windows.Forms.PictureBox();
-            this.firstFifthChoice = new System.Windows.Forms.PictureBox();
-            this.thirdSixthChoice = new System.Windows.Forms.PictureBox();
-            this.secondSixthChoice = new System.Windows.Forms.PictureBox();
-            this.firstSixthChoice = new System.Windows.Forms.PictureBox();
-            this.firstSixthWinrate = new System.Windows.Forms.Label();
-            this.firstSixthMatches = new System.Windows.Forms.Label();
-            this.secondSixthWinrate = new System.Windows.Forms.Label();
-            this.secondSixthMatches = new System.Windows.Forms.Label();
-            this.thirdSixthWinrate = new System.Windows.Forms.Label();
-            this.thirdSixthMatches = new System.Windows.Forms.Label();
-            this.firstFifthWinrate = new System.Windows.Forms.Label();
-            this.firstFifthMatches = new System.Windows.Forms.Label();
-            this.secondFifthWinrate = new System.Windows.Forms.Label();
-            this.secondFifthMatches = new System.Windows.Forms.Label();
-            this.thirdFifthWinrate = new System.Windows.Forms.Label();
-            this.thirdFifthMatches = new System.Windows.Forms.Label();
-            this.firstFourthWinrate = new System.Windows.Forms.Label();
-            this.firstFourthMatches = new System.Windows.Forms.Label();
-            this.secondFourthWinrate = new System.Windows.Forms.Label();
-            this.secondFourthMatches = new System.Windows.Forms.Label();
-            this.thirdFourthWinrate = new System.Windows.Forms.Label();
-            this.thirdFourthMatches = new System.Windows.Forms.Label();
-            this.championMatchupData = new System.Windows.Forms.DataGridView();
-            this.Image = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Winrate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.championImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstAbility)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondCoreItem)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondAbility)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.summonerSpell1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.summonerSpell2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstStartItem)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondStartItem)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstCoreItem)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdAbility)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdCoreItem)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.supportSelection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.topSelection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jungleSelection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.midSelection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bottomSelection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstFourthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondFourthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdFourthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdFifthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondFifthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstFifthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdSixthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondSixthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstSixthChoice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.championMatchupData)).BeginInit();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            championImage = new PictureBox();
+            championName = new Label();
+            championTitle = new Label();
+            searchChampionTextBox = new TextBox();
+            searchChampionListBox = new ListBox();
+            firstAbility = new PictureBox();
+            secondCoreItem = new PictureBox();
+            secondAbility = new PictureBox();
+            summonerSpell1 = new PictureBox();
+            summonerSpell2 = new PictureBox();
+            firstStartItem = new PictureBox();
+            secondStartItem = new PictureBox();
+            firstCoreItem = new PictureBox();
+            thirdAbility = new PictureBox();
+            thirdCoreItem = new PictureBox();
+            panel1 = new Panel();
+            label4 = new Label();
+            label3 = new Label();
+            label2 = new Label();
+            banrateValue = new Label();
+            totalgamesValue = new Label();
+            pickrateValue = new Label();
+            label1 = new Label();
+            winrateValue = new Label();
+            supportSelection = new PictureBox();
+            topSelection = new PictureBox();
+            jungleSelection = new PictureBox();
+            midSelection = new PictureBox();
+            bottomSelection = new PictureBox();
+            firstFourthChoice = new PictureBox();
+            panel2 = new Panel();
+            summonerSpellsTitle = new Label();
+            summonerSpellsData = new Label();
+            panel3 = new Panel();
+            ItemTitle = new Label();
+            startItemData = new Label();
+            panel4 = new Panel();
+            skillTitle = new Label();
+            skillData = new Label();
+            firstAbilityValue = new Label();
+            secondAbilityValue = new Label();
+            thirdAbilityValue = new Label();
+            panel5 = new Panel();
+            label5 = new Label();
+            coreItemData = new Label();
+            panel6 = new Panel();
+            label6 = new Label();
+            label7 = new Label();
+            panel7 = new Panel();
+            panel8 = new Panel();
+            label8 = new Label();
+            secondFourthChoice = new PictureBox();
+            thirdFourthChoice = new PictureBox();
+            thirdFifthChoice = new PictureBox();
+            secondFifthChoice = new PictureBox();
+            firstFifthChoice = new PictureBox();
+            thirdSixthChoice = new PictureBox();
+            secondSixthChoice = new PictureBox();
+            firstSixthChoice = new PictureBox();
+            firstSixthWinrate = new Label();
+            firstSixthMatches = new Label();
+            secondSixthWinrate = new Label();
+            secondSixthMatches = new Label();
+            thirdSixthWinrate = new Label();
+            thirdSixthMatches = new Label();
+            firstFifthWinrate = new Label();
+            firstFifthMatches = new Label();
+            secondFifthWinrate = new Label();
+            secondFifthMatches = new Label();
+            thirdFifthWinrate = new Label();
+            thirdFifthMatches = new Label();
+            firstFourthWinrate = new Label();
+            firstFourthMatches = new Label();
+            secondFourthWinrate = new Label();
+            secondFourthMatches = new Label();
+            thirdFourthWinrate = new Label();
+            thirdFourthMatches = new Label();
+            championMatchupData = new DataGridView();
+            Image = new DataGridViewImageColumn();
+            Winrate = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)championImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)firstAbility).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)secondCoreItem).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)secondAbility).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)summonerSpell1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)summonerSpell2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)firstStartItem).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)secondStartItem).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)firstCoreItem).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)thirdAbility).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)thirdCoreItem).BeginInit();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)supportSelection).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)topSelection).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)jungleSelection).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)midSelection).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bottomSelection).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)firstFourthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)secondFourthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)thirdFourthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)thirdFifthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)secondFifthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)firstFifthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)thirdSixthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)secondSixthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)firstSixthChoice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)championMatchupData).BeginInit();
+            SuspendLayout();
             // 
             // championImage
             // 
-            this.championImage.Location = new System.Drawing.Point(12, 90);
-            this.championImage.Name = "championImage";
-            this.championImage.Size = new System.Drawing.Size(175, 256);
-            this.championImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.championImage.TabIndex = 0;
-            this.championImage.TabStop = false;
+            championImage.Location = new Point(12, 90);
+            championImage.Name = "championImage";
+            championImage.Size = new Size(175, 256);
+            championImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            championImage.TabIndex = 0;
+            championImage.TabStop = false;
             // 
             // championName
             // 
-            this.championName.AutoSize = true;
-            this.championName.BackColor = System.Drawing.SystemColors.Control;
-            this.championName.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.championName.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.championName.Location = new System.Drawing.Point(12, 9);
-            this.championName.Name = "championName";
-            this.championName.Size = new System.Drawing.Size(146, 25);
-            this.championName.TabIndex = 1;
-            this.championName.Text = "championName";
+            championName.AutoSize = true;
+            championName.BackColor = SystemColors.Control;
+            championName.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            championName.ForeColor = SystemColors.ActiveCaptionText;
+            championName.Location = new Point(12, 9);
+            championName.Name = "championName";
+            championName.Size = new Size(146, 25);
+            championName.TabIndex = 1;
+            championName.Text = "championName";
             // 
             // championTitle
             // 
-            this.championTitle.AutoSize = true;
-            this.championTitle.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.championTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.championTitle.Location = new System.Drawing.Point(12, 34);
-            this.championTitle.Name = "championTitle";
-            this.championTitle.Size = new System.Drawing.Size(89, 17);
-            this.championTitle.TabIndex = 2;
-            this.championTitle.Text = "championTitle";
+            championTitle.AutoSize = true;
+            championTitle.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            championTitle.ForeColor = SystemColors.ActiveCaptionText;
+            championTitle.Location = new Point(12, 34);
+            championTitle.Name = "championTitle";
+            championTitle.Size = new Size(89, 17);
+            championTitle.TabIndex = 2;
+            championTitle.Text = "championTitle";
             // 
             // searchChampionTextBox
             // 
-            this.searchChampionTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.searchChampionTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.searchChampionTextBox.Location = new System.Drawing.Point(308, 9);
-            this.searchChampionTextBox.Name = "searchChampionTextBox";
-            this.searchChampionTextBox.Size = new System.Drawing.Size(249, 29);
-            this.searchChampionTextBox.TabIndex = 3;
-            this.searchChampionTextBox.TextChanged += new System.EventHandler(this.searchChampionTextBox_TextChanged);
+            searchChampionTextBox.Anchor = AnchorStyles.Top;
+            searchChampionTextBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            searchChampionTextBox.Location = new Point(308, 9);
+            searchChampionTextBox.Name = "searchChampionTextBox";
+            searchChampionTextBox.Size = new Size(249, 29);
+            searchChampionTextBox.TabIndex = 3;
+            searchChampionTextBox.TextChanged += SearchChampionTextBox_TextChanged;
             // 
             // searchChampionListBox
             // 
-            this.searchChampionListBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.searchChampionListBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.searchChampionListBox.FormattingEnabled = true;
-            this.searchChampionListBox.ItemHeight = 20;
-            this.searchChampionListBox.Location = new System.Drawing.Point(308, 34);
-            this.searchChampionListBox.Name = "searchChampionListBox";
-            this.searchChampionListBox.Size = new System.Drawing.Size(249, 84);
-            this.searchChampionListBox.TabIndex = 4;
-            this.searchChampionListBox.SelectedIndexChanged += new System.EventHandler(this.searchChampionListBox_SelectedIndexChanged);
+            searchChampionListBox.Anchor = AnchorStyles.Top;
+            searchChampionListBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            searchChampionListBox.FormattingEnabled = true;
+            searchChampionListBox.ItemHeight = 20;
+            searchChampionListBox.Location = new Point(308, 34);
+            searchChampionListBox.Name = "searchChampionListBox";
+            searchChampionListBox.Size = new Size(249, 84);
+            searchChampionListBox.TabIndex = 4;
+            searchChampionListBox.SelectedIndexChanged += SearchChampionListBox_SelectedIndexChanged;
             // 
             // firstAbility
             // 
-            this.firstAbility.Location = new System.Drawing.Point(193, 308);
-            this.firstAbility.Name = "firstAbility";
-            this.firstAbility.Size = new System.Drawing.Size(41, 38);
-            this.firstAbility.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstAbility.TabIndex = 5;
-            this.firstAbility.TabStop = false;
+            firstAbility.Location = new Point(193, 308);
+            firstAbility.Name = "firstAbility";
+            firstAbility.Size = new Size(41, 38);
+            firstAbility.SizeMode = PictureBoxSizeMode.StretchImage;
+            firstAbility.TabIndex = 5;
+            firstAbility.TabStop = false;
             // 
             // secondCoreItem
             // 
-            this.secondCoreItem.Location = new System.Drawing.Point(169, 389);
-            this.secondCoreItem.Name = "secondCoreItem";
-            this.secondCoreItem.Size = new System.Drawing.Size(41, 39);
-            this.secondCoreItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.secondCoreItem.TabIndex = 6;
-            this.secondCoreItem.TabStop = false;
+            secondCoreItem.Location = new Point(169, 389);
+            secondCoreItem.Name = "secondCoreItem";
+            secondCoreItem.Size = new Size(41, 39);
+            secondCoreItem.SizeMode = PictureBoxSizeMode.StretchImage;
+            secondCoreItem.TabIndex = 6;
+            secondCoreItem.TabStop = false;
             // 
             // secondAbility
             // 
-            this.secondAbility.Location = new System.Drawing.Point(242, 308);
-            this.secondAbility.Name = "secondAbility";
-            this.secondAbility.Size = new System.Drawing.Size(41, 38);
-            this.secondAbility.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.secondAbility.TabIndex = 7;
-            this.secondAbility.TabStop = false;
+            secondAbility.Location = new Point(242, 308);
+            secondAbility.Name = "secondAbility";
+            secondAbility.Size = new Size(41, 38);
+            secondAbility.SizeMode = PictureBoxSizeMode.StretchImage;
+            secondAbility.TabIndex = 7;
+            secondAbility.TabStop = false;
             // 
             // summonerSpell1
             // 
-            this.summonerSpell1.Location = new System.Drawing.Point(193, 210);
-            this.summonerSpell1.Name = "summonerSpell1";
-            this.summonerSpell1.Size = new System.Drawing.Size(41, 38);
-            this.summonerSpell1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.summonerSpell1.TabIndex = 8;
-            this.summonerSpell1.TabStop = false;
+            summonerSpell1.Location = new Point(193, 210);
+            summonerSpell1.Name = "summonerSpell1";
+            summonerSpell1.Size = new Size(41, 38);
+            summonerSpell1.SizeMode = PictureBoxSizeMode.StretchImage;
+            summonerSpell1.TabIndex = 8;
+            summonerSpell1.TabStop = false;
             // 
             // summonerSpell2
             // 
-            this.summonerSpell2.Location = new System.Drawing.Point(240, 210);
-            this.summonerSpell2.Name = "summonerSpell2";
-            this.summonerSpell2.Size = new System.Drawing.Size(41, 38);
-            this.summonerSpell2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.summonerSpell2.TabIndex = 9;
-            this.summonerSpell2.TabStop = false;
+            summonerSpell2.Location = new Point(240, 210);
+            summonerSpell2.Name = "summonerSpell2";
+            summonerSpell2.Size = new Size(41, 38);
+            summonerSpell2.SizeMode = PictureBoxSizeMode.StretchImage;
+            summonerSpell2.TabIndex = 9;
+            summonerSpell2.TabStop = false;
             // 
             // firstStartItem
             // 
-            this.firstStartItem.Location = new System.Drawing.Point(12, 389);
-            this.firstStartItem.Name = "firstStartItem";
-            this.firstStartItem.Size = new System.Drawing.Size(41, 39);
-            this.firstStartItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstStartItem.TabIndex = 10;
-            this.firstStartItem.TabStop = false;
+            firstStartItem.Location = new Point(12, 389);
+            firstStartItem.Name = "firstStartItem";
+            firstStartItem.Size = new Size(41, 39);
+            firstStartItem.SizeMode = PictureBoxSizeMode.StretchImage;
+            firstStartItem.TabIndex = 10;
+            firstStartItem.TabStop = false;
             // 
             // secondStartItem
             // 
-            this.secondStartItem.Location = new System.Drawing.Point(59, 389);
-            this.secondStartItem.Name = "secondStartItem";
-            this.secondStartItem.Size = new System.Drawing.Size(41, 39);
-            this.secondStartItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.secondStartItem.TabIndex = 11;
-            this.secondStartItem.TabStop = false;
+            secondStartItem.Location = new Point(59, 389);
+            secondStartItem.Name = "secondStartItem";
+            secondStartItem.Size = new Size(41, 39);
+            secondStartItem.SizeMode = PictureBoxSizeMode.StretchImage;
+            secondStartItem.TabIndex = 11;
+            secondStartItem.TabStop = false;
             // 
             // firstCoreItem
             // 
-            this.firstCoreItem.Location = new System.Drawing.Point(120, 389);
-            this.firstCoreItem.Name = "firstCoreItem";
-            this.firstCoreItem.Size = new System.Drawing.Size(43, 39);
-            this.firstCoreItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstCoreItem.TabIndex = 12;
-            this.firstCoreItem.TabStop = false;
+            firstCoreItem.Location = new Point(120, 389);
+            firstCoreItem.Name = "firstCoreItem";
+            firstCoreItem.Size = new Size(43, 39);
+            firstCoreItem.SizeMode = PictureBoxSizeMode.StretchImage;
+            firstCoreItem.TabIndex = 12;
+            firstCoreItem.TabStop = false;
             // 
             // thirdAbility
             // 
-            this.thirdAbility.Location = new System.Drawing.Point(291, 308);
-            this.thirdAbility.Name = "thirdAbility";
-            this.thirdAbility.Size = new System.Drawing.Size(41, 39);
-            this.thirdAbility.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.thirdAbility.TabIndex = 13;
-            this.thirdAbility.TabStop = false;
+            thirdAbility.Location = new Point(291, 308);
+            thirdAbility.Name = "thirdAbility";
+            thirdAbility.Size = new Size(41, 39);
+            thirdAbility.SizeMode = PictureBoxSizeMode.StretchImage;
+            thirdAbility.TabIndex = 13;
+            thirdAbility.TabStop = false;
             // 
             // thirdCoreItem
             // 
-            this.thirdCoreItem.Location = new System.Drawing.Point(216, 389);
-            this.thirdCoreItem.Name = "thirdCoreItem";
-            this.thirdCoreItem.Size = new System.Drawing.Size(43, 39);
-            this.thirdCoreItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.thirdCoreItem.TabIndex = 14;
-            this.thirdCoreItem.TabStop = false;
+            thirdCoreItem.Location = new Point(216, 389);
+            thirdCoreItem.Name = "thirdCoreItem";
+            thirdCoreItem.Size = new Size(43, 39);
+            thirdCoreItem.SizeMode = PictureBoxSizeMode.StretchImage;
+            thirdCoreItem.TabIndex = 14;
+            thirdCoreItem.TabStop = false;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.banrateValue);
-            this.panel1.Controls.Add(this.totalgamesValue);
-            this.panel1.Controls.Add(this.pickrateValue);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.winrateValue);
-            this.panel1.Location = new System.Drawing.Point(12, 90);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(676, 77);
-            this.panel1.TabIndex = 15;
+            panel1.BackColor = SystemColors.ActiveCaptionText;
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(banrateValue);
+            panel1.Controls.Add(totalgamesValue);
+            panel1.Controls.Add(pickrateValue);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(winrateValue);
+            panel1.Location = new Point(12, 90);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(676, 77);
+            panel1.TabIndex = 15;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label4.Location = new System.Drawing.Point(564, 41);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 20);
-            this.label4.TabIndex = 34;
-            this.label4.Text = "Total Games";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label4.AutoSize = true;
+            label4.BackColor = SystemColors.ActiveCaptionText;
+            label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.ForeColor = SystemColors.ControlLightLight;
+            label4.Location = new Point(564, 41);
+            label4.Name = "label4";
+            label4.Size = new Size(91, 20);
+            label4.TabIndex = 34;
+            label4.Text = "Total Games";
+            label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(443, 41);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 20);
-            this.label3.TabIndex = 33;
-            this.label3.Text = "Ban Rate";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label3.AutoSize = true;
+            label3.BackColor = SystemColors.ActiveCaptionText;
+            label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.ForeColor = SystemColors.ControlLightLight;
+            label3.Location = new Point(443, 41);
+            label3.Name = "label3";
+            label3.Size = new Size(68, 20);
+            label3.TabIndex = 33;
+            label3.Text = "Ban Rate";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label2.Location = new System.Drawing.Point(309, 41);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 20);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Pick Rate";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label2.AutoSize = true;
+            label2.BackColor = SystemColors.ActiveCaptionText;
+            label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.ForeColor = SystemColors.ControlLightLight;
+            label2.Location = new Point(309, 41);
+            label2.Name = "label2";
+            label2.Size = new Size(69, 20);
+            label2.TabIndex = 32;
+            label2.Text = "Pick Rate";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // banrateValue
             // 
-            this.banrateValue.AutoSize = true;
-            this.banrateValue.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.banrateValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.banrateValue.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.banrateValue.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.banrateValue.Location = new System.Drawing.Point(443, 14);
-            this.banrateValue.Name = "banrateValue";
-            this.banrateValue.Size = new System.Drawing.Size(126, 27);
-            this.banrateValue.TabIndex = 31;
-            this.banrateValue.Text = "banrateValue";
-            this.banrateValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            banrateValue.AutoSize = true;
+            banrateValue.BackColor = SystemColors.ActiveCaptionText;
+            banrateValue.BorderStyle = BorderStyle.FixedSingle;
+            banrateValue.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            banrateValue.ForeColor = SystemColors.ControlLightLight;
+            banrateValue.Location = new Point(443, 14);
+            banrateValue.Name = "banrateValue";
+            banrateValue.Size = new Size(126, 27);
+            banrateValue.TabIndex = 31;
+            banrateValue.Text = "banrateValue";
+            banrateValue.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // totalgamesValue
             // 
-            this.totalgamesValue.AutoSize = true;
-            this.totalgamesValue.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.totalgamesValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.totalgamesValue.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.totalgamesValue.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.totalgamesValue.Location = new System.Drawing.Point(564, 14);
-            this.totalgamesValue.Name = "totalgamesValue";
-            this.totalgamesValue.Size = new System.Drawing.Size(154, 27);
-            this.totalgamesValue.TabIndex = 32;
-            this.totalgamesValue.Text = "totalgamesValue";
-            this.totalgamesValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            totalgamesValue.AutoSize = true;
+            totalgamesValue.BackColor = SystemColors.ActiveCaptionText;
+            totalgamesValue.BorderStyle = BorderStyle.FixedSingle;
+            totalgamesValue.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            totalgamesValue.ForeColor = SystemColors.ControlLightLight;
+            totalgamesValue.Location = new Point(564, 14);
+            totalgamesValue.Name = "totalgamesValue";
+            totalgamesValue.Size = new Size(154, 27);
+            totalgamesValue.TabIndex = 32;
+            totalgamesValue.Text = "totalgamesValue";
+            totalgamesValue.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // pickrateValue
             // 
-            this.pickrateValue.AutoSize = true;
-            this.pickrateValue.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pickrateValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pickrateValue.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.pickrateValue.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.pickrateValue.Location = new System.Drawing.Point(309, 14);
-            this.pickrateValue.Name = "pickrateValue";
-            this.pickrateValue.Size = new System.Drawing.Size(128, 27);
-            this.pickrateValue.TabIndex = 35;
-            this.pickrateValue.Text = "pickrateValue";
-            this.pickrateValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            pickrateValue.AutoSize = true;
+            pickrateValue.BackColor = SystemColors.ActiveCaptionText;
+            pickrateValue.BorderStyle = BorderStyle.FixedSingle;
+            pickrateValue.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            pickrateValue.ForeColor = SystemColors.ControlLightLight;
+            pickrateValue.Location = new Point(309, 14);
+            pickrateValue.Name = "pickrateValue";
+            pickrateValue.Size = new Size(128, 27);
+            pickrateValue.TabIndex = 35;
+            pickrateValue.Text = "pickrateValue";
+            pickrateValue.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(181, 41);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 20);
-            this.label1.TabIndex = 31;
-            this.label1.Text = "Win Rate";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label1.AutoSize = true;
+            label1.BackColor = SystemColors.ActiveCaptionText;
+            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.ControlLightLight;
+            label1.Location = new Point(181, 41);
+            label1.Name = "label1";
+            label1.Size = new Size(69, 20);
+            label1.TabIndex = 31;
+            label1.Text = "Win Rate";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // winrateValue
             // 
-            this.winrateValue.AutoSize = true;
-            this.winrateValue.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.winrateValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.winrateValue.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.winrateValue.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.winrateValue.Location = new System.Drawing.Point(181, 14);
-            this.winrateValue.Name = "winrateValue";
-            this.winrateValue.Size = new System.Drawing.Size(124, 27);
-            this.winrateValue.TabIndex = 16;
-            this.winrateValue.Text = "winrateValue";
-            this.winrateValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            winrateValue.AutoSize = true;
+            winrateValue.BackColor = SystemColors.ActiveCaptionText;
+            winrateValue.BorderStyle = BorderStyle.FixedSingle;
+            winrateValue.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            winrateValue.ForeColor = SystemColors.ControlLightLight;
+            winrateValue.Location = new Point(181, 14);
+            winrateValue.Name = "winrateValue";
+            winrateValue.Size = new Size(124, 27);
+            winrateValue.TabIndex = 16;
+            winrateValue.Text = "winrateValue";
+            winrateValue.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // supportSelection
             // 
-            this.supportSelection.Image = global::Project_Nesja.Properties.Resources.Position_Master_Support;
-            this.supportSelection.Location = new System.Drawing.Point(156, 61);
-            this.supportSelection.Name = "supportSelection";
-            this.supportSelection.Size = new System.Drawing.Size(30, 29);
-            this.supportSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.supportSelection.TabIndex = 25;
-            this.supportSelection.TabStop = false;
-            this.supportSelection.Click += new System.EventHandler(this.supportSelection_Click);
+            supportSelection.Image = Properties.Resources.Position_Master_Support;
+            supportSelection.Location = new Point(156, 61);
+            supportSelection.Name = "supportSelection";
+            supportSelection.Size = new Size(30, 29);
+            supportSelection.SizeMode = PictureBoxSizeMode.StretchImage;
+            supportSelection.TabIndex = 25;
+            supportSelection.TabStop = false;
+            supportSelection.Click += SupportSelection_Click;
             // 
             // topSelection
             // 
-            this.topSelection.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.topSelection.Image = global::Project_Nesja.Properties.Resources.Position_Master_Top;
-            this.topSelection.Location = new System.Drawing.Point(12, 61);
-            this.topSelection.Name = "topSelection";
-            this.topSelection.Size = new System.Drawing.Size(30, 29);
-            this.topSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.topSelection.TabIndex = 26;
-            this.topSelection.TabStop = false;
-            this.topSelection.Click += new System.EventHandler(this.topSelection_Click);
+            topSelection.BackColor = SystemColors.ButtonFace;
+            topSelection.Image = Properties.Resources.Position_Master_Top;
+            topSelection.Location = new Point(12, 61);
+            topSelection.Name = "topSelection";
+            topSelection.Size = new Size(30, 29);
+            topSelection.SizeMode = PictureBoxSizeMode.StretchImage;
+            topSelection.TabIndex = 26;
+            topSelection.TabStop = false;
+            topSelection.Click += TopSelection_Click;
             // 
             // jungleSelection
             // 
-            this.jungleSelection.Image = global::Project_Nesja.Properties.Resources.Position_Master_Jungle;
-            this.jungleSelection.Location = new System.Drawing.Point(48, 61);
-            this.jungleSelection.Name = "jungleSelection";
-            this.jungleSelection.Size = new System.Drawing.Size(30, 29);
-            this.jungleSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.jungleSelection.TabIndex = 27;
-            this.jungleSelection.TabStop = false;
-            this.jungleSelection.Click += new System.EventHandler(this.jungleSelection_Click);
+            jungleSelection.Image = Properties.Resources.Position_Master_Jungle;
+            jungleSelection.Location = new Point(48, 61);
+            jungleSelection.Name = "jungleSelection";
+            jungleSelection.Size = new Size(30, 29);
+            jungleSelection.SizeMode = PictureBoxSizeMode.StretchImage;
+            jungleSelection.TabIndex = 27;
+            jungleSelection.TabStop = false;
+            jungleSelection.Click += JungleSelection_Click;
             // 
             // midSelection
             // 
-            this.midSelection.Image = global::Project_Nesja.Properties.Resources.Position_Master_Mid;
-            this.midSelection.Location = new System.Drawing.Point(84, 61);
-            this.midSelection.Name = "midSelection";
-            this.midSelection.Size = new System.Drawing.Size(30, 29);
-            this.midSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.midSelection.TabIndex = 28;
-            this.midSelection.TabStop = false;
-            this.midSelection.Click += new System.EventHandler(this.midSelection_Click);
+            midSelection.Image = Properties.Resources.Position_Master_Mid;
+            midSelection.Location = new Point(84, 61);
+            midSelection.Name = "midSelection";
+            midSelection.Size = new Size(30, 29);
+            midSelection.SizeMode = PictureBoxSizeMode.StretchImage;
+            midSelection.TabIndex = 28;
+            midSelection.TabStop = false;
+            midSelection.Click += MidSelection_Click;
             // 
             // bottomSelection
             // 
-            this.bottomSelection.Image = global::Project_Nesja.Properties.Resources.Position_Master_Bot;
-            this.bottomSelection.Location = new System.Drawing.Point(120, 61);
-            this.bottomSelection.Name = "bottomSelection";
-            this.bottomSelection.Size = new System.Drawing.Size(30, 29);
-            this.bottomSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.bottomSelection.TabIndex = 29;
-            this.bottomSelection.TabStop = false;
-            this.bottomSelection.Click += new System.EventHandler(this.bottomSelection_Click);
+            bottomSelection.Image = Properties.Resources.Position_Master_Bot;
+            bottomSelection.Location = new Point(120, 61);
+            bottomSelection.Name = "bottomSelection";
+            bottomSelection.Size = new Size(30, 29);
+            bottomSelection.SizeMode = PictureBoxSizeMode.StretchImage;
+            bottomSelection.TabIndex = 29;
+            bottomSelection.TabStop = false;
+            bottomSelection.Click += BottomSelection_Click;
             // 
             // firstFourthChoice
             // 
-            this.firstFourthChoice.Location = new System.Drawing.Point(270, 371);
-            this.firstFourthChoice.Name = "firstFourthChoice";
-            this.firstFourthChoice.Size = new System.Drawing.Size(35, 35);
-            this.firstFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstFourthChoice.TabIndex = 30;
-            this.firstFourthChoice.TabStop = false;
+            firstFourthChoice.Location = new Point(270, 371);
+            firstFourthChoice.Name = "firstFourthChoice";
+            firstFourthChoice.Size = new Size(35, 35);
+            firstFourthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            firstFourthChoice.TabIndex = 30;
+            firstFourthChoice.TabStop = false;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel2.Location = new System.Drawing.Point(193, 173);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(11, 16);
-            this.panel2.TabIndex = 31;
+            panel2.BackColor = SystemColors.ActiveCaptionText;
+            panel2.Location = new Point(193, 173);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(11, 16);
+            panel2.TabIndex = 31;
             // 
             // summonerSpellsTitle
             // 
-            this.summonerSpellsTitle.AutoSize = true;
-            this.summonerSpellsTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.summonerSpellsTitle.Location = new System.Drawing.Point(209, 174);
-            this.summonerSpellsTitle.Name = "summonerSpellsTitle";
-            this.summonerSpellsTitle.Size = new System.Drawing.Size(99, 15);
-            this.summonerSpellsTitle.TabIndex = 32;
-            this.summonerSpellsTitle.Text = "Summoner Spells";
+            summonerSpellsTitle.AutoSize = true;
+            summonerSpellsTitle.ForeColor = SystemColors.ActiveCaptionText;
+            summonerSpellsTitle.Location = new Point(209, 174);
+            summonerSpellsTitle.Name = "summonerSpellsTitle";
+            summonerSpellsTitle.Size = new Size(99, 15);
+            summonerSpellsTitle.TabIndex = 32;
+            summonerSpellsTitle.Text = "Summoner Spells";
             // 
             // summonerSpellsData
             // 
-            this.summonerSpellsData.AutoSize = true;
-            this.summonerSpellsData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.summonerSpellsData.Location = new System.Drawing.Point(193, 192);
-            this.summonerSpellsData.Name = "summonerSpellsData";
-            this.summonerSpellsData.Size = new System.Drawing.Size(139, 15);
-            this.summonerSpellsData.TabIndex = 33;
-            this.summonerSpellsData.Text = "40.30% (323414) Matches";
-            this.summonerSpellsData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            summonerSpellsData.AutoSize = true;
+            summonerSpellsData.ForeColor = SystemColors.ActiveCaptionText;
+            summonerSpellsData.Location = new Point(193, 192);
+            summonerSpellsData.Name = "summonerSpellsData";
+            summonerSpellsData.Size = new Size(139, 15);
+            summonerSpellsData.TabIndex = 33;
+            summonerSpellsData.Text = "40.30% (323414) Matches";
+            summonerSpellsData.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel3.Location = new System.Drawing.Point(12, 352);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(11, 16);
-            this.panel3.TabIndex = 34;
+            panel3.BackColor = SystemColors.ActiveCaptionText;
+            panel3.Location = new Point(12, 352);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(11, 16);
+            panel3.TabIndex = 34;
             // 
             // ItemTitle
             // 
-            this.ItemTitle.AutoSize = true;
-            this.ItemTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ItemTitle.Location = new System.Drawing.Point(29, 353);
-            this.ItemTitle.Name = "ItemTitle";
-            this.ItemTitle.Size = new System.Drawing.Size(80, 15);
-            this.ItemTitle.TabIndex = 35;
-            this.ItemTitle.Text = "Starting Items\r\n";
+            ItemTitle.AutoSize = true;
+            ItemTitle.ForeColor = SystemColors.ActiveCaptionText;
+            ItemTitle.Location = new Point(29, 353);
+            ItemTitle.Name = "ItemTitle";
+            ItemTitle.Size = new Size(80, 15);
+            ItemTitle.TabIndex = 35;
+            ItemTitle.Text = "Starting Items\r\n";
             // 
             // startItemData
             // 
-            this.startItemData.AutoSize = true;
-            this.startItemData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.startItemData.Location = new System.Drawing.Point(12, 371);
-            this.startItemData.Name = "startItemData";
-            this.startItemData.Size = new System.Drawing.Size(0, 15);
-            this.startItemData.TabIndex = 36;
-            this.startItemData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            startItemData.AutoSize = true;
+            startItemData.ForeColor = SystemColors.ActiveCaptionText;
+            startItemData.Location = new Point(12, 371);
+            startItemData.Name = "startItemData";
+            startItemData.Size = new Size(0, 15);
+            startItemData.TabIndex = 36;
+            startItemData.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel4.Location = new System.Drawing.Point(193, 271);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(11, 16);
-            this.panel4.TabIndex = 37;
+            panel4.BackColor = SystemColors.ActiveCaptionText;
+            panel4.Location = new Point(193, 271);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(11, 16);
+            panel4.TabIndex = 37;
             // 
             // skillTitle
             // 
-            this.skillTitle.AutoSize = true;
-            this.skillTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.skillTitle.Location = new System.Drawing.Point(210, 272);
-            this.skillTitle.Name = "skillTitle";
-            this.skillTitle.Size = new System.Drawing.Size(69, 15);
-            this.skillTitle.TabIndex = 38;
-            this.skillTitle.Text = "Skill Priority";
+            skillTitle.AutoSize = true;
+            skillTitle.ForeColor = SystemColors.ActiveCaptionText;
+            skillTitle.Location = new Point(210, 272);
+            skillTitle.Name = "skillTitle";
+            skillTitle.Size = new Size(69, 15);
+            skillTitle.TabIndex = 38;
+            skillTitle.Text = "Skill Priority";
             // 
             // skillData
             // 
-            this.skillData.AutoSize = true;
-            this.skillData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.skillData.Location = new System.Drawing.Point(193, 290);
-            this.skillData.Name = "skillData";
-            this.skillData.Size = new System.Drawing.Size(139, 15);
-            this.skillData.TabIndex = 39;
-            this.skillData.Text = "40.30% (323414) Matches";
-            this.skillData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            skillData.AutoSize = true;
+            skillData.ForeColor = SystemColors.ActiveCaptionText;
+            skillData.Location = new Point(193, 290);
+            skillData.Name = "skillData";
+            skillData.Size = new Size(139, 15);
+            skillData.TabIndex = 39;
+            skillData.Text = "40.30% (323414) Matches";
+            skillData.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // firstAbilityValue
             // 
-            this.firstAbilityValue.AutoSize = true;
-            this.firstAbilityValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstAbilityValue.Location = new System.Drawing.Point(193, 331);
-            this.firstAbilityValue.Name = "firstAbilityValue";
-            this.firstAbilityValue.Size = new System.Drawing.Size(27, 15);
-            this.firstAbilityValue.TabIndex = 40;
-            this.firstAbilityValue.Text = "first";
-            this.firstAbilityValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            firstAbilityValue.AutoSize = true;
+            firstAbilityValue.ForeColor = SystemColors.ActiveCaptionText;
+            firstAbilityValue.Location = new Point(193, 331);
+            firstAbilityValue.Name = "firstAbilityValue";
+            firstAbilityValue.Size = new Size(27, 15);
+            firstAbilityValue.TabIndex = 40;
+            firstAbilityValue.Text = "first";
+            firstAbilityValue.TextAlign = ContentAlignment.MiddleRight;
             // 
             // secondAbilityValue
             // 
-            this.secondAbilityValue.AutoSize = true;
-            this.secondAbilityValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondAbilityValue.Location = new System.Drawing.Point(242, 332);
-            this.secondAbilityValue.Name = "secondAbilityValue";
-            this.secondAbilityValue.Size = new System.Drawing.Size(45, 15);
-            this.secondAbilityValue.TabIndex = 41;
-            this.secondAbilityValue.Text = "second";
-            this.secondAbilityValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            secondAbilityValue.AutoSize = true;
+            secondAbilityValue.ForeColor = SystemColors.ActiveCaptionText;
+            secondAbilityValue.Location = new Point(242, 332);
+            secondAbilityValue.Name = "secondAbilityValue";
+            secondAbilityValue.Size = new Size(45, 15);
+            secondAbilityValue.TabIndex = 41;
+            secondAbilityValue.Text = "second";
+            secondAbilityValue.TextAlign = ContentAlignment.MiddleRight;
             // 
             // thirdAbilityValue
             // 
-            this.thirdAbilityValue.AutoSize = true;
-            this.thirdAbilityValue.BackColor = System.Drawing.SystemColors.Control;
-            this.thirdAbilityValue.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdAbilityValue.Location = new System.Drawing.Point(291, 332);
-            this.thirdAbilityValue.Name = "thirdAbilityValue";
-            this.thirdAbilityValue.Size = new System.Drawing.Size(32, 15);
-            this.thirdAbilityValue.TabIndex = 42;
-            this.thirdAbilityValue.Text = "third";
-            this.thirdAbilityValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            thirdAbilityValue.AutoSize = true;
+            thirdAbilityValue.BackColor = SystemColors.Control;
+            thirdAbilityValue.ForeColor = SystemColors.ActiveCaptionText;
+            thirdAbilityValue.Location = new Point(291, 332);
+            thirdAbilityValue.Name = "thirdAbilityValue";
+            thirdAbilityValue.Size = new Size(32, 15);
+            thirdAbilityValue.TabIndex = 42;
+            thirdAbilityValue.Text = "third";
+            thirdAbilityValue.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel5.Location = new System.Drawing.Point(120, 352);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(11, 16);
-            this.panel5.TabIndex = 43;
+            panel5.BackColor = SystemColors.ActiveCaptionText;
+            panel5.Location = new Point(120, 352);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(11, 16);
+            panel5.TabIndex = 43;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label5.Location = new System.Drawing.Point(137, 352);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 15);
-            this.label5.TabIndex = 44;
-            this.label5.Text = "Core Items";
+            label5.AutoSize = true;
+            label5.ForeColor = SystemColors.ActiveCaptionText;
+            label5.Location = new Point(137, 352);
+            label5.Name = "label5";
+            label5.Size = new Size(64, 15);
+            label5.TabIndex = 44;
+            label5.Text = "Core Items";
             // 
             // coreItemData
             // 
-            this.coreItemData.AutoSize = true;
-            this.coreItemData.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.coreItemData.Location = new System.Drawing.Point(120, 371);
-            this.coreItemData.Name = "coreItemData";
-            this.coreItemData.Size = new System.Drawing.Size(0, 15);
-            this.coreItemData.TabIndex = 45;
-            this.coreItemData.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            coreItemData.AutoSize = true;
+            coreItemData.ForeColor = SystemColors.ActiveCaptionText;
+            coreItemData.Location = new Point(120, 371);
+            coreItemData.Name = "coreItemData";
+            coreItemData.Size = new Size(0, 15);
+            coreItemData.TabIndex = 45;
+            coreItemData.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel6.Location = new System.Drawing.Point(270, 351);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(11, 16);
-            this.panel6.TabIndex = 46;
+            panel6.BackColor = SystemColors.ActiveCaptionText;
+            panel6.Location = new Point(270, 351);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(11, 16);
+            panel6.TabIndex = 46;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(287, 351);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(96, 15);
-            this.label6.TabIndex = 47;
-            this.label6.Text = "4th Item Options";
+            label6.AutoSize = true;
+            label6.ForeColor = SystemColors.ActiveCaptionText;
+            label6.Location = new Point(287, 351);
+            label6.Name = "label6";
+            label6.Size = new Size(96, 15);
+            label6.TabIndex = 47;
+            label6.Text = "4th Item Options";
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(415, 353);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(96, 15);
-            this.label7.TabIndex = 48;
-            this.label7.Text = "5th Item Options";
+            label7.AutoSize = true;
+            label7.ForeColor = SystemColors.ActiveCaptionText;
+            label7.Location = new Point(415, 353);
+            label7.Name = "label7";
+            label7.Size = new Size(96, 15);
+            label7.TabIndex = 48;
+            label7.Text = "5th Item Options";
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel7.Location = new System.Drawing.Point(398, 352);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(11, 16);
-            this.panel7.TabIndex = 49;
+            panel7.BackColor = SystemColors.ActiveCaptionText;
+            panel7.Location = new Point(398, 352);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(11, 16);
+            panel7.TabIndex = 49;
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel8.Location = new System.Drawing.Point(527, 353);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(11, 16);
-            this.panel8.TabIndex = 50;
+            panel8.BackColor = SystemColors.ActiveCaptionText;
+            panel8.Location = new Point(527, 353);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(11, 16);
+            panel8.TabIndex = 50;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(544, 353);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(96, 15);
-            this.label8.TabIndex = 51;
-            this.label8.Text = "6th Item Options";
+            label8.AutoSize = true;
+            label8.ForeColor = SystemColors.ActiveCaptionText;
+            label8.Location = new Point(544, 353);
+            label8.Name = "label8";
+            label8.Size = new Size(96, 15);
+            label8.TabIndex = 51;
+            label8.Text = "6th Item Options";
             // 
             // secondFourthChoice
             // 
-            this.secondFourthChoice.Location = new System.Drawing.Point(270, 407);
-            this.secondFourthChoice.Name = "secondFourthChoice";
-            this.secondFourthChoice.Size = new System.Drawing.Size(35, 35);
-            this.secondFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.secondFourthChoice.TabIndex = 52;
-            this.secondFourthChoice.TabStop = false;
+            secondFourthChoice.Location = new Point(270, 407);
+            secondFourthChoice.Name = "secondFourthChoice";
+            secondFourthChoice.Size = new Size(35, 35);
+            secondFourthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            secondFourthChoice.TabIndex = 52;
+            secondFourthChoice.TabStop = false;
             // 
             // thirdFourthChoice
             // 
-            this.thirdFourthChoice.Location = new System.Drawing.Point(270, 442);
-            this.thirdFourthChoice.Name = "thirdFourthChoice";
-            this.thirdFourthChoice.Size = new System.Drawing.Size(35, 35);
-            this.thirdFourthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.thirdFourthChoice.TabIndex = 53;
-            this.thirdFourthChoice.TabStop = false;
+            thirdFourthChoice.Location = new Point(270, 442);
+            thirdFourthChoice.Name = "thirdFourthChoice";
+            thirdFourthChoice.Size = new Size(35, 35);
+            thirdFourthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            thirdFourthChoice.TabIndex = 53;
+            thirdFourthChoice.TabStop = false;
             // 
             // thirdFifthChoice
             // 
-            this.thirdFifthChoice.Location = new System.Drawing.Point(398, 442);
-            this.thirdFifthChoice.Name = "thirdFifthChoice";
-            this.thirdFifthChoice.Size = new System.Drawing.Size(35, 35);
-            this.thirdFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.thirdFifthChoice.TabIndex = 54;
-            this.thirdFifthChoice.TabStop = false;
+            thirdFifthChoice.Location = new Point(398, 442);
+            thirdFifthChoice.Name = "thirdFifthChoice";
+            thirdFifthChoice.Size = new Size(35, 35);
+            thirdFifthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            thirdFifthChoice.TabIndex = 54;
+            thirdFifthChoice.TabStop = false;
             // 
             // secondFifthChoice
             // 
-            this.secondFifthChoice.Location = new System.Drawing.Point(398, 407);
-            this.secondFifthChoice.Name = "secondFifthChoice";
-            this.secondFifthChoice.Size = new System.Drawing.Size(35, 35);
-            this.secondFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.secondFifthChoice.TabIndex = 55;
-            this.secondFifthChoice.TabStop = false;
+            secondFifthChoice.Location = new Point(398, 407);
+            secondFifthChoice.Name = "secondFifthChoice";
+            secondFifthChoice.Size = new Size(35, 35);
+            secondFifthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            secondFifthChoice.TabIndex = 55;
+            secondFifthChoice.TabStop = false;
             // 
             // firstFifthChoice
             // 
-            this.firstFifthChoice.Location = new System.Drawing.Point(398, 371);
-            this.firstFifthChoice.Name = "firstFifthChoice";
-            this.firstFifthChoice.Size = new System.Drawing.Size(35, 35);
-            this.firstFifthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstFifthChoice.TabIndex = 56;
-            this.firstFifthChoice.TabStop = false;
+            firstFifthChoice.Location = new Point(398, 371);
+            firstFifthChoice.Name = "firstFifthChoice";
+            firstFifthChoice.Size = new Size(35, 35);
+            firstFifthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            firstFifthChoice.TabIndex = 56;
+            firstFifthChoice.TabStop = false;
             // 
             // thirdSixthChoice
             // 
-            this.thirdSixthChoice.Location = new System.Drawing.Point(527, 442);
-            this.thirdSixthChoice.Name = "thirdSixthChoice";
-            this.thirdSixthChoice.Size = new System.Drawing.Size(35, 35);
-            this.thirdSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.thirdSixthChoice.TabIndex = 57;
-            this.thirdSixthChoice.TabStop = false;
+            thirdSixthChoice.Location = new Point(527, 442);
+            thirdSixthChoice.Name = "thirdSixthChoice";
+            thirdSixthChoice.Size = new Size(35, 35);
+            thirdSixthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            thirdSixthChoice.TabIndex = 57;
+            thirdSixthChoice.TabStop = false;
             // 
             // secondSixthChoice
             // 
-            this.secondSixthChoice.Location = new System.Drawing.Point(527, 407);
-            this.secondSixthChoice.Name = "secondSixthChoice";
-            this.secondSixthChoice.Size = new System.Drawing.Size(35, 35);
-            this.secondSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.secondSixthChoice.TabIndex = 58;
-            this.secondSixthChoice.TabStop = false;
+            secondSixthChoice.Location = new Point(527, 407);
+            secondSixthChoice.Name = "secondSixthChoice";
+            secondSixthChoice.Size = new Size(35, 35);
+            secondSixthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            secondSixthChoice.TabIndex = 58;
+            secondSixthChoice.TabStop = false;
             // 
             // firstSixthChoice
             // 
-            this.firstSixthChoice.Location = new System.Drawing.Point(527, 371);
-            this.firstSixthChoice.Name = "firstSixthChoice";
-            this.firstSixthChoice.Size = new System.Drawing.Size(35, 35);
-            this.firstSixthChoice.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.firstSixthChoice.TabIndex = 59;
-            this.firstSixthChoice.TabStop = false;
+            firstSixthChoice.Location = new Point(527, 371);
+            firstSixthChoice.Name = "firstSixthChoice";
+            firstSixthChoice.Size = new Size(35, 35);
+            firstSixthChoice.SizeMode = PictureBoxSizeMode.StretchImage;
+            firstSixthChoice.TabIndex = 59;
+            firstSixthChoice.TabStop = false;
             // 
             // firstSixthWinrate
             // 
-            this.firstSixthWinrate.AutoSize = true;
-            this.firstSixthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstSixthWinrate.Location = new System.Drawing.Point(562, 374);
-            this.firstSixthWinrate.Name = "firstSixthWinrate";
-            this.firstSixthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.firstSixthWinrate.TabIndex = 60;
-            this.firstSixthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            firstSixthWinrate.AutoSize = true;
+            firstSixthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            firstSixthWinrate.Location = new Point(562, 374);
+            firstSixthWinrate.Name = "firstSixthWinrate";
+            firstSixthWinrate.Size = new Size(0, 15);
+            firstSixthWinrate.TabIndex = 60;
+            firstSixthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // firstSixthMatches
             // 
-            this.firstSixthMatches.AutoSize = true;
-            this.firstSixthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstSixthMatches.Location = new System.Drawing.Point(562, 389);
-            this.firstSixthMatches.Name = "firstSixthMatches";
-            this.firstSixthMatches.Size = new System.Drawing.Size(0, 15);
-            this.firstSixthMatches.TabIndex = 61;
-            this.firstSixthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            firstSixthMatches.AutoSize = true;
+            firstSixthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            firstSixthMatches.Location = new Point(562, 389);
+            firstSixthMatches.Name = "firstSixthMatches";
+            firstSixthMatches.Size = new Size(0, 15);
+            firstSixthMatches.TabIndex = 61;
+            firstSixthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // secondSixthWinrate
             // 
-            this.secondSixthWinrate.AutoSize = true;
-            this.secondSixthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondSixthWinrate.Location = new System.Drawing.Point(562, 407);
-            this.secondSixthWinrate.Name = "secondSixthWinrate";
-            this.secondSixthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.secondSixthWinrate.TabIndex = 62;
-            this.secondSixthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            secondSixthWinrate.AutoSize = true;
+            secondSixthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            secondSixthWinrate.Location = new Point(562, 407);
+            secondSixthWinrate.Name = "secondSixthWinrate";
+            secondSixthWinrate.Size = new Size(0, 15);
+            secondSixthWinrate.TabIndex = 62;
+            secondSixthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // secondSixthMatches
             // 
-            this.secondSixthMatches.AutoSize = true;
-            this.secondSixthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondSixthMatches.Location = new System.Drawing.Point(562, 422);
-            this.secondSixthMatches.Name = "secondSixthMatches";
-            this.secondSixthMatches.Size = new System.Drawing.Size(0, 15);
-            this.secondSixthMatches.TabIndex = 63;
-            this.secondSixthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            secondSixthMatches.AutoSize = true;
+            secondSixthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            secondSixthMatches.Location = new Point(562, 422);
+            secondSixthMatches.Name = "secondSixthMatches";
+            secondSixthMatches.Size = new Size(0, 15);
+            secondSixthMatches.TabIndex = 63;
+            secondSixthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // thirdSixthWinrate
             // 
-            this.thirdSixthWinrate.AutoSize = true;
-            this.thirdSixthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdSixthWinrate.Location = new System.Drawing.Point(562, 442);
-            this.thirdSixthWinrate.Name = "thirdSixthWinrate";
-            this.thirdSixthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.thirdSixthWinrate.TabIndex = 64;
-            this.thirdSixthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            thirdSixthWinrate.AutoSize = true;
+            thirdSixthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            thirdSixthWinrate.Location = new Point(562, 442);
+            thirdSixthWinrate.Name = "thirdSixthWinrate";
+            thirdSixthWinrate.Size = new Size(0, 15);
+            thirdSixthWinrate.TabIndex = 64;
+            thirdSixthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // thirdSixthMatches
             // 
-            this.thirdSixthMatches.AutoSize = true;
-            this.thirdSixthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdSixthMatches.Location = new System.Drawing.Point(562, 457);
-            this.thirdSixthMatches.Name = "thirdSixthMatches";
-            this.thirdSixthMatches.Size = new System.Drawing.Size(0, 15);
-            this.thirdSixthMatches.TabIndex = 65;
-            this.thirdSixthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            thirdSixthMatches.AutoSize = true;
+            thirdSixthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            thirdSixthMatches.Location = new Point(562, 457);
+            thirdSixthMatches.Name = "thirdSixthMatches";
+            thirdSixthMatches.Size = new Size(0, 15);
+            thirdSixthMatches.TabIndex = 65;
+            thirdSixthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // firstFifthWinrate
             // 
-            this.firstFifthWinrate.AutoSize = true;
-            this.firstFifthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstFifthWinrate.Location = new System.Drawing.Point(434, 374);
-            this.firstFifthWinrate.Name = "firstFifthWinrate";
-            this.firstFifthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.firstFifthWinrate.TabIndex = 66;
-            this.firstFifthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            firstFifthWinrate.AutoSize = true;
+            firstFifthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            firstFifthWinrate.Location = new Point(434, 374);
+            firstFifthWinrate.Name = "firstFifthWinrate";
+            firstFifthWinrate.Size = new Size(0, 15);
+            firstFifthWinrate.TabIndex = 66;
+            firstFifthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // firstFifthMatches
             // 
-            this.firstFifthMatches.AutoSize = true;
-            this.firstFifthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstFifthMatches.Location = new System.Drawing.Point(434, 389);
-            this.firstFifthMatches.Name = "firstFifthMatches";
-            this.firstFifthMatches.Size = new System.Drawing.Size(0, 15);
-            this.firstFifthMatches.TabIndex = 67;
-            this.firstFifthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            firstFifthMatches.AutoSize = true;
+            firstFifthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            firstFifthMatches.Location = new Point(434, 389);
+            firstFifthMatches.Name = "firstFifthMatches";
+            firstFifthMatches.Size = new Size(0, 15);
+            firstFifthMatches.TabIndex = 67;
+            firstFifthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // secondFifthWinrate
             // 
-            this.secondFifthWinrate.AutoSize = true;
-            this.secondFifthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondFifthWinrate.Location = new System.Drawing.Point(434, 407);
-            this.secondFifthWinrate.Name = "secondFifthWinrate";
-            this.secondFifthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.secondFifthWinrate.TabIndex = 68;
-            this.secondFifthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            secondFifthWinrate.AutoSize = true;
+            secondFifthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            secondFifthWinrate.Location = new Point(434, 407);
+            secondFifthWinrate.Name = "secondFifthWinrate";
+            secondFifthWinrate.Size = new Size(0, 15);
+            secondFifthWinrate.TabIndex = 68;
+            secondFifthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // secondFifthMatches
             // 
-            this.secondFifthMatches.AutoSize = true;
-            this.secondFifthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondFifthMatches.Location = new System.Drawing.Point(434, 422);
-            this.secondFifthMatches.Name = "secondFifthMatches";
-            this.secondFifthMatches.Size = new System.Drawing.Size(0, 15);
-            this.secondFifthMatches.TabIndex = 69;
-            this.secondFifthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            secondFifthMatches.AutoSize = true;
+            secondFifthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            secondFifthMatches.Location = new Point(434, 422);
+            secondFifthMatches.Name = "secondFifthMatches";
+            secondFifthMatches.Size = new Size(0, 15);
+            secondFifthMatches.TabIndex = 69;
+            secondFifthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // thirdFifthWinrate
             // 
-            this.thirdFifthWinrate.AutoSize = true;
-            this.thirdFifthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdFifthWinrate.Location = new System.Drawing.Point(434, 445);
-            this.thirdFifthWinrate.Name = "thirdFifthWinrate";
-            this.thirdFifthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.thirdFifthWinrate.TabIndex = 70;
-            this.thirdFifthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            thirdFifthWinrate.AutoSize = true;
+            thirdFifthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            thirdFifthWinrate.Location = new Point(434, 445);
+            thirdFifthWinrate.Name = "thirdFifthWinrate";
+            thirdFifthWinrate.Size = new Size(0, 15);
+            thirdFifthWinrate.TabIndex = 70;
+            thirdFifthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // thirdFifthMatches
             // 
-            this.thirdFifthMatches.AutoSize = true;
-            this.thirdFifthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdFifthMatches.Location = new System.Drawing.Point(434, 460);
-            this.thirdFifthMatches.Name = "thirdFifthMatches";
-            this.thirdFifthMatches.Size = new System.Drawing.Size(0, 15);
-            this.thirdFifthMatches.TabIndex = 71;
-            this.thirdFifthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            thirdFifthMatches.AutoSize = true;
+            thirdFifthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            thirdFifthMatches.Location = new Point(434, 460);
+            thirdFifthMatches.Name = "thirdFifthMatches";
+            thirdFifthMatches.Size = new Size(0, 15);
+            thirdFifthMatches.TabIndex = 71;
+            thirdFifthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // firstFourthWinrate
             // 
-            this.firstFourthWinrate.AutoSize = true;
-            this.firstFourthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstFourthWinrate.Location = new System.Drawing.Point(305, 374);
-            this.firstFourthWinrate.Name = "firstFourthWinrate";
-            this.firstFourthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.firstFourthWinrate.TabIndex = 72;
-            this.firstFourthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            firstFourthWinrate.AutoSize = true;
+            firstFourthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            firstFourthWinrate.Location = new Point(305, 374);
+            firstFourthWinrate.Name = "firstFourthWinrate";
+            firstFourthWinrate.Size = new Size(0, 15);
+            firstFourthWinrate.TabIndex = 72;
+            firstFourthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // firstFourthMatches
             // 
-            this.firstFourthMatches.AutoSize = true;
-            this.firstFourthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.firstFourthMatches.Location = new System.Drawing.Point(305, 389);
-            this.firstFourthMatches.Name = "firstFourthMatches";
-            this.firstFourthMatches.Size = new System.Drawing.Size(0, 15);
-            this.firstFourthMatches.TabIndex = 73;
-            this.firstFourthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            firstFourthMatches.AutoSize = true;
+            firstFourthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            firstFourthMatches.Location = new Point(305, 389);
+            firstFourthMatches.Name = "firstFourthMatches";
+            firstFourthMatches.Size = new Size(0, 15);
+            firstFourthMatches.TabIndex = 73;
+            firstFourthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // secondFourthWinrate
             // 
-            this.secondFourthWinrate.AutoSize = true;
-            this.secondFourthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondFourthWinrate.Location = new System.Drawing.Point(305, 407);
-            this.secondFourthWinrate.Name = "secondFourthWinrate";
-            this.secondFourthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.secondFourthWinrate.TabIndex = 74;
-            this.secondFourthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            secondFourthWinrate.AutoSize = true;
+            secondFourthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            secondFourthWinrate.Location = new Point(305, 407);
+            secondFourthWinrate.Name = "secondFourthWinrate";
+            secondFourthWinrate.Size = new Size(0, 15);
+            secondFourthWinrate.TabIndex = 74;
+            secondFourthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // secondFourthMatches
             // 
-            this.secondFourthMatches.AutoSize = true;
-            this.secondFourthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.secondFourthMatches.Location = new System.Drawing.Point(305, 422);
-            this.secondFourthMatches.Name = "secondFourthMatches";
-            this.secondFourthMatches.Size = new System.Drawing.Size(0, 15);
-            this.secondFourthMatches.TabIndex = 75;
-            this.secondFourthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            secondFourthMatches.AutoSize = true;
+            secondFourthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            secondFourthMatches.Location = new Point(305, 422);
+            secondFourthMatches.Name = "secondFourthMatches";
+            secondFourthMatches.Size = new Size(0, 15);
+            secondFourthMatches.TabIndex = 75;
+            secondFourthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // thirdFourthWinrate
             // 
-            this.thirdFourthWinrate.AutoSize = true;
-            this.thirdFourthWinrate.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdFourthWinrate.Location = new System.Drawing.Point(305, 442);
-            this.thirdFourthWinrate.Name = "thirdFourthWinrate";
-            this.thirdFourthWinrate.Size = new System.Drawing.Size(0, 15);
-            this.thirdFourthWinrate.TabIndex = 76;
-            this.thirdFourthWinrate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            thirdFourthWinrate.AutoSize = true;
+            thirdFourthWinrate.ForeColor = SystemColors.ActiveCaptionText;
+            thirdFourthWinrate.Location = new Point(305, 442);
+            thirdFourthWinrate.Name = "thirdFourthWinrate";
+            thirdFourthWinrate.Size = new Size(0, 15);
+            thirdFourthWinrate.TabIndex = 76;
+            thirdFourthWinrate.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // thirdFourthMatches
             // 
-            this.thirdFourthMatches.AutoSize = true;
-            this.thirdFourthMatches.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.thirdFourthMatches.Location = new System.Drawing.Point(305, 457);
-            this.thirdFourthMatches.Name = "thirdFourthMatches";
-            this.thirdFourthMatches.Size = new System.Drawing.Size(0, 15);
-            this.thirdFourthMatches.TabIndex = 77;
-            this.thirdFourthMatches.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            thirdFourthMatches.AutoSize = true;
+            thirdFourthMatches.ForeColor = SystemColors.ActiveCaptionText;
+            thirdFourthMatches.Location = new Point(305, 457);
+            thirdFourthMatches.Name = "thirdFourthMatches";
+            thirdFourthMatches.Size = new Size(0, 15);
+            thirdFourthMatches.TabIndex = 77;
+            thirdFourthMatches.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // championMatchupData
             // 
-            this.championMatchupData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.championMatchupData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.championMatchupData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Image,
-            this.Winrate});
-            this.championMatchupData.EnableHeadersVisualStyles = false;
-            this.championMatchupData.Location = new System.Drawing.Point(704, 12);
-            this.championMatchupData.Name = "championMatchupData";
-            this.championMatchupData.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.championMatchupData.RowHeadersVisible = false;
-            this.championMatchupData.RowHeadersWidth = 20;
-            this.championMatchupData.RowTemplate.Height = 25;
-            this.championMatchupData.Size = new System.Drawing.Size(133, 451);
-            this.championMatchupData.TabIndex = 78;
+            championMatchupData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            championMatchupData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            championMatchupData.Columns.AddRange(new DataGridViewColumn[] { Image, Winrate });
+            championMatchupData.EnableHeadersVisualStyles = false;
+            championMatchupData.Location = new Point(694, 12);
+            championMatchupData.Name = "championMatchupData";
+            championMatchupData.RightToLeft = RightToLeft.No;
+            championMatchupData.RowHeadersVisible = false;
+            championMatchupData.RowHeadersWidth = 20;
+            championMatchupData.RowTemplate.Height = 25;
+            championMatchupData.Size = new Size(143, 451);
+            championMatchupData.TabIndex = 78;
             // 
             // Image
             // 
-            this.Image.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Image.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Image.HeaderText = "Image";
-            this.Image.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.Image.Name = "Image";
-            this.Image.Width = 40;
+            Image.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = resources.GetObject("dataGridViewCellStyle1.NullValue");
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Image.DefaultCellStyle = dataGridViewCellStyle1;
+            Image.HeaderText = "Image";
+            Image.ImageLayout = DataGridViewImageCellLayout.Stretch;
+            Image.Name = "Image";
+            Image.Width = 50;
             // 
             // Winrate
             // 
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            this.Winrate.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Winrate.HeaderText = "Winrate";
-            this.Winrate.Name = "Winrate";
-            this.Winrate.Width = 94;
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            Winrate.DefaultCellStyle = dataGridViewCellStyle2;
+            Winrate.HeaderText = "Winrate";
+            Winrate.Name = "Winrate";
+            Winrate.Width = 94;
             // 
-            // Home
+            // Champion
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(854, 472);
-            this.Controls.Add(this.championMatchupData);
-            this.Controls.Add(this.thirdFourthMatches);
-            this.Controls.Add(this.thirdFourthWinrate);
-            this.Controls.Add(this.secondFourthMatches);
-            this.Controls.Add(this.secondFourthWinrate);
-            this.Controls.Add(this.firstFourthMatches);
-            this.Controls.Add(this.firstFourthWinrate);
-            this.Controls.Add(this.thirdFifthMatches);
-            this.Controls.Add(this.thirdFifthWinrate);
-            this.Controls.Add(this.secondFifthMatches);
-            this.Controls.Add(this.secondFifthWinrate);
-            this.Controls.Add(this.firstFifthMatches);
-            this.Controls.Add(this.firstFifthWinrate);
-            this.Controls.Add(this.thirdSixthMatches);
-            this.Controls.Add(this.thirdSixthWinrate);
-            this.Controls.Add(this.secondSixthMatches);
-            this.Controls.Add(this.secondSixthWinrate);
-            this.Controls.Add(this.firstSixthMatches);
-            this.Controls.Add(this.firstSixthWinrate);
-            this.Controls.Add(this.firstSixthChoice);
-            this.Controls.Add(this.secondSixthChoice);
-            this.Controls.Add(this.thirdSixthChoice);
-            this.Controls.Add(this.firstFifthChoice);
-            this.Controls.Add(this.secondFifthChoice);
-            this.Controls.Add(this.thirdFifthChoice);
-            this.Controls.Add(this.thirdFourthChoice);
-            this.Controls.Add(this.secondFourthChoice);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.panel8);
-            this.Controls.Add(this.panel7);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.panel6);
-            this.Controls.Add(this.coreItemData);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.panel5);
-            this.Controls.Add(this.thirdAbilityValue);
-            this.Controls.Add(this.secondAbilityValue);
-            this.Controls.Add(this.firstAbilityValue);
-            this.Controls.Add(this.skillData);
-            this.Controls.Add(this.skillTitle);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.startItemData);
-            this.Controls.Add(this.ItemTitle);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.summonerSpellsData);
-            this.Controls.Add(this.summonerSpellsTitle);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.firstFourthChoice);
-            this.Controls.Add(this.bottomSelection);
-            this.Controls.Add(this.midSelection);
-            this.Controls.Add(this.jungleSelection);
-            this.Controls.Add(this.topSelection);
-            this.Controls.Add(this.supportSelection);
-            this.Controls.Add(this.thirdCoreItem);
-            this.Controls.Add(this.thirdAbility);
-            this.Controls.Add(this.firstCoreItem);
-            this.Controls.Add(this.secondStartItem);
-            this.Controls.Add(this.firstStartItem);
-            this.Controls.Add(this.summonerSpell2);
-            this.Controls.Add(this.summonerSpell1);
-            this.Controls.Add(this.secondAbility);
-            this.Controls.Add(this.secondCoreItem);
-            this.Controls.Add(this.firstAbility);
-            this.Controls.Add(this.searchChampionListBox);
-            this.Controls.Add(this.searchChampionTextBox);
-            this.Controls.Add(this.championTitle);
-            this.Controls.Add(this.championName);
-            this.Controls.Add(this.championImage);
-            this.Controls.Add(this.panel1);
-            this.Name = "Home";
-            this.Text = "Home";
-            this.Load += new System.EventHandler(this.Home_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.championImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstAbility)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondCoreItem)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondAbility)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.summonerSpell1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.summonerSpell2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstStartItem)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondStartItem)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstCoreItem)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdAbility)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdCoreItem)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.supportSelection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.topSelection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.jungleSelection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.midSelection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bottomSelection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstFourthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondFourthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdFourthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdFifthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondFifthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstFifthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.thirdSixthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.secondSixthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.firstSixthChoice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.championMatchupData)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(854, 472);
+            Controls.Add(championMatchupData);
+            Controls.Add(thirdFourthMatches);
+            Controls.Add(thirdFourthWinrate);
+            Controls.Add(secondFourthMatches);
+            Controls.Add(secondFourthWinrate);
+            Controls.Add(firstFourthMatches);
+            Controls.Add(firstFourthWinrate);
+            Controls.Add(thirdFifthMatches);
+            Controls.Add(thirdFifthWinrate);
+            Controls.Add(secondFifthMatches);
+            Controls.Add(secondFifthWinrate);
+            Controls.Add(firstFifthMatches);
+            Controls.Add(firstFifthWinrate);
+            Controls.Add(thirdSixthMatches);
+            Controls.Add(thirdSixthWinrate);
+            Controls.Add(secondSixthMatches);
+            Controls.Add(secondSixthWinrate);
+            Controls.Add(firstSixthMatches);
+            Controls.Add(firstSixthWinrate);
+            Controls.Add(firstSixthChoice);
+            Controls.Add(secondSixthChoice);
+            Controls.Add(thirdSixthChoice);
+            Controls.Add(firstFifthChoice);
+            Controls.Add(secondFifthChoice);
+            Controls.Add(thirdFifthChoice);
+            Controls.Add(thirdFourthChoice);
+            Controls.Add(secondFourthChoice);
+            Controls.Add(label8);
+            Controls.Add(panel8);
+            Controls.Add(panel7);
+            Controls.Add(label7);
+            Controls.Add(label6);
+            Controls.Add(panel6);
+            Controls.Add(coreItemData);
+            Controls.Add(label5);
+            Controls.Add(panel5);
+            Controls.Add(thirdAbilityValue);
+            Controls.Add(secondAbilityValue);
+            Controls.Add(firstAbilityValue);
+            Controls.Add(skillData);
+            Controls.Add(skillTitle);
+            Controls.Add(panel4);
+            Controls.Add(startItemData);
+            Controls.Add(ItemTitle);
+            Controls.Add(panel3);
+            Controls.Add(summonerSpellsData);
+            Controls.Add(summonerSpellsTitle);
+            Controls.Add(panel2);
+            Controls.Add(firstFourthChoice);
+            Controls.Add(bottomSelection);
+            Controls.Add(midSelection);
+            Controls.Add(jungleSelection);
+            Controls.Add(topSelection);
+            Controls.Add(supportSelection);
+            Controls.Add(thirdCoreItem);
+            Controls.Add(thirdAbility);
+            Controls.Add(firstCoreItem);
+            Controls.Add(secondStartItem);
+            Controls.Add(firstStartItem);
+            Controls.Add(summonerSpell2);
+            Controls.Add(summonerSpell1);
+            Controls.Add(secondAbility);
+            Controls.Add(secondCoreItem);
+            Controls.Add(firstAbility);
+            Controls.Add(searchChampionListBox);
+            Controls.Add(searchChampionTextBox);
+            Controls.Add(championTitle);
+            Controls.Add(championName);
+            Controls.Add(championImage);
+            Controls.Add(panel1);
+            Name = "Champion";
+            Text = "Home";
+            Load += Home_Load;
+            ((System.ComponentModel.ISupportInitialize)championImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)firstAbility).EndInit();
+            ((System.ComponentModel.ISupportInitialize)secondCoreItem).EndInit();
+            ((System.ComponentModel.ISupportInitialize)secondAbility).EndInit();
+            ((System.ComponentModel.ISupportInitialize)summonerSpell1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)summonerSpell2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)firstStartItem).EndInit();
+            ((System.ComponentModel.ISupportInitialize)secondStartItem).EndInit();
+            ((System.ComponentModel.ISupportInitialize)firstCoreItem).EndInit();
+            ((System.ComponentModel.ISupportInitialize)thirdAbility).EndInit();
+            ((System.ComponentModel.ISupportInitialize)thirdCoreItem).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)supportSelection).EndInit();
+            ((System.ComponentModel.ISupportInitialize)topSelection).EndInit();
+            ((System.ComponentModel.ISupportInitialize)jungleSelection).EndInit();
+            ((System.ComponentModel.ISupportInitialize)midSelection).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bottomSelection).EndInit();
+            ((System.ComponentModel.ISupportInitialize)firstFourthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)secondFourthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)thirdFourthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)thirdFifthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)secondFifthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)firstFifthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)thirdSixthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)secondSixthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)firstSixthChoice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)championMatchupData).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

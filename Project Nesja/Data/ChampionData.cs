@@ -4,16 +4,16 @@ using Project_Nesja.Data;
 
 public class ChampionData
 {
-    public string? Name { get; set; }
-    public string? Title { get; set; }
-    public string? NameID { get; set; }
-    public int ID { get; set; }
-    public Image? SplashImage { get; set; }
-    public Image? SpriteImage { get; set; }
-    public Image? QAbility { get; set; }
-    public Image? WAbility { get; set; }
-    public Image? EAbility { get; set; }
-    public Image? RAbility { get; set; }
+    public string? Name;
+    public string? Title;
+    public string? NameID;
+    public int ID;
+    public Image? SplashImage;
+    public Image? SpriteImage;
+    public Image? QAbility;
+    public Image? WAbility;
+    public Image? EAbility;
+    public Image? RAbility;
 
     public async Task<ChampionData> FetchChampionData()
     {
@@ -25,17 +25,17 @@ public class ChampionData
         return this;
     }
 
-    private async Task FetchChampionSplash()
+    public async Task FetchChampionSplash()
     {
         SplashImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg", "Splash", NameID);
     }
 
-    private async Task FetchChampionSprite()
+    public async Task FetchChampionSprite()
     {
         SpriteImage = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID);
     }
-    
-    private async Task FetchChampionJson()
+
+    public async Task FetchChampionJson()
     {
         string filePath = Path.Combine("Data", "ChampionJson", NameID + ".json");
         JToken championJson;
@@ -61,21 +61,16 @@ public class ChampionData
     
     public Image FetchChampionAbility(string abilityName)
     {
-        switch (abilityName)
+        return abilityName switch
         {
-            case "Q":
-                return QAbility;
-            case "W":
-                return WAbility;
-            case "E":
-                return EAbility;
-            case "R":
-                return RAbility;
-            default:
-                return null;
-        }
+            "Q" => QAbility!,
+            "W" => WAbility!,
+            "E" => EAbility!,
+            "R" => RAbility!,
+            _ => null!,
+        };
     }
-
+    
     private async Task FetchChampionQImage(JArray championJsonObject)
     {
         string QAbilityUrl = (string)championJsonObject.ElementAt(0).SelectToken("image").First;

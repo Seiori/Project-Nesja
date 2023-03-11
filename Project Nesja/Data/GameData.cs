@@ -21,9 +21,7 @@ namespace Project_Nesja.Data
             CurrentVersion = (await WebRequests.GetJsonObject("https://ddragon.leagueoflegends.com/api/versions.json")).FirstOrDefault().ToString();
 
             if (GetCurrentVersion())
-            {
                 await LoadGameData();
-            }
             else
             {
                 await Task.WhenAll(
@@ -39,120 +37,99 @@ namespace Project_Nesja.Data
         private static async Task FetchChampionData()
         {
             // Grabs All Champion Data
-            var champions = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/champion.json")).SelectToken("data");
+            JObject allChampions = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/champion.json")).SelectToken("data");
 
             // Parses the Champion Data into a Easily Accessible Dictionary of Relevant Data
-            foreach (var champion in champions.Children())
+            foreach (var eachChampion in allChampions!)
             {
+                JObject eachChampionData = (JObject)eachChampion.Value!;
+                
                 ChampionData championData = new()
                 {
-                    Name = champion.First.SelectToken("name").ToString(),
-                    Title = champion.First.SelectToken("title").ToString(),
-                    NameID = champion.First.SelectToken("id").ToString(),
-                    ID = (int)champion.First.SelectToken("key"),
+                    Name = eachChampionData["name"]!.ToString(),
+                    Title = eachChampionData["title"]!.ToString(),
+                    NameID = eachChampionData["id"]!.ToString(),
+                    ID = eachChampionData["key"]!.ToObject<int>()
                 };
                 ChampionList.Add(championData.ID, championData);
             }
+            
+            // Saves Updated ChampionList to File
             File.WriteAllText(Path.Combine("Data", "ChampionList"), JsonConvert.SerializeObject(ChampionList));
-        }
-
-        private static async Task FetchIconData()
-        {
-            // Grabs All Icon Data
-            var Icons = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/profileicon.json")).SelectToken("data");
-
-            // Parses the Icon Data into a Easily Accessible Dictionary of Relevant IconData
-            foreach (var icon in Icons.Children())
-            {
-                Asset iconData = new()
-                {
-                    ID = (int)icon.First,
-                    AssetType = "Icons"
-                };
-                Assets.Add(iconData.ID, iconData);
-            }
         }
 
         private static async Task FetchItemData()
         {
             // Grabs All Item Data
-            var Items = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/item.json")).SelectToken("data");
+            JObject allItems = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/item.json")).SelectToken("data");
 
             // Parses the Item Data into a Easily Accessible Dictionary of Relevant ItemData
-            foreach (var item in Items.Children())
+            foreach (var eachItem in allItems!)
             {
-                Asset ItemData = new()
+                JObject eachItemData = (JObject)eachItem.Value!;
+
+                Asset itemData = new()
                 {
-                    Name = item.First.ToString(),
-                    ID = int.Parse(item.First.SelectToken("image").SelectToken("full").ToString().Split('.')[0]),
-                    AssetType = "Items"
+                    Name = eachItemData["name"]!.ToString(),
+                    ID = int.Parse(eachItemData["image"]["full"].ToString().Split('.')[0]),
+                    AssetType = AssetType.Items
                 };
-                Assets.Add(ItemData.ID, ItemData);
+                Assets.Add(itemData.ID, itemData);
             }
         }
 
         private static async Task FetchAllRuneData()
         {
-            var allRuneData = await WebRequests.GetJsonObject("https://www.op.gg/_next/data/0gDq3PqZvdVUaHBVGp5wk/champions/aatrox/top/runes.json?region=global&tier=platinum_plus&champion=aatrox&position=top");
+            JArray allRunePages = (JArray)await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/runesReforged.json");
 
-            var runeData = allRuneData.SelectToken("pageProps")?.SelectToken("data")?.SelectToken("meta")?.SelectToken("runes");
-            var runePageData = allRuneData.SelectToken("pageProps")?.SelectToken("data")?.SelectToken("meta")?.SelectToken("runePages");
-            var statModData = allRuneData.SelectToken("pageProps")?.SelectToken("data")?.SelectToken("meta")?.SelectToken("statMods");
-
-            // Parses the Rune Data into an Easily Accessible Dictionary of Relevant RuneData
-            foreach (var rune in runeData.Children())
+            foreach (JObject eachRunePage in allRunePages!.Cast<JObject>())
             {
-                Asset runes = new()
+                Asset runeData = new()
                 {
-                    Name = (string)rune.ElementAt(5),
-                    NameID = (string)rune.ElementAt(4),
-                    ID = (int)rune.First,
-                    AssetType = "Runes"
+                    Name = eachRunePage["name"]!.ToString(),
+                    NameID = eachRunePage["key"]!.ToString(),
+                    ID = eachRunePage["id"]!.ToObject<int>(),
+                    AssetType = AssetType.Runes
                 };
-                Assets.Add(runes.ID, runes);
-            }
 
-            // Parses the Rune Page Data into an Easily Accessible Dictionary of Relevant RunePageData
-            foreach (var runePage in runePageData.Children())
-            {
-                Asset runePages = new()
+                Assets.Add(runeData.ID, runeData);
+                
+                foreach (JObject eachRuneRow in eachRunePage["slots"]!.Cast<JObject>())
                 {
-                    Name = (string)runePage.ElementAt(1),
-                    ID = (int)runePage.First,
-                    AssetType = "RunePages"
-                };
-                Assets.Add(runePages.ID, runePages);
-            }
+                    foreach (JObject eachRuneSlot in eachRuneRow["runes"]!.Cast<JObject>())
+                    {
+                        runeData = new()
+                        {
+                            Name = eachRuneSlot["name"]!.ToString(),
+                            NameID = eachRuneSlot["key"]!.ToString(),
+                            ID = eachRuneSlot["id"]!.ToObject<int>(),
+                            AssetType = AssetType.Runes
+                        };
 
-            // Parses the Stat Mod Data into an Easily Accessible Dictionart of Relevant StatModData
-            foreach (var statMod in statModData)
-            {
-                Asset statMods = new()
-                {
-                    Name = (string)statMod.ElementAt(1),
-                    ID = (int)statMod.First,
-                    AssetType = "StatMods"
-                };
-                Assets.Add(statMods.ID, statMods);
+                        Assets.Add(runeData.ID, runeData);
+                    }
+                }
             }
         }
 
         private static async Task FetchSummonerSpellData()
         {
             // Grabs All SummonerSpell Data
-            var summonerSpellData = (await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json")).SelectToken("data");
+            JObject allSummonerSpells = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json")).SelectToken("data");
 
             // Parses the Summoner Spell Data into an Easily Accessible Dictionary of Relevant SummonerSpellData
-            foreach (var summonerSpell in summonerSpellData.Children())
+            foreach (var eachSummonerSpell in allSummonerSpells!)
             {
-                Asset summonerSpells = new()
+                JObject eachSummonerSpellData = (JObject)eachSummonerSpell.Value!;
+                
+                Asset summonerSpellData = new()
                 {
-                    Name = (string)summonerSpell.First.ElementAt(1),
-                    NameID = (string)summonerSpell.First.First,
-                    ID = (int)summonerSpell.First.ElementAt(13),
-                    AssetType = "SummonerSpells"
+                    Name = eachSummonerSpellData["name"]!.ToString(),
+                    NameID = eachSummonerSpellData["id"]!.ToString(),
+                    ID = eachSummonerSpellData["key"]!.ToObject<int>(),
+                    AssetType = AssetType.SummonerSpells
                 };
-                Assets.Add(summonerSpells.ID, summonerSpells);
+                Assets.Add(summonerSpellData.ID, summonerSpellData);
             }
         }
 
@@ -163,7 +140,7 @@ namespace Project_Nesja.Data
                 File.WriteAllText("CurrentVersion", JsonConvert.SerializeObject(CurrentVersion));
                 return false;
             }
-            string currentDataVersion = JsonConvert.DeserializeObject<string>(File.ReadAllText("CurrentVersion"));
+            string currentDataVersion = JsonConvert.DeserializeObject<string>(File.ReadAllText("CurrentVersion"))!;
             if (currentDataVersion == CurrentVersion)
                 return true;
             else
@@ -186,7 +163,7 @@ namespace Project_Nesja.Data
         {
             string rootFolder = "Img";
 
-            ChampionList = JsonConvert.DeserializeObject<Dictionary<int, ChampionData>>(File.ReadAllText(Path.Combine("Data", "ChampionList")));
+            ChampionList = JsonConvert.DeserializeObject<Dictionary<int, ChampionData>>(File.ReadAllText(Path.Combine("Data", "ChampionList")))!;
 
             foreach (var champion in ChampionList)
             {
@@ -230,8 +207,8 @@ namespace Project_Nesja.Data
 
             foreach (var asset in Assets)
             {
-                if (File.Exists(Path.Combine(rootFolder, asset.Value.AssetType, asset.Value.ID + ".jpg")))
-                    asset.Value.Image = Image.FromFile(Path.Combine(rootFolder, asset.Value.AssetType, asset.Value.ID + ".jpg"));
+                if (File.Exists(Path.Combine(rootFolder, asset.Value.AssetType.ToString(), asset.Value.ID + ".jpg")))
+                    asset.Value.Image = Image.FromFile(Path.Combine(rootFolder, asset.Value.AssetType.ToString(), asset.Value.ID + ".jpg"));
             }
             return Task.CompletedTask;
         }

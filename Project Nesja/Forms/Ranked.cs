@@ -31,7 +31,7 @@ namespace Project_Nesja.Forms
         {
             string apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=platinum_plus&queue=420&region=all";
 
-            this.rankedData = (JObject)await WebRequests.GetJsonObject(apiUrl);
+            this.rankedData = await WebRequests.GetJsonObject(apiUrl) as JObject;
 
             ParseRankedData();
         }
@@ -44,11 +44,14 @@ namespace Project_Nesja.Forms
 
             foreach (var champion in rankedData.SelectToken("current").SelectToken("lane").SelectToken(currentRole).SelectToken("cid"))
             {
-                ChampionRole championRoleData = new ChampionRole();
-                championRoleData.ChampionData = GameData.ChampionList.First(x => x.Value.ID == int.Parse(champion.ToString().Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries)[0].Trim().Split(" ").Last())).Value;
-                championRoleData.Role = (int)champion.First().ElementAt(1);
-                championRoleData.RolePercentage = (float)champion.First().ElementAt(4) / (float)champion.First().ElementAt(5);
-                championRoleData.TotalGames = (int)champion.First().ElementAt(4);
+                ChampionRole championRoleData = new()
+                {
+                    ChampionData = GameData.ChampionList.First(x => x.Value.ID == int.Parse(champion.ToString().Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries)[0].Trim().Split(" ").Last())).Value,
+                    Role = (int)champion.First().ElementAt(1),
+                    RolePercentage = (float)champion.First().ElementAt(4) / (float)champion.First().ElementAt(5),
+                    TotalGames = (int)champion.First().ElementAt(4)
+                };
+                
                 championRoleData.Winrate = (float)champion.First().ElementAt(3) / championRoleData.TotalGames;
 
                 switch (championRoleData.Role)
@@ -94,7 +97,7 @@ namespace Project_Nesja.Forms
             {
                 PBI = (champion.Value.Winrate - (rankedQueue.Sum(x => x.Value.Winrate) / rankedQueue.Count)) * 100 * champion.Value.Pickrate / (100 - champion.Value.Banrate);
                 
-                champion.Value.ChampionData.FetchChampionData();
+                await champion.Value.ChampionData.FetchChampionData();
                 
                 switch(champion.Value.Role)
                 {
@@ -118,7 +121,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void roleSelection_SelectedIndexChanged(object sender, EventArgs e)
+        private void RoleSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (roleSelection.SelectedIndex)
             {
@@ -150,7 +153,7 @@ namespace Project_Nesja.Forms
             ParseRankedData();
         }
 
-        private void minLanePercentage_TextChanged(object sender, EventArgs e)
+        private void MinLanePercentage_TextChanged(object sender, EventArgs e)
         {
             if (float.TryParse(minLanePercentage.Text, out float result))
             {
@@ -168,7 +171,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void minLanePercentage_KeyPress(object sender, KeyPressEventArgs e)
+        private void MinLanePercentage_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
@@ -182,7 +185,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void minGameCount_TextChanged(object sender, EventArgs e)
+        private void MinGameCount_TextChanged(object sender, EventArgs e)
         {
             if (float.TryParse(minGameCount.Text, out float result))
             {
@@ -200,7 +203,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void minGameCount_KeyPress(object sender, KeyPressEventArgs e)
+        private void MinGameCount_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
@@ -214,7 +217,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void minPickPercentage_TextChanged(object sender, EventArgs e)
+        private void MinPickPercentage_TextChanged(object sender, EventArgs e)
         {
             if (float.TryParse(minPickPercentage.Text, out float result))
             {
@@ -232,7 +235,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void minPickPercentage_KeyPress(object sender, KeyPressEventArgs e)
+        private void MinPickPercentage_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
@@ -246,7 +249,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void rankedDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void RankedDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {

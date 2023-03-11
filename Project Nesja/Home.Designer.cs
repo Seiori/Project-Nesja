@@ -167,7 +167,7 @@
             ChampionButton.TextAlign = ContentAlignment.MiddleLeft;
             ChampionButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             ChampionButton.UseVisualStyleBackColor = false;
-            ChampionButton.Click += HomeButton_Click;
+            ChampionButton.Click += ChampionButton_Click;
             // 
             // PanelTitleBar
             // 
@@ -256,9 +256,9 @@
             CurrentPatch.ForeColor = SystemColors.ActiveCaptionText;
             CurrentPatch.Location = new Point(3, 462);
             CurrentPatch.Name = "CurrentPatch";
-            CurrentPatch.Size = new Size(81, 15);
+            CurrentPatch.Size = new Size(78, 15);
             CurrentPatch.TabIndex = 3;
-            CurrentPatch.Text = "Patch Version`";
+            CurrentPatch.Text = "Patch Version";
             CurrentPatch.TextAlign = ContentAlignment.MiddleRight;
             // 
             // ActiveSummoner
@@ -284,7 +284,7 @@
             searchChampionListBox.Size = new Size(279, 184);
             searchChampionListBox.TabIndex = 1;
             searchChampionListBox.Visible = false;
-            searchChampionListBox.SelectedIndexChanged += searchChampionListBox_SelectedIndexChanged;
+            searchChampionListBox.SelectedIndexChanged += SearchChampionListBox_SelectedIndexChanged;
             // 
             // searchChampionTextBox
             // 
@@ -294,7 +294,7 @@
             searchChampionTextBox.Name = "searchChampionTextBox";
             searchChampionTextBox.Size = new Size(279, 35);
             searchChampionTextBox.TabIndex = 0;
-            searchChampionTextBox.TextChanged += searchChampionTextBox_TextChanged;
+            searchChampionTextBox.TextChanged += SearchChampionTextBox_TextChanged;
             // 
             // MainMenu
             // 

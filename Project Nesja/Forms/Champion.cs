@@ -7,7 +7,7 @@ namespace Project_Nesja.Forms
         private ChampionData selectedChampion;
         private ChampionBuild championBuild;
         private string role;
-        
+
         public Champion(ChampionData chosenChampion, string role)
         {
             InitializeComponent();
@@ -24,8 +24,8 @@ namespace Project_Nesja.Forms
             SelectRole(role);
         }
 
-        private void LoadChamptionData()
-        {   
+        private async void LoadChamptionData()
+        {
             // Display Selected Champion Information
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;
@@ -38,8 +38,8 @@ namespace Project_Nesja.Forms
             banrateValue.Text = championBuild.Banrate.ToString() + "%";
 
             // Adds the Images of the Abilities to the Form
-            skillData.Text = System.Math.Round(championBuild.SkillPriority.Winrate,2 ).ToString() + "% WR (" + championBuild.SkillPriority.TotalGames + ")";
-            firstAbilityValue.Text = championBuild.SkillPriority.Priority[0].ToString();
+            skillData.Text = System.Math.Round(championBuild.SkillPriority.Winrate, 2).ToString() + "% WR (" + championBuild.SkillPriority.TotalGames + ")";
+            firstAbilityValue.Text = championBuild.SkillPriority.Priority![0].ToString();
             firstAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[0].ToString());
             secondAbilityValue.Text = championBuild.SkillPriority.Priority[1].ToString();
             secondAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[1].ToString());
@@ -49,70 +49,78 @@ namespace Project_Nesja.Forms
 
             // Adds the Images of the Summoner Spells to the Form
             summonerSpellsData.Text = System.Math.Round(championBuild.SummonerSpells.Winrate, 2).ToString() + "% WR (" + championBuild.SummonerSpells.TotalGames + ")";
-            summonerSpell1.Image = championBuild.SummonerSpells.FirstSpellData.Image;
-            summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData.Image;
+            summonerSpell1.Image = championBuild.SummonerSpells.FirstSpellData?.Image ?? null;
+            summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData?.Image ?? null;
 
             // Adds the Images/Data of the Starting Items to the Form
             startItemData.Text = System.Math.Round(championBuild.StartingItems.Winrate * 100, 2).ToString() + "% WR (" + championBuild.StartingItems.TotalGames + ")";
-            firstStartItem.Image = championBuild.StartingItems.FirstItem.Image;
+            firstStartItem.Image = championBuild.StartingItems.FirstItem?.Image ?? null;
+            
             if (championBuild.StartingItems.SecondItem != null)
                 secondStartItem.Image = championBuild.StartingItems.SecondItem.Image;
             else
                 secondStartItem.Image = null;
 
             // Adds the Images/Data of the Core Items to the Form
-            firstCoreItem.Image = championBuild.CoreItems.FirstItem.Image;
-            secondCoreItem.Image = championBuild.CoreItems.SecondItem.Image;
-            thirdCoreItem.Image = championBuild.CoreItems.ThirdItem.Image;
-
+            firstCoreItem.Image = championBuild.CoreItems.FirstItem?.Image ?? null;
+            secondCoreItem.Image = championBuild.CoreItems.SecondItem?.Image ?? null;
+            thirdCoreItem.Image = championBuild.CoreItems.ThirdItem?.Image ?? null;
+            
             // Adds the Images/Data of the Fourth Item choices to the Form
-            firstFourthChoice.Image = championBuild.FourthItemChoice.First().ItemAsset.Image;
-            firstFourthWinrate.Text = System.Math.Round((championBuild.FourthItemChoice.First().Winrate * 100), 2).ToString() + "% WR";
-            firstFourthMatches.Text = championBuild.FourthItemChoice.First().TotalGames.ToString() + " Matches";
-            secondFourthChoice.Image = championBuild.FourthItemChoice.ElementAt(1).ItemAsset.Image;
-            secondFourthWinrate.Text = System.Math.Round((championBuild.FourthItemChoice.ElementAt(1).Winrate * 100), 2).ToString() + "% WR";
-            secondFourthMatches.Text = championBuild.FourthItemChoice.ElementAt(1).TotalGames.ToString() + " Matches";
-            thirdFourthChoice.Image = championBuild.FourthItemChoice.Last().ItemAsset.Image;
-            thirdFourthWinrate.Text = System.Math.Round((championBuild.FourthItemChoice.Last().Winrate * 100), 2).ToString() + "% WR";
-            thirdFourthMatches.Text = championBuild.FourthItemChoice.Last().TotalGames.ToString() + " Matches";
+            firstFourthChoice.Image = championBuild.FourthItemChoice.FirstOrDefault()?.ItemAsset.Image ?? null;
+            firstFourthWinrate.Text = championBuild.FourthItemChoice.FirstOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            firstFourthMatches.Text = (championBuild.FourthItemChoice.FirstOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
+
+            secondFourthChoice.Image = championBuild.FourthItemChoice.ElementAtOrDefault(1)?.ItemAsset.Image ?? null;
+            secondFourthWinrate.Text = championBuild.FourthItemChoice.ElementAtOrDefault(1)?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            secondFourthMatches.Text = (championBuild.FourthItemChoice.ElementAtOrDefault(1)?.TotalGames ?? 0).ToString() + " Matches";
+            
+            thirdFourthChoice.Image = championBuild.FourthItemChoice.LastOrDefault()?.ItemAsset.Image ?? null;
+            thirdFourthWinrate.Text = championBuild.FourthItemChoice.LastOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            thirdFourthMatches.Text = (championBuild.FourthItemChoice.LastOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
 
             // Adds the Images/Data of the Fifth Item choices to the Form
-            firstFifthChoice.Image = championBuild.FifthItemChoice.First().ItemAsset.Image;
-            firstFifthWinrate.Text = System.Math.Round((championBuild.FifthItemChoice.First().Winrate * 100), 2).ToString() + "% WR";
-            firstFifthMatches.Text = championBuild.FifthItemChoice.First().TotalGames.ToString() + " Matches";
-            secondFifthChoice.Image = championBuild.FifthItemChoice.ElementAt(1).ItemAsset.Image;
-            secondFifthWinrate.Text = System.Math.Round((championBuild.FifthItemChoice.ElementAt(1).Winrate * 100), 2).ToString() + "% WR";
-            secondFifthMatches.Text = championBuild.FifthItemChoice.ElementAt(1).TotalGames.ToString() + " Matches";
-            thirdFifthChoice.Image = championBuild.FifthItemChoice.Last().ItemAsset.Image;
-            thirdFifthWinrate.Text = System.Math.Round((championBuild.FifthItemChoice.Last().Winrate * 100), 2).ToString() + "% WR";
-            thirdFifthMatches.Text = championBuild.FifthItemChoice.Last().TotalGames.ToString() + " Matches";
+            firstFifthChoice.Image = championBuild.FifthItemChoice.FirstOrDefault()?.ItemAsset.Image ?? null;
+            firstFifthWinrate.Text = championBuild.FifthItemChoice.FirstOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            firstFifthMatches.Text = (championBuild.FifthItemChoice.FirstOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
+
+            secondFifthChoice.Image = championBuild.FifthItemChoice.ElementAtOrDefault(1)?.ItemAsset.Image ?? null;
+            secondFifthWinrate.Text = championBuild.FifthItemChoice.ElementAtOrDefault(1)?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            secondFifthMatches.Text = (championBuild.FifthItemChoice.ElementAtOrDefault(1)?.TotalGames ?? 0).ToString() + " Matches";
+
+            thirdFifthChoice.Image = championBuild.FifthItemChoice.LastOrDefault()?.ItemAsset.Image ?? null;
+            thirdFifthWinrate.Text = championBuild.FifthItemChoice.LastOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            thirdFifthMatches.Text = (championBuild.FifthItemChoice.LastOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
 
             // Adds the Images/Data of the Sixth Item choices to the Form
-            firstSixthChoice.Image = championBuild.SixthItemChoice.First().ItemAsset.Image;
-            firstSixthWinrate.Text = System.Math.Round((championBuild.SixthItemChoice.First().Winrate * 100), 2).ToString() + "% WR";
-            firstSixthMatches.Text = championBuild.SixthItemChoice.First().TotalGames.ToString() + " Matches";
-            secondSixthChoice.Image = championBuild.SixthItemChoice.ElementAt(1).ItemAsset.Image;
-            secondSixthWinrate.Text = System.Math.Round((championBuild.SixthItemChoice.ElementAt(1).Winrate * 100), 2).ToString() + "% WR";
-            secondSixthMatches.Text = championBuild.SixthItemChoice.ElementAt(1).TotalGames.ToString() + " Matches";
-            thirdSixthChoice.Image = championBuild.SixthItemChoice.Last().ItemAsset.Image;
-            thirdSixthWinrate.Text = System.Math.Round((championBuild.SixthItemChoice.Last().Winrate * 100), 2).ToString() + "% WR";
-            thirdSixthMatches.Text = championBuild.SixthItemChoice.Last().TotalGames.ToString() + " Matches";
+            firstSixthChoice.Image = championBuild.SixthItemChoice.FirstOrDefault()?.ItemAsset.Image ?? null;
+            firstSixthWinrate.Text = championBuild.SixthItemChoice.FirstOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            firstSixthMatches.Text = (championBuild.SixthItemChoice.FirstOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
+
+            secondSixthChoice.Image = championBuild.SixthItemChoice.ElementAtOrDefault(1)?.ItemAsset.Image ?? null;
+            secondSixthWinrate.Text = championBuild.SixthItemChoice.ElementAtOrDefault(1)?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            secondSixthMatches.Text = (championBuild.SixthItemChoice.ElementAtOrDefault(1)?.TotalGames ?? 0).ToString() + " Matches";
+
+            thirdSixthChoice.Image = championBuild.SixthItemChoice.LastOrDefault()?.ItemAsset.Image ?? null;
+            thirdSixthWinrate.Text = championBuild.SixthItemChoice.LastOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
+            thirdSixthMatches.Text = (championBuild.SixthItemChoice.LastOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
 
             // Adds Matchup Data
             championMatchupData.Rows.Clear();
 
             foreach (var champion in championBuild.Matchups)
             {
+                await champion.ChampionData!.FetchChampionSprite();
                 championMatchupData.Rows.Add(champion.ChampionData.SpriteImage, champion.Winrate.ToString());
             }
         }
 
-        private void searchChampionTextBox_TextChanged(object sender, EventArgs e)
+        private void SearchChampionTextBox_TextChanged(object sender, EventArgs e)
         {
             if (GameData.ChampionList != null)
             {
                 // Use the GameData.ChampionList, and compare the letters in the searchChampionTextBox to the names of the champions in the list
-                var filteredList = GameData.ChampionList.Where(x => x.Value.Name.ToLower().Contains(searchChampionTextBox.Text.ToLower())).ToList();
+                var filteredList = GameData.ChampionList.Where(x => x.Value.Name!.ToLower().Contains(searchChampionTextBox.Text.ToLower())).ToList();
 
                 // Clear the listbox
                 searchChampionListBox.Items.Clear();
@@ -120,7 +128,7 @@ namespace Project_Nesja.Forms
                 // Add the filtered list to the listbox
                 foreach (var champion in filteredList)
                 {
-                    searchChampionListBox.Items.Add(champion.Value.Name);
+                    searchChampionListBox.Items.Add(champion.Value.Name!);
                 }
 
                 if (searchChampionTextBox.Text != "")
@@ -134,7 +142,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void searchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void SearchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Grab the ChampionData from the Dictionary of ChampionData Values using the ChampionName
             selectedChampion = GameData.ChampionList.Where(x => x.Value.Name == searchChampionListBox.SelectedItem.ToString()).FirstOrDefault().Value;
@@ -149,9 +157,9 @@ namespace Project_Nesja.Forms
             searchChampionTextBox.Clear();
         }
 
-        private async void SelectRole(string role)
+        private async void SelectRole(string? role)
         {
-            championBuild = new ChampionBuild(selectedChampion, role);
+            championBuild = new ChampionBuild(selectedChampion, role!);
 
             await selectedChampion.FetchChampionData();
             await championBuild.FetchChampionBuild();
@@ -161,8 +169,8 @@ namespace Project_Nesja.Forms
             midSelection.BackColor = SystemColors.Control;
             bottomSelection.BackColor = SystemColors.Control;
             supportSelection.BackColor = SystemColors.Control;
-            
-            switch(championBuild.role)
+
+            switch (championBuild.role)
             {
                 case "top":
                     topSelection.BackColor = Color.Black;
@@ -182,28 +190,28 @@ namespace Project_Nesja.Forms
             }
             LoadChamptionData();
         }
-        
-        private void topSelection_Click(object sender, EventArgs e)
+
+        private void TopSelection_Click(object sender, EventArgs e)
         {
             SelectRole("top");
         }
 
-        private void jungleSelection_Click(object sender, EventArgs e)
+        private void JungleSelection_Click(object sender, EventArgs e)
         {
             SelectRole("jungle");
         }
 
-        private void midSelection_Click(object sender, EventArgs e)
+        private void MidSelection_Click(object sender, EventArgs e)
         {
             SelectRole("middle");
         }
 
-        private void bottomSelection_Click(object sender, EventArgs e)
+        private void BottomSelection_Click(object sender, EventArgs e)
         {
             SelectRole("bottom");
         }
 
-        private void supportSelection_Click(object sender, EventArgs e)
+        private void SupportSelection_Click(object sender, EventArgs e)
         {
             SelectRole("support");
         }
