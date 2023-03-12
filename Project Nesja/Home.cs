@@ -13,7 +13,7 @@ namespace Project_Nesja
     public partial class MainMenu : Form
     {
         public static LeagueClient leagueClient = new(credentials.cmd);
-        public static SummonerData CurrentSummoner;
+        public static SummonerData? CurrentSummoner;
 
         private IconButton? currentButton;
         private readonly Panel leftBorderButton;
@@ -44,14 +44,13 @@ namespace Project_Nesja
 
             try
             {
-                var data = JObject.Parse("");
-                var region = JObject.Parse("");
+                JObject data = null;
+                JObject region = null;
 
                 Parallel.Invoke(
                     async () => data = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner")),
                     async () => region = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"))
                 );
-
 
                 CurrentSummoner = new()
                 {
@@ -67,10 +66,11 @@ namespace Project_Nesja
 
                 ActiveSummoner.Text = "Current Summoner: " + CurrentSummoner.Name;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Failed to find active client session. Please open the client to use the related features!");
+                MessageBox.Show("Failed to find active client session. Please open the client to use the related features!", ex.ToString());
             }
+
 
             CurrentPatch.Text = "v" + GameData.CurrentVersion;
         }
@@ -89,7 +89,7 @@ namespace Project_Nesja
         private void ChampionButton_Click(object sender, EventArgs e)
         {
             ActiveButton(sender, Color.White);
-            OpenChildForm(new Champion(null!, null!));
+            OpenChildForm(new Champion(leagueClient, CurrentSummoner, null!, null!));
         }
 
         private void ProfileButton_Click(object sender, EventArgs e)
@@ -242,7 +242,7 @@ namespace Project_Nesja
             string selectedChampion = searchChampionListBox.SelectedItem.ToString();
 
             // Open the new form and pass the selected champion as a parameter
-            OpenChildForm(new Champion(GameData.ChampionList.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value, null));
+            OpenChildForm(new Champion(leagueClient, CurrentSummoner, GameData.ChampionList.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value, null));
         }
     }
 }

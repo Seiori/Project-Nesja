@@ -111,6 +111,19 @@
             championMatchupData = new DataGridView();
             Image = new DataGridViewImageColumn();
             Winrate = new DataGridViewTextBoxColumn();
+            KeystoneImage = new PictureBox();
+            PrimRuneFirstRowImage = new PictureBox();
+            PrimRuneSecRowImage = new PictureBox();
+            PrimRuneThirdRowImage = new PictureBox();
+            SecRuneFirstOptionImage = new PictureBox();
+            SecRuneSecOptionImage = new PictureBox();
+            StatModFirstRowImage = new PictureBox();
+            StatModSecRowImage = new PictureBox();
+            StatModThirdRowImage = new PictureBox();
+            panel9 = new Panel();
+            runePageTitle = new Label();
+            runePageData = new Label();
+            ImportButton = new Button();
             ((System.ComponentModel.ISupportInitialize)championImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)firstAbility).BeginInit();
             ((System.ComponentModel.ISupportInitialize)secondCoreItem).BeginInit();
@@ -138,6 +151,15 @@
             ((System.ComponentModel.ISupportInitialize)secondSixthChoice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)firstSixthChoice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)championMatchupData).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)KeystoneImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PrimRuneFirstRowImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PrimRuneSecRowImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PrimRuneThirdRowImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SecRuneFirstOptionImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SecRuneSecOptionImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StatModFirstRowImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StatModSecRowImage).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StatModThirdRowImage).BeginInit();
             SuspendLayout();
             // 
             // championImage
@@ -938,7 +960,7 @@
             championMatchupData.RightToLeft = RightToLeft.No;
             championMatchupData.RowHeadersVisible = false;
             championMatchupData.RowHeadersWidth = 20;
-            championMatchupData.RowTemplate.Height = 25;
+            championMatchupData.RowTemplate.Height = 35;
             championMatchupData.Size = new Size(143, 451);
             championMatchupData.TabIndex = 78;
             // 
@@ -962,11 +984,146 @@
             Winrate.Name = "Winrate";
             Winrate.Width = 94;
             // 
+            // KeystoneImage
+            // 
+            KeystoneImage.Location = new Point(368, 210);
+            KeystoneImage.Name = "KeystoneImage";
+            KeystoneImage.Size = new Size(41, 38);
+            KeystoneImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            KeystoneImage.TabIndex = 79;
+            KeystoneImage.TabStop = false;
+            // 
+            // PrimRuneFirstRowImage
+            // 
+            PrimRuneFirstRowImage.Location = new Point(415, 210);
+            PrimRuneFirstRowImage.Name = "PrimRuneFirstRowImage";
+            PrimRuneFirstRowImage.Size = new Size(41, 38);
+            PrimRuneFirstRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            PrimRuneFirstRowImage.TabIndex = 80;
+            PrimRuneFirstRowImage.TabStop = false;
+            // 
+            // PrimRuneSecRowImage
+            // 
+            PrimRuneSecRowImage.Location = new Point(462, 210);
+            PrimRuneSecRowImage.Name = "PrimRuneSecRowImage";
+            PrimRuneSecRowImage.Size = new Size(41, 38);
+            PrimRuneSecRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            PrimRuneSecRowImage.TabIndex = 81;
+            PrimRuneSecRowImage.TabStop = false;
+            // 
+            // PrimRuneThirdRowImage
+            // 
+            PrimRuneThirdRowImage.Location = new Point(509, 210);
+            PrimRuneThirdRowImage.Name = "PrimRuneThirdRowImage";
+            PrimRuneThirdRowImage.Size = new Size(41, 38);
+            PrimRuneThirdRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            PrimRuneThirdRowImage.TabIndex = 82;
+            PrimRuneThirdRowImage.TabStop = false;
+            // 
+            // SecRuneFirstOptionImage
+            // 
+            SecRuneFirstOptionImage.Location = new Point(450, 254);
+            SecRuneFirstOptionImage.Name = "SecRuneFirstOptionImage";
+            SecRuneFirstOptionImage.Size = new Size(41, 38);
+            SecRuneFirstOptionImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            SecRuneFirstOptionImage.TabIndex = 83;
+            SecRuneFirstOptionImage.TabStop = false;
+            // 
+            // SecRuneSecOptionImage
+            // 
+            SecRuneSecOptionImage.Location = new Point(497, 254);
+            SecRuneSecOptionImage.Name = "SecRuneSecOptionImage";
+            SecRuneSecOptionImage.Size = new Size(41, 38);
+            SecRuneSecOptionImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            SecRuneSecOptionImage.TabIndex = 84;
+            SecRuneSecOptionImage.TabStop = false;
+            // 
+            // StatModFirstRowImage
+            // 
+            StatModFirstRowImage.Location = new Point(562, 192);
+            StatModFirstRowImage.Name = "StatModFirstRowImage";
+            StatModFirstRowImage.Size = new Size(41, 38);
+            StatModFirstRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            StatModFirstRowImage.TabIndex = 85;
+            StatModFirstRowImage.TabStop = false;
+            // 
+            // StatModSecRowImage
+            // 
+            StatModSecRowImage.Location = new Point(562, 236);
+            StatModSecRowImage.Name = "StatModSecRowImage";
+            StatModSecRowImage.Size = new Size(41, 38);
+            StatModSecRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            StatModSecRowImage.TabIndex = 86;
+            StatModSecRowImage.TabStop = false;
+            // 
+            // StatModThirdRowImage
+            // 
+            StatModThirdRowImage.Location = new Point(562, 280);
+            StatModThirdRowImage.Name = "StatModThirdRowImage";
+            StatModThirdRowImage.Size = new Size(41, 38);
+            StatModThirdRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
+            StatModThirdRowImage.TabIndex = 87;
+            StatModThirdRowImage.TabStop = false;
+            // 
+            // panel9
+            // 
+            panel9.BackColor = SystemColors.ActiveCaptionText;
+            panel9.Location = new Point(368, 174);
+            panel9.Name = "panel9";
+            panel9.Size = new Size(11, 16);
+            panel9.TabIndex = 88;
+            // 
+            // runePageTitle
+            // 
+            runePageTitle.AutoSize = true;
+            runePageTitle.ForeColor = SystemColors.ActiveCaptionText;
+            runePageTitle.Location = new Point(385, 174);
+            runePageTitle.Name = "runePageTitle";
+            runePageTitle.Size = new Size(63, 15);
+            runePageTitle.TabIndex = 89;
+            runePageTitle.Text = "Rune Page";
+            // 
+            // runePageData
+            // 
+            runePageData.AutoSize = true;
+            runePageData.ForeColor = SystemColors.ActiveCaptionText;
+            runePageData.Location = new Point(368, 192);
+            runePageData.Name = "runePageData";
+            runePageData.Size = new Size(139, 15);
+            runePageData.TabIndex = 90;
+            runePageData.Text = "40.30% (323414) Matches";
+            runePageData.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // ImportButton
+            // 
+            ImportButton.ForeColor = SystemColors.Desktop;
+            ImportButton.Location = new Point(415, 308);
+            ImportButton.Name = "ImportButton";
+            ImportButton.Size = new Size(75, 23);
+            ImportButton.TabIndex = 91;
+            ImportButton.Text = "Import";
+            ImportButton.UseVisualStyleBackColor = true;
+            ImportButton.Visible = false;
+            ImportButton.Click += ImportButton_Click;
+            // 
             // Champion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(854, 472);
+            Controls.Add(ImportButton);
+            Controls.Add(runePageData);
+            Controls.Add(runePageTitle);
+            Controls.Add(panel9);
+            Controls.Add(StatModThirdRowImage);
+            Controls.Add(StatModSecRowImage);
+            Controls.Add(StatModFirstRowImage);
+            Controls.Add(SecRuneSecOptionImage);
+            Controls.Add(SecRuneFirstOptionImage);
+            Controls.Add(PrimRuneThirdRowImage);
+            Controls.Add(PrimRuneSecRowImage);
+            Controls.Add(PrimRuneFirstRowImage);
+            Controls.Add(KeystoneImage);
             Controls.Add(championMatchupData);
             Controls.Add(thirdFourthMatches);
             Controls.Add(thirdFourthWinrate);
@@ -1068,6 +1225,15 @@
             ((System.ComponentModel.ISupportInitialize)secondSixthChoice).EndInit();
             ((System.ComponentModel.ISupportInitialize)firstSixthChoice).EndInit();
             ((System.ComponentModel.ISupportInitialize)championMatchupData).EndInit();
+            ((System.ComponentModel.ISupportInitialize)KeystoneImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PrimRuneFirstRowImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PrimRuneSecRowImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PrimRuneThirdRowImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SecRuneFirstOptionImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SecRuneSecOptionImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StatModFirstRowImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StatModSecRowImage).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StatModThirdRowImage).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1154,5 +1320,18 @@
         private DataGridView championMatchupData;
         private DataGridViewImageColumn Image;
         private DataGridViewTextBoxColumn Winrate;
+        private PictureBox KeystoneImage;
+        private PictureBox PrimRuneFirstRowImage;
+        private PictureBox PrimRuneSecRowImage;
+        private PictureBox PrimRuneThirdRowImage;
+        private PictureBox SecRuneFirstOptionImage;
+        private PictureBox SecRuneSecOptionImage;
+        private PictureBox StatModFirstRowImage;
+        private PictureBox StatModSecRowImage;
+        private PictureBox StatModThirdRowImage;
+        private Panel panel9;
+        private Label runePageTitle;
+        private Label runePageData;
+        private Button ImportButton;
     }
 }

@@ -34,7 +34,7 @@ namespace Project_Nesja.Forms
                 championRoleData.ChampionData = GameData.ChampionList.FirstOrDefault(x => x.Value.ID == int.Parse(champion.ToString().Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries)[0].Trim().Split(" ").Last())).Value;
                 championRoleData.TotalGames = (int)champion.First().ElementAt(4);
                 championRoleData.Winrate = (float)champion.First().ElementAt(3) / championRoleData.TotalGames;
-                championRoleData.Pickrate = championRoleData.TotalGames / (float)aramData.SelectToken("totals").First();
+                championRoleData.Pickrate = championRoleData.TotalGames / (float)aramData.SelectToken("totals")!.First();
 
                 aramQueue.Add(championRoleData.ChampionData.ID, championRoleData);
             }
@@ -46,11 +46,11 @@ namespace Project_Nesja.Forms
             int TotalGames = aramQueue.Sum(x => x.Value.TotalGames);
             aramQueue = aramQueue.OrderByDescending(x => x.Value.Winrate * 0.45f + (float)x.Value.TotalGames / TotalGames * 0.55f).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-            await Task.WhenAll(aramQueue.Values.Select(x => x.ChampionData.FetchChampionData()));
+            await Task.WhenAll(aramQueue.Values.Select(x => x.ChampionData!.FetchChampionData()));
 
             foreach (var champion in aramQueue)
             {
-                aramDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%");
+                aramDataGrid.Rows.Add(champion.Value.ChampionData!.SpriteImage, champion.Value.ChampionData.Name, champion.Value.TotalGames, System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%");
             }
         }
 
@@ -63,7 +63,7 @@ namespace Project_Nesja.Forms
                 {
                     Debug.WriteLine("Image Clicked");
                     ChampionData champion = GameData.ChampionList.Where(x => x.Value.Name == aramDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
-                    this.mainForm.OpenChildForm(new Champion(champion, null));
+                    this.mainForm.OpenChildForm(new Champion(null!, null!, champion, null!));
                 }
             }
         }

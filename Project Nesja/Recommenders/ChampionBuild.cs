@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
 using Project_Nesja.Data;
-using System.Configuration;
-using System.Diagnostics.Eventing.Reader;
-using System.Text.Json;
 
 public class ChampionBuild
 {
@@ -89,12 +86,21 @@ public class ChampionBuild
         
         tasks.AddRange(new Task[]
         {
-            StartingItems.FirstItem.FetchAssetImage(),
-            CoreItems.FirstItem.FetchAssetImage(),
-            CoreItems.SecondItem.FetchAssetImage(),
-            CoreItems.ThirdItem.FetchAssetImage(),
-            SummonerSpells.FirstSpellData.FetchAssetImage(),
-            SummonerSpells.SecondSpellData.FetchAssetImage()
+            RunePageChoice.Keystone!.RuneAsset!.FetchAssetImage(),
+            RunePageChoice.PrimTreeFirstRow!.RuneAsset!.FetchAssetImage(),
+            RunePageChoice.PrimTreeSecondRow!.RuneAsset!.FetchAssetImage(),
+            RunePageChoice.PrimTreeThirdRow!.RuneAsset!.FetchAssetImage(),
+            RunePageChoice.SecTreeFirstOption!.RuneAsset!.FetchAssetImage(),
+            RunePageChoice.SecTreeSecondOption!.RuneAsset!.FetchAssetImage(),
+            RunePageChoice.firstRowOption!.StatModAsset!.FetchAssetImage(),
+            RunePageChoice.secondRowOption!.StatModAsset!.FetchAssetImage(),
+            RunePageChoice.thirdRowOption!.StatModAsset!.FetchAssetImage(),
+            StartingItems.FirstItem!.FetchAssetImage(),
+            CoreItems.FirstItem!.FetchAssetImage(),
+            CoreItems.SecondItem!.FetchAssetImage(),
+            CoreItems.ThirdItem!.FetchAssetImage(),
+            SummonerSpells.FirstSpellData!.FetchAssetImage(),
+            SummonerSpells.SecondSpellData!.FetchAssetImage()
         });
         
         tasks.AddRange(FourthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
@@ -321,18 +327,40 @@ public class ChampionBuild
                 switch (eachRuneData.Key)
                 {
                     case "5001":
+                        statModData.StatModType = StatModType.Health;
+                        thirdRowStatMod.Add(statModData);
+                        break;
                     case "5002":
+                        statModData.StatModType = StatModType.Armor;
+                        thirdRowStatMod.Add(statModData);
+                        break;
                     case "5003":
+                        statModData.StatModType = StatModType.MagicResistance;
                         thirdRowStatMod.Add(statModData);
                         break;
                     case "5002f":
-                    case "5003f":
-                    case "5008f":
+                        statModData.StatModType = StatModType.Armor;
                         secondRowStatMod.Add(statModData);
                         break;
+                    case "5003f":
+                        statModData.StatModType = StatModType.MagicResistance;
+                        secondRowStatMod.Add(statModData);
+                        break;
+                    case "5008f":
+                        statModData.StatModType = StatModType.AdaptiveForce;
+                        secondRowStatMod.Add(statModData);
+                        break;
+                        break;
                     case "5005":
+                        statModData.StatModType = StatModType.AttackSpeed;
+                        firstRowStatMod.Add(statModData);
+                        break;
                     case "5007":
+                        statModData.StatModType = StatModType.AbilityHaste;
+                        firstRowStatMod.Add(statModData);
+                        break;
                     case "5008":
+                        statModData.StatModType = StatModType.AdaptiveForce;
                         firstRowStatMod.Add(statModData);
                         break;
                 }
@@ -345,7 +373,12 @@ public class ChampionBuild
         RunePageChoice.PrimTreeFirstRow = primaryRunes.First(x => x.RuneType == RuneType.FirstRow && x.RuneTree == RunePageChoice.Keystone.RuneTree);
         RunePageChoice.PrimTreeSecondRow = primaryRunes.First(x => x.RuneType == RuneType.SecondRow && x.RuneTree == RunePageChoice.Keystone.RuneTree);
         RunePageChoice.PrimTreeThirdRow = primaryRunes.First(x => x.RuneType == RuneType.ThirdRow && x.RuneTree == RunePageChoice.Keystone.RuneTree);
-        
+        RunePageChoice.SecTreeFirstOption = secondaryRunes.First(x => x.RuneTree != RunePageChoice.Keystone.RuneTree);
+        RunePageChoice.SecTreeSecondOption = secondaryRunes.First(x => x.RuneTree == RunePageChoice.SecTreeFirstOption.RuneTree && x.RuneType != RunePageChoice.SecTreeFirstOption.RuneType);
+        RunePageChoice.firstRowOption = firstRowStatMod.OrderByDescending(x => x.TotalGames).First();
+        RunePageChoice.secondRowOption = secondRowStatMod.OrderByDescending(x => x.TotalGames).First();
+        RunePageChoice.thirdRowOption = thirdRowStatMod.OrderByDescending(x => x.TotalGames).First();
+
         return Task.CompletedTask;
     }
 

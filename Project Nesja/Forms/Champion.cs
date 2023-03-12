@@ -1,16 +1,24 @@
-﻿using Project_Nesja.Data;
+﻿using Newtonsoft.Json.Linq;
+using PoniLCU;
+using Project_Nesja.Data;
+using Project_Nesja.Objects;
+using static PoniLCU.LeagueClient;
 
 namespace Project_Nesja.Forms
 {
     public partial class Champion : Form
     {
+        public LeagueClient leagueClient;
+        private SummonerData summonerData;
         private ChampionData selectedChampion;
         private ChampionBuild championBuild;
         private string role;
 
-        public Champion(ChampionData chosenChampion, string role)
+        public Champion(LeagueClient leagueClient, SummonerData summonerData, ChampionData chosenChampion, string role)
         {
             InitializeComponent();
+            this.leagueClient = leagueClient;
+            this.summonerData = summonerData;
             this.selectedChampion = chosenChampion;
             this.role = role;
 
@@ -22,6 +30,9 @@ namespace Project_Nesja.Forms
         {
             searchChampionListBox.Visible = false;
             SelectRole(role);
+
+            if (leagueClient.IsConnected!)
+                ImportButton.Visible = true;
         }
 
         private async void LoadChamptionData()
@@ -37,6 +48,22 @@ namespace Project_Nesja.Forms
             pickrateValue.Text = championBuild.Pickrate.ToString() + "%";
             banrateValue.Text = championBuild.Banrate.ToString() + "%";
 
+            // Adds the Images of the Summoner Spells to the Form
+            summonerSpellsData.Text = System.Math.Round(championBuild.SummonerSpells.Winrate, 2).ToString() + "% WR (" + championBuild.SummonerSpells.TotalGames + ")";
+            summonerSpell1.Image = championBuild.SummonerSpells.FirstSpellData?.Image ?? null;
+            summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData?.Image ?? null;
+
+            // Adds the Images of the Rune Page to the Form
+            KeystoneImage.Image = championBuild.RunePageChoice.Keystone!.RuneAsset!.Image;
+            PrimRuneFirstRowImage.Image = championBuild.RunePageChoice.PrimTreeFirstRow!.RuneAsset!.Image;
+            PrimRuneSecRowImage.Image = championBuild.RunePageChoice.PrimTreeSecondRow!.RuneAsset!.Image;
+            PrimRuneThirdRowImage.Image = championBuild.RunePageChoice.PrimTreeThirdRow!.RuneAsset!.Image;
+            SecRuneFirstOptionImage.Image = championBuild.RunePageChoice.SecTreeFirstOption!.RuneAsset!.Image;
+            SecRuneSecOptionImage.Image = championBuild.RunePageChoice.SecTreeSecondOption!.RuneAsset!.Image;
+            StatModFirstRowImage.Image = championBuild.RunePageChoice.firstRowOption!.StatModAsset!.Image;
+            StatModSecRowImage.Image = championBuild.RunePageChoice.secondRowOption!.StatModAsset!.Image;
+            StatModThirdRowImage.Image = championBuild.RunePageChoice.thirdRowOption!.StatModAsset!.Image;
+
             // Adds the Images of the Abilities to the Form
             skillData.Text = System.Math.Round(championBuild.SkillPriority.Winrate, 2).ToString() + "% WR (" + championBuild.SkillPriority.TotalGames + ")";
             firstAbilityValue.Text = championBuild.SkillPriority.Priority![0].ToString();
@@ -46,16 +73,10 @@ namespace Project_Nesja.Forms
             thirdAbilityValue.Text = championBuild.SkillPriority.Priority[2].ToString();
             thirdAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[2].ToString());
 
-
-            // Adds the Images of the Summoner Spells to the Form
-            summonerSpellsData.Text = System.Math.Round(championBuild.SummonerSpells.Winrate, 2).ToString() + "% WR (" + championBuild.SummonerSpells.TotalGames + ")";
-            summonerSpell1.Image = championBuild.SummonerSpells.FirstSpellData?.Image ?? null;
-            summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData?.Image ?? null;
-
             // Adds the Images/Data of the Starting Items to the Form
             startItemData.Text = System.Math.Round(championBuild.StartingItems.Winrate * 100, 2).ToString() + "% WR (" + championBuild.StartingItems.TotalGames + ")";
             firstStartItem.Image = championBuild.StartingItems.FirstItem?.Image ?? null;
-            
+
             if (championBuild.StartingItems.SecondItem != null)
                 secondStartItem.Image = championBuild.StartingItems.SecondItem.Image;
             else
@@ -65,7 +86,7 @@ namespace Project_Nesja.Forms
             firstCoreItem.Image = championBuild.CoreItems.FirstItem?.Image ?? null;
             secondCoreItem.Image = championBuild.CoreItems.SecondItem?.Image ?? null;
             thirdCoreItem.Image = championBuild.CoreItems.ThirdItem?.Image ?? null;
-            
+
             // Adds the Images/Data of the Fourth Item choices to the Form
             firstFourthChoice.Image = championBuild.FourthItemChoice.FirstOrDefault()?.ItemAsset.Image ?? null;
             firstFourthWinrate.Text = championBuild.FourthItemChoice.FirstOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
@@ -74,7 +95,7 @@ namespace Project_Nesja.Forms
             secondFourthChoice.Image = championBuild.FourthItemChoice.ElementAtOrDefault(1)?.ItemAsset.Image ?? null;
             secondFourthWinrate.Text = championBuild.FourthItemChoice.ElementAtOrDefault(1)?.Winrate.ToString("P2") + " WR" ?? "N/A";
             secondFourthMatches.Text = (championBuild.FourthItemChoice.ElementAtOrDefault(1)?.TotalGames ?? 0).ToString() + " Matches";
-            
+
             thirdFourthChoice.Image = championBuild.FourthItemChoice.LastOrDefault()?.ItemAsset.Image ?? null;
             thirdFourthWinrate.Text = championBuild.FourthItemChoice.LastOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
             thirdFourthMatches.Text = (championBuild.FourthItemChoice.LastOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
@@ -144,6 +165,9 @@ namespace Project_Nesja.Forms
 
         private void SearchChampionListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (searchChampionListBox.SelectedItem == null)
+                return;
+
             // Grab the ChampionData from the Dictionary of ChampionData Values using the ChampionName
             selectedChampion = GameData.ChampionList.Where(x => x.Value.Name == searchChampionListBox.SelectedItem.ToString()).FirstOrDefault().Value;
 
@@ -173,22 +197,36 @@ namespace Project_Nesja.Forms
             switch (championBuild.role)
             {
                 case "top":
+                    this.role = "Top";
                     topSelection.BackColor = Color.Black;
                     break;
                 case "jungle":
+                    this.role = "Jungle";
                     jungleSelection.BackColor = Color.Black;
                     break;
                 case "middle":
+                    this.role = "Mid";
                     midSelection.BackColor = Color.Black;
                     break;
                 case "bottom":
+                    this.role = "Adc";
                     bottomSelection.BackColor = Color.Black;
                     break;
                 case "support":
+                    this.role = "Supp";
                     supportSelection.BackColor = Color.Black;
                     break;
             }
             LoadChamptionData();
+        }
+
+        private async void ImportButton_Click(object sender, EventArgs e)
+        {
+            var currentRunePage = await leagueClient.Request(requestMethod.GET, "/lol-perks/v1/currentpage");
+            int pageId = (int)JObject.Parse(currentRunePage)["id"]!;
+            await leagueClient.Request(requestMethod.DELETE, $"/lol-perks/v1/pages/{pageId}");
+            var body = "{\"name\":\"" + selectedChampion.Name + " " + role + " Runes\", \"selectedPerkIds\": " + JArray.FromObject(this.championBuild.RunePageChoice.GetRunePageIDs()).ToString() + ", \"primaryStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.Keystone!.RuneTree) + ", \"subStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.SecTreeFirstOption!.RuneTree) + ", \"current\": true}";
+            await leagueClient.Request(requestMethod.POST, "lol-perks/v1/pages", body);
         }
 
         private void TopSelection_Click(object sender, EventArgs e)

@@ -257,7 +257,7 @@ namespace Project_Nesja.Forms
                 if (cell.Value is Image)
                 {
                     ChampionData champion = GameData.ChampionList.Where(x => x.Value.Name == rankedDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
-                    this.mainForm.OpenChildForm(new Champion(champion, currentRole));
+                    this.mainForm.OpenChildForm(new Champion(null, null, champion, currentRole));
                 }
             }
         }
