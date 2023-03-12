@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
 using Project_Nesja.Data;
+using System.Configuration;
+using System.Diagnostics.Eventing.Reader;
 using System.Text.Json;
 
 public class ChampionBuild
@@ -26,15 +28,16 @@ public class ChampionBuild
     {
         this.championData = championData;
         this.role = role;
-        StartingItems = new ItemSet();
-        CoreItems = new ItemSet();
-        FourthItemChoice = new List<Item>(3);
-        FifthItemChoice = new List<Item>(3);
-        SixthItemChoice = new List<Item>(3);
-        SkillPriority = new SkillPriority();
-        SkillOrder = new SkillOrder();
-        SummonerSpells = new SummonerSpells();
-        Matchups = new List<ChampionRole>();
+        RunePageChoice = new();
+        StartingItems = new();
+        CoreItems = new();
+        FourthItemChoice = new(3);
+        FifthItemChoice = new(3);
+        SixthItemChoice = new(3);
+        SkillPriority = new();
+        SkillOrder = new();
+        SummonerSpells = new();
+        Matchups = new();
     }
 
     public async Task<ChampionBuild> FetchChampionBuild()
@@ -121,20 +124,21 @@ public class ChampionBuild
         List<StatMod> firstRowStatMod = new(3);
         List<StatMod> secondRowStatMod = new(3);
         List<StatMod> thirdRowStatMod = new(3);
-        
-        Dictionary<string, double> runeWeights = new();
-
-        int count = 0;
+        int runeTreeIndex = 0;
+        int runeRowIndex = 0;
+        RuneTree runeTree = RuneTree.Precision;
 
         foreach (var eachRuneData in allRuneData)
         {
             int id;
 
+            // REMOVE THE LETTER F FROM ID
             if (eachRuneData.Key.EndsWith("f"))
                 id = int.Parse(eachRuneData.Key.Replace("f", ""));
             else
                 id = int.Parse(eachRuneData.Key);
 
+            // CHECKS TO MAKE SURE RUNE IS VALID AND NOT A STATMOD VALUE
             if (GameData.Assets.ContainsKey(id) && GameData.Assets.FirstOrDefault(x => x.Key == id).Value.AssetType == AssetType.Runes)
             {
                 Rune primaryRuneData = new()
@@ -147,8 +151,8 @@ public class ChampionBuild
 
                 if (eachRuneData.Value!.Count() > 1)
                 {
-                    count += 1;
-                    
+                    runeRowIndex++;
+
                     Rune secondaryRuneData = new()
                     {
                         RuneAsset = GameData.Assets.GetValueOrDefault(int.Parse(eachRuneData.Key))!,
@@ -157,30 +161,145 @@ public class ChampionBuild
                         TotalGames = eachRuneData.Value![1]![2]!.ToObject<int>()
                     };
 
-                    switch (count)
+                    switch (runeTreeIndex)
                     {
-                        case < 4:
-                            primaryRuneData.RuneType = RuneType.FirstRow;
-                            secondaryRuneData.RuneType = RuneType.FirstRow;
+                        case 0:
+                            primaryRuneData.RuneTree = RuneTree.Precision;
+                            secondaryRuneData.RuneTree = RuneTree.Precision;
+                            switch (runeRowIndex)
+                            {
+                                case >= 1 and <= 3:
+                                    primaryRuneData.RuneType = RuneType.FirstRow;
+                                    secondaryRuneData.RuneType = RuneType.FirstRow;
+                                    break;
+                                case >= 4 and <= 6:
+                                    primaryRuneData.RuneType = RuneType.SecondRow;
+                                    secondaryRuneData.RuneType = RuneType.SecondRow;
+                                    break;
+                                case >= 7 and <= 8:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    break;
+                                case 9:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    runeRowIndex = 0;
+                                    runeTreeIndex++;
+                                    runeTree++;
+                                    break;
+                            }
+
                             break;
-                        case < 7:
-                            primaryRuneData.RuneType = RuneType.SecondRow;
-                            secondaryRuneData.RuneType = RuneType.SecondRow;
+                        case 1:
+                            primaryRuneData.RuneTree = RuneTree.Domination;
+                            secondaryRuneData.RuneTree = RuneTree.Domination;
+                            switch (runeRowIndex)
+                            {
+                                case >= 1 and <= 3:
+                                    primaryRuneData.RuneType = RuneType.FirstRow;
+                                    secondaryRuneData.RuneType = RuneType.FirstRow;
+                                    break;
+                                case >= 4 and <= 6:
+                                    primaryRuneData.RuneType = RuneType.SecondRow;
+                                    secondaryRuneData.RuneType = RuneType.SecondRow;
+                                    break;
+                                case >= 7 and <= 9:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    break;
+                                case 10:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    runeRowIndex = 0;
+                                    runeTreeIndex++;
+                                    runeTree++;
+                                    break;
+                            }
                             break;
-                        case < 10:
-                            primaryRuneData.RuneType = RuneType.ThirdRow;
-                            secondaryRuneData.RuneType = RuneType.ThirdRow;
+                        case 2:
+                            primaryRuneData.RuneTree = RuneTree.Sorcery;
+                            secondaryRuneData.RuneTree = RuneTree.Sorcery;
+                            switch (runeRowIndex)
+                            {
+                                case >= 1 and <= 3:
+                                    primaryRuneData.RuneType = RuneType.FirstRow;
+                                    secondaryRuneData.RuneType = RuneType.FirstRow;
+                                    break;
+                                case >= 4 and <= 6:
+                                    primaryRuneData.RuneType = RuneType.SecondRow;
+                                    secondaryRuneData.RuneType = RuneType.SecondRow;
+                                    break;
+                                case >= 7 and <= 8:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    break;
+                                case 9:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    runeRowIndex = 0;
+                                    runeTreeIndex++;
+                                    runeTree++;
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            primaryRuneData.RuneTree = RuneTree.Resolve;
+                            secondaryRuneData.RuneTree = RuneTree.Resolve;
+                            switch (runeRowIndex)
+                            {
+                                case >= 1 and <= 3:
+                                    primaryRuneData.RuneType = RuneType.FirstRow;
+                                    secondaryRuneData.RuneType = RuneType.FirstRow;
+                                    break;
+                                case >= 4 and <= 6:
+                                    primaryRuneData.RuneType = RuneType.SecondRow;
+                                    secondaryRuneData.RuneType = RuneType.SecondRow;
+                                    break;
+                                case >= 7 and <= 8:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    break;
+                                case 9:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    runeRowIndex = 0;
+                                    runeTreeIndex++;
+                                    runeTree++;
+                                    break;
+                            }
+                            break;
+                        case 4:
+                            primaryRuneData.RuneTree = RuneTree.Inspiration;
+                            secondaryRuneData.RuneTree = RuneTree.Inspiration;
+                            switch (runeRowIndex)
+                            {
+                                case >= 1 and <= 3:
+                                    primaryRuneData.RuneType = RuneType.FirstRow;
+                                    secondaryRuneData.RuneType = RuneType.FirstRow;
+                                    break;
+                                case >= 4 and <= 6:
+                                    primaryRuneData.RuneType = RuneType.SecondRow;
+                                    secondaryRuneData.RuneType = RuneType.SecondRow;
+                                    break;
+                                case >= 7 and <= 8:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    break;
+                                case 9:
+                                    primaryRuneData.RuneType = RuneType.ThirdRow;
+                                    secondaryRuneData.RuneType = RuneType.ThirdRow;
+                                    runeRowIndex = 0;
+                                    runeTreeIndex++;
+                                    break;
+                            }
                             break;
                     }
+
                     secondaryRunes.Add(secondaryRuneData);
                 }
                 else
-                {
-                    primaryRuneData.RuneType = RuneType.Keystone;
-                    count = 0;
-                }
-
-                primaryRunes.Add(primaryRuneData);
+                    primaryRuneData.RuneTree = runeTree;
+                primaryRunes.Add(primaryRuneData); 
             }
             else
             {  
@@ -219,6 +338,14 @@ public class ChampionBuild
                 }
             }
         }
+        primaryRunes = primaryRunes.OrderByDescending(x => x.TotalGames).ToList();
+        secondaryRunes = secondaryRunes.OrderByDescending(x => x.TotalGames).ToList();
+
+        RunePageChoice.Keystone = primaryRunes.First(x => x.RuneType == RuneType.Keystone);
+        RunePageChoice.PrimTreeFirstRow = primaryRunes.First(x => x.RuneType == RuneType.FirstRow && x.RuneTree == RunePageChoice.Keystone.RuneTree);
+        RunePageChoice.PrimTreeSecondRow = primaryRunes.First(x => x.RuneType == RuneType.SecondRow && x.RuneTree == RunePageChoice.Keystone.RuneTree);
+        RunePageChoice.PrimTreeThirdRow = primaryRunes.First(x => x.RuneType == RuneType.ThirdRow && x.RuneTree == RunePageChoice.Keystone.RuneTree);
+        
         return Task.CompletedTask;
     }
 
@@ -300,7 +427,7 @@ public class ChampionBuild
 
             coreSets.Add(coreSet);
         }
-        CoreItems = coreSets.OrderByDescending(x => x.TotalGames / (coreSets.Sum(x => x.TotalGames))).First();
+        CoreItems = coreSets.OrderByDescending(x => x.TotalGames / coreSets.Sum(x => x.TotalGames)).First();
 
         return Task.CompletedTask;
     }
