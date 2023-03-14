@@ -3,7 +3,7 @@
     public class Summoner
     {
         public string? PUUID;
-        public int AccountID;
+        public long AccountID;
         public int SummonerID;
         public string? Name;
         public string? InternalName;
