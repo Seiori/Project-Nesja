@@ -1,6 +1,6 @@
 ﻿namespace Project_Nesja.Forms
 {
-    partial class Champion
+    partial class ChampionLookup
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Champion));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChampionLookup));
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             championImage = new PictureBox();
             championName = new Label();

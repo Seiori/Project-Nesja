@@ -1,45 +1,38 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
 namespace Project_Nesja
 {
     public class WebRequests
     {
-        private static readonly HttpClientHandler handler = new HttpClientHandler();
+        private static readonly HttpClientHandler handler = new();
         private static readonly HttpClient client;
 
         static WebRequests()
         {
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
             client = new HttpClient(handler);
-            client.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue() { NoCache = true };
+            client.DefaultRequestHeaders.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue();
         }
 
-        public static async Task<JToken?> GetJsonObject(string url)
+        public static async Task<JToken?> GetJsonObject(string url, string subFolder = null!, string fileName = null!)
         {
-            try
+            if (subFolder == null && fileName == null)
             {
                 var json = await client.GetStringAsync(url);
                 return JToken.Parse(json);
             }
-            catch (WebException ex)
+
+            var filePath = Path.Combine("Data", subFolder!, fileName + ".json");
+
+            if (File.Exists(filePath))
             {
-                if (ex.Status == WebExceptionStatus.NameResolutionFailure)
-                {
-                    Console.WriteLine("Error: Internet Connection not available.");
-                    return default;
-                }
-                else
-                {
-                    throw;
-                }
+                var json = await File.ReadAllTextAsync(filePath);
+                return JToken.Parse(json);
             }
+
+            var downloadedJson = await client.GetStringAsync(url);
+            await File.WriteAllTextAsync(filePath, downloadedJson);
+            return JToken.Parse(downloadedJson);
         }
 
         public static async Task<Image?> DownloadImage(string url, string subFolder, string fileName)
@@ -48,22 +41,18 @@ namespace Project_Nesja
 
             if (File.Exists(filePath))
             {
-                using (var fileStream = File.OpenRead(filePath))
-                {
-                    var img = Image.FromStream(fileStream);
-                    return img;
-                }
+                using var fileStream = File.OpenRead(filePath);
+                var img = Image.FromStream(fileStream);
+                return img;
             }
             else
             {
                 var imageBytes = await client.GetByteArrayAsync(url);
-                using (var ms = new MemoryStream(imageBytes))
-                {
-                    var img = Image.FromStream(ms);
-                    ms.Seek(0, SeekOrigin.Begin);
-                    File.WriteAllBytes(filePath, imageBytes);
-                    return img;
-                }
+                using var ms = new MemoryStream(imageBytes);
+                var img = Image.FromStream(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                File.WriteAllBytes(filePath, imageBytes);
+                return img;
             }
         }
     }

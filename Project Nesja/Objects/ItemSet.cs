@@ -1,11 +1,17 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-public class ItemSet
+﻿public class ItemSet
 {
-    public Asset? FirstItem { get; set; }
-    public Asset? SecondItem { get; set; }
-    public Asset? ThirdItem { get; set; }
-    public float Winrate { get; set; }
-    public float Pickrate { get; set; }
-    public float TotalGames { get; set; }
+    public Asset? FirstItem;
+    public Asset? SecondItem;
+    public Asset? ThirdItem;
+    public float Winrate;
+    public float Pickrate;
+    public float TotalGames;
+}
+
+public class Item
+{
+    public Asset? ItemAsset;
+    public float Winrate;
+    public float Pickrate;
+    public int TotalGames;
 }

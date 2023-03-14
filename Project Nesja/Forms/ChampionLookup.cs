@@ -1,24 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
-using PoniLCU;
 using Project_Nesja.Data;
-using Project_Nesja.Objects;
 using static PoniLCU.LeagueClient;
 
 namespace Project_Nesja.Forms
 {
-    public partial class Champion : Form
+    public partial class ChampionLookup : Form
     {
-        public LeagueClient leagueClient;
-        private SummonerData summonerData;
-        private ChampionData selectedChampion;
+        private Champion selectedChampion;
         private ChampionBuild championBuild;
         private string role;
 
-        public Champion(LeagueClient leagueClient, SummonerData summonerData, ChampionData chosenChampion, string role)
+        public ChampionLookup(Champion chosenChampion, string role)
         {
             InitializeComponent();
-            this.leagueClient = leagueClient;
-            this.summonerData = summonerData;
             this.selectedChampion = chosenChampion;
             this.role = role;
 
@@ -31,16 +25,26 @@ namespace Project_Nesja.Forms
             searchChampionListBox.Visible = false;
             SelectRole(role);
 
-            if (leagueClient.IsConnected!)
+            if (ClientData.LeagueClient.IsConnected!)
                 ImportButton.Visible = true;
         }
 
         private async void LoadChamptionData()
         {
+
+            // Adds Matchup Data
+            championMatchupData.Rows.Clear();
+
+            foreach (var champion in championBuild.Matchups)
+            {
+                await champion.ChampionData!.FetchSprite();
+                championMatchupData.Rows.Add(champion.ChampionData.Sprite, champion.Winrate.ToString());
+            }
+            
             // Display Selected Champion Information
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;
-            championImage.Image = selectedChampion.SplashImage;
+            championImage.Image = selectedChampion.Splash;
 
             // Display Selected Champion Data
             totalgamesValue.Text = championBuild.TotalGames.ToString();
@@ -67,11 +71,11 @@ namespace Project_Nesja.Forms
             // Adds the Images of the Abilities to the Form
             skillData.Text = System.Math.Round(championBuild.SkillPriority.Winrate, 2).ToString() + "% WR (" + championBuild.SkillPriority.TotalGames + ")";
             firstAbilityValue.Text = championBuild.SkillPriority.Priority![0].ToString();
-            firstAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[0].ToString());
+            firstAbility.Image = selectedChampion.AbilityImageFromString(championBuild.SkillPriority.Priority[0].ToString());
             secondAbilityValue.Text = championBuild.SkillPriority.Priority[1].ToString();
-            secondAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[1].ToString());
+            secondAbility.Image = selectedChampion.AbilityImageFromString(championBuild.SkillPriority.Priority[1].ToString());
             thirdAbilityValue.Text = championBuild.SkillPriority.Priority[2].ToString();
-            thirdAbility.Image = selectedChampion.FetchChampionAbility(championBuild.SkillPriority.Priority[2].ToString());
+            thirdAbility.Image = selectedChampion.AbilityImageFromString(championBuild.SkillPriority.Priority[2].ToString());
 
             // Adds the Images/Data of the Starting Items to the Form
             startItemData.Text = System.Math.Round(championBuild.StartingItems.Winrate * 100, 2).ToString() + "% WR (" + championBuild.StartingItems.TotalGames + ")";
@@ -86,54 +90,46 @@ namespace Project_Nesja.Forms
             firstCoreItem.Image = championBuild.CoreItems.FirstItem?.Image ?? null;
             secondCoreItem.Image = championBuild.CoreItems.SecondItem?.Image ?? null;
             thirdCoreItem.Image = championBuild.CoreItems.ThirdItem?.Image ?? null;
+            coreItemData.Text = System.Math.Round(championBuild.CoreItems.Winrate * 100, 2).ToString() + "% WR (" + championBuild.CoreItems.TotalGames + ")";
 
             // Adds the Images/Data of the Fourth Item choices to the Form
-            firstFourthChoice.Image = championBuild.FourthItemChoice.FirstOrDefault()?.ItemAsset.Image ?? null;
+            firstFourthChoice.Image = championBuild.FourthItemChoice.FirstOrDefault()?.ItemAsset!.Image ?? null;
             firstFourthWinrate.Text = championBuild.FourthItemChoice.FirstOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
             firstFourthMatches.Text = (championBuild.FourthItemChoice.FirstOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
 
-            secondFourthChoice.Image = championBuild.FourthItemChoice.ElementAtOrDefault(1)?.ItemAsset.Image ?? null;
+            secondFourthChoice.Image = championBuild.FourthItemChoice.ElementAtOrDefault(1)?.ItemAsset!.Image ?? null;
             secondFourthWinrate.Text = championBuild.FourthItemChoice.ElementAtOrDefault(1)?.Winrate.ToString("P2") + " WR" ?? "N/A";
             secondFourthMatches.Text = (championBuild.FourthItemChoice.ElementAtOrDefault(1)?.TotalGames ?? 0).ToString() + " Matches";
 
-            thirdFourthChoice.Image = championBuild.FourthItemChoice.LastOrDefault()?.ItemAsset.Image ?? null;
+            thirdFourthChoice.Image = championBuild.FourthItemChoice.LastOrDefault()?.ItemAsset!.Image ?? null;
             thirdFourthWinrate.Text = championBuild.FourthItemChoice.LastOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
             thirdFourthMatches.Text = (championBuild.FourthItemChoice.LastOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
 
             // Adds the Images/Data of the Fifth Item choices to the Form
-            firstFifthChoice.Image = championBuild.FifthItemChoice.FirstOrDefault()?.ItemAsset.Image ?? null;
+            firstFifthChoice.Image = championBuild.FifthItemChoice.FirstOrDefault()?.ItemAsset!.Image ?? null;
             firstFifthWinrate.Text = championBuild.FifthItemChoice.FirstOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
             firstFifthMatches.Text = (championBuild.FifthItemChoice.FirstOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
 
-            secondFifthChoice.Image = championBuild.FifthItemChoice.ElementAtOrDefault(1)?.ItemAsset.Image ?? null;
+            secondFifthChoice.Image = championBuild.FifthItemChoice.ElementAtOrDefault(1)?.ItemAsset!.Image ?? null;
             secondFifthWinrate.Text = championBuild.FifthItemChoice.ElementAtOrDefault(1)?.Winrate.ToString("P2") + " WR" ?? "N/A";
             secondFifthMatches.Text = (championBuild.FifthItemChoice.ElementAtOrDefault(1)?.TotalGames ?? 0).ToString() + " Matches";
 
-            thirdFifthChoice.Image = championBuild.FifthItemChoice.LastOrDefault()?.ItemAsset.Image ?? null;
+            thirdFifthChoice.Image = championBuild.FifthItemChoice.LastOrDefault()?.ItemAsset!.Image ?? null;
             thirdFifthWinrate.Text = championBuild.FifthItemChoice.LastOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
             thirdFifthMatches.Text = (championBuild.FifthItemChoice.LastOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
 
             // Adds the Images/Data of the Sixth Item choices to the Form
-            firstSixthChoice.Image = championBuild.SixthItemChoice.FirstOrDefault()?.ItemAsset.Image ?? null;
+            firstSixthChoice.Image = championBuild.SixthItemChoice.FirstOrDefault()?.ItemAsset!.Image ?? null;
             firstSixthWinrate.Text = championBuild.SixthItemChoice.FirstOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
             firstSixthMatches.Text = (championBuild.SixthItemChoice.FirstOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
 
-            secondSixthChoice.Image = championBuild.SixthItemChoice.ElementAtOrDefault(1)?.ItemAsset.Image ?? null;
+            secondSixthChoice.Image = championBuild.SixthItemChoice.ElementAtOrDefault(1)?.ItemAsset!.Image ?? null;
             secondSixthWinrate.Text = championBuild.SixthItemChoice.ElementAtOrDefault(1)?.Winrate.ToString("P2") + " WR" ?? "N/A";
             secondSixthMatches.Text = (championBuild.SixthItemChoice.ElementAtOrDefault(1)?.TotalGames ?? 0).ToString() + " Matches";
 
-            thirdSixthChoice.Image = championBuild.SixthItemChoice.LastOrDefault()?.ItemAsset.Image ?? null;
+            thirdSixthChoice.Image = championBuild.SixthItemChoice.LastOrDefault()?.ItemAsset!.Image ?? null;
             thirdSixthWinrate.Text = championBuild.SixthItemChoice.LastOrDefault()?.Winrate.ToString("P2") + " WR" ?? "N/A";
             thirdSixthMatches.Text = (championBuild.SixthItemChoice.LastOrDefault()?.TotalGames ?? 0).ToString() + " Matches";
-
-            // Adds Matchup Data
-            championMatchupData.Rows.Clear();
-
-            foreach (var champion in championBuild.Matchups)
-            {
-                await champion.ChampionData!.FetchChampionSprite();
-                championMatchupData.Rows.Add(champion.ChampionData.SpriteImage, champion.Winrate.ToString());
-            }
         }
 
         private void SearchChampionTextBox_TextChanged(object sender, EventArgs e)
@@ -185,7 +181,7 @@ namespace Project_Nesja.Forms
         {
             championBuild = new ChampionBuild(selectedChampion, role!);
 
-            await selectedChampion.FetchChampionData();
+            await selectedChampion.FetchAll();
             await championBuild.FetchChampionBuild();
 
             topSelection.BackColor = SystemColors.Control;
@@ -222,11 +218,8 @@ namespace Project_Nesja.Forms
 
         private async void ImportButton_Click(object sender, EventArgs e)
         {
-            var currentRunePage = await leagueClient.Request(requestMethod.GET, "/lol-perks/v1/currentpage");
-            int pageId = (int)JObject.Parse(currentRunePage)["id"]!;
-            await leagueClient.Request(requestMethod.DELETE, $"/lol-perks/v1/pages/{pageId}");
-            var body = "{\"name\":\"" + selectedChampion.Name + " " + role + " Runes\", \"selectedPerkIds\": " + JArray.FromObject(this.championBuild.RunePageChoice.GetRunePageIDs()).ToString() + ", \"primaryStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.Keystone!.RuneTree) + ", \"subStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.SecTreeFirstOption!.RuneTree) + ", \"current\": true}";
-            await leagueClient.Request(requestMethod.POST, "lol-perks/v1/pages", body);
+            var postBody = "{\"name\":\"" + selectedChampion.Name + " " + role + " Runes\", \"selectedPerkIds\": " + JArray.FromObject(this.championBuild.RunePageChoice.GetRunePageIDs()).ToString() + ", \"primaryStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.Keystone!.RuneTree) + ", \"subStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.SecTreeFirstOption!.RuneTree) + ", \"current\": true}";
+            await ClientData.SetSummonerRunes(postBody);
         }
 
         private void TopSelection_Click(object sender, EventArgs e)

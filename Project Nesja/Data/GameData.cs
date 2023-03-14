@@ -1,24 +1,25 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Project_Nesja.Objects;
 
 namespace Project_Nesja.Data
 {
     public static class GameData
     {
         public static string? CurrentVersion { get; set; }
-        public static Dictionary<int, ChampionData> ChampionList { get; set; }
+        public static Dictionary<int, Champion> ChampionList { get; set; }
         public static Dictionary<int, Asset> Assets { get; set; }
 
         static GameData()
         {
-            ChampionList = new Dictionary<int, ChampionData>();
+            ChampionList = new Dictionary<int, Champion>();
             Assets = new Dictionary<int, Asset>();
         }
         
         public static async Task FetchGameData()
         {
             // Grabs Current Live Patch Version
-            CurrentVersion = (await WebRequests.GetJsonObject("https://ddragon.leagueoflegends.com/api/versions.json")).FirstOrDefault().ToString();
+            CurrentVersion = (await WebRequests.GetJsonObject("https://ddragon.leagueoflegends.com/api/versions.json"))!.FirstOrDefault()!.ToString();
 
             if (GetCurrentVersion())
                 await LoadGameData();
@@ -37,14 +38,14 @@ namespace Project_Nesja.Data
         private static async Task FetchChampionData()
         {
             // Grabs All Champion Data
-            JObject allChampions = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/champion.json")).SelectToken("data");
+            JObject allChampions = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/champion.json"))!.SelectToken("data")!;
 
             // Parses the Champion Data into a Easily Accessible Dictionary of Relevant Data
             foreach (var eachChampion in allChampions!)
             {
                 JObject eachChampionData = (JObject)eachChampion.Value!;
                 
-                ChampionData championData = new()
+                Champion championData = new()
                 {
                     Name = eachChampionData["name"]!.ToString(),
                     Title = eachChampionData["title"]!.ToString(),
@@ -61,7 +62,7 @@ namespace Project_Nesja.Data
         private static async Task FetchItemData()
         {
             // Grabs All Item Data
-            JObject allItems = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/item.json")).SelectToken("data");
+            JObject allItems = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/item.json"))!.SelectToken("data")!;
 
             // Parses the Item Data into a Easily Accessible Dictionary of Relevant ItemData
             foreach (var eachItem in allItems!)
@@ -71,7 +72,7 @@ namespace Project_Nesja.Data
                 Asset itemData = new()
                 {
                     Name = eachItemData["name"]!.ToString(),
-                    ID = int.Parse(eachItemData["image"]["full"].ToString().Split('.')[0]),
+                    ID = int.Parse(eachItemData["image"]!["full"]!.ToString().Split('.')[0]),
                     AssetType = AssetType.Items
                 };
                 Assets.Add(itemData.ID, itemData);
@@ -115,7 +116,7 @@ namespace Project_Nesja.Data
         private static async Task FetchSummonerSpellData()
         {
             // Grabs All SummonerSpell Data
-            JObject allSummonerSpells = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json")).SelectToken("data");
+            JObject allSummonerSpells = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json"))!.SelectToken("data")!;
 
             // Parses the Summoner Spell Data into an Easily Accessible Dictionary of Relevant SummonerSpellData
             foreach (var eachSummonerSpell in allSummonerSpells!)
@@ -163,7 +164,7 @@ namespace Project_Nesja.Data
         {
             string rootFolder = "Img";
 
-            ChampionList = JsonConvert.DeserializeObject<Dictionary<int, ChampionData>>(File.ReadAllText(Path.Combine("Data", "ChampionList")))!;
+            ChampionList = JsonConvert.DeserializeObject<Dictionary<int, Champion>>(File.ReadAllText(Path.Combine("Data", "ChampionList")))!;
 
             foreach (var champion in ChampionList)
             {
@@ -171,39 +172,39 @@ namespace Project_Nesja.Data
                 if (File.Exists(splashPath))
                 {
                     using FileStream stream = new(splashPath, FileMode.Open, FileAccess.Read);
-                    champion.Value.SplashImage = Image.FromStream(stream);
+                    champion.Value.Splash = Image.FromStream(stream);
                 }
 
                 var spritePath = Path.Combine(rootFolder, "Sprite", champion.Value.NameID + ".jpg");
                 if (File.Exists(spritePath))
                 {
                     using FileStream stream = new(spritePath, FileMode.Open, FileAccess.Read);
-                    champion.Value.SpriteImage = Image.FromStream(stream);
+                    champion.Value.Sprite = Image.FromStream(stream);
                 }
 
                 var qAbilityPath = Path.Combine(rootFolder, "Abilities", champion.Value.NameID + "Q.jpg");
                 if (File.Exists(qAbilityPath))
                 {
                     using FileStream stream = new(qAbilityPath, FileMode.Open, FileAccess.Read);
-                    champion.Value.QAbility = Image.FromStream(stream);
+                    champion.Value.Q = Image.FromStream(stream);
                 }
 
                 var wAbilityPath = Path.Combine(rootFolder, "Abilities", champion.Value.NameID + "W.jpg");
                 if (File.Exists(wAbilityPath))
                 {
                     using FileStream stream = new(wAbilityPath, FileMode.Open, FileAccess.Read);
-                    champion.Value.WAbility = Image.FromStream(stream);
+                    champion.Value.W = Image.FromStream(stream);
                 }
 
                 var eAbilityPath = Path.Combine(rootFolder, "Abilities", champion.Value.NameID + "E.jpg");
                 if (File.Exists(eAbilityPath))
                 {
                     using FileStream stream = new(eAbilityPath, FileMode.Open, FileAccess.Read);
-                    champion.Value.EAbility = Image.FromStream(stream);
+                    champion.Value.E = Image.FromStream(stream);
                 }
             }
 
-            Assets = JsonConvert.DeserializeObject<Dictionary<int, Asset>>(File.ReadAllText(Path.Combine("Data", "Assets")));
+            Assets = JsonConvert.DeserializeObject<Dictionary<int, Asset>>(File.ReadAllText(Path.Combine("Data", "Assets")))!;
 
             foreach (var asset in Assets)
             {

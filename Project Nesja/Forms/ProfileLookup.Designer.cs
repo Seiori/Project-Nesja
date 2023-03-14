@@ -1,6 +1,6 @@
 ﻿namespace Project_Nesja.Forms
 {
-    partial class Profile
+    partial class ProfileLookup
     {
         /// <summary>
         /// Required designer variable.

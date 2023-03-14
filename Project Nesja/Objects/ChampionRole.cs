@@ -1,10 +1,10 @@
 ﻿public class ChampionRole
-{ 
-    public ChampionData? ChampionData { get; set; }
-    public int Role { get; set; }
-    public float RolePercentage { get; set; }
-    public int TotalGames { get; set; }
-    public float Winrate { get; set; }
-    public float Pickrate { get; set; }
-    public float Banrate { get; set; }
+{
+    public Champion? ChampionData;
+    public int Role;
+    public float RolePercentage;
+    public int TotalGames;
+    public float Winrate;
+    public float Pickrate;
+    public float Banrate;
 }

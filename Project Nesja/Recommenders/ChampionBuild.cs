@@ -4,7 +4,7 @@ using Project_Nesja.Data;
 
 public class ChampionBuild
 {
-    private readonly ChampionData championData;
+    private readonly Champion championData;
     public string role;
     public int TotalGames;
     public double Winrate;
@@ -17,11 +17,10 @@ public class ChampionBuild
     public List<Item>  FifthItemChoice;
     public List<Item> SixthItemChoice;
     public SkillPriority SkillPriority;
-    public SkillOrder SkillOrder;
     public SummonerSpells SummonerSpells;
     public List<ChampionRole> Matchups;
 
-    public ChampionBuild(ChampionData championData, string role)
+    public ChampionBuild(Champion championData, string role)
     {
         this.championData = championData;
         this.role = role;
@@ -32,7 +31,6 @@ public class ChampionBuild
         FifthItemChoice = new(3);
         SixthItemChoice = new(3);
         SkillPriority = new();
-        SkillOrder = new();
         SummonerSpells = new();
         Matchups = new();
     }
@@ -117,6 +115,7 @@ public class ChampionBuild
         Winrate = statData["wr"]!.ToObject<double>();
         Pickrate = statData["pr"]!.ToObject<double>();
         Banrate = statData["br"]!.ToObject<double>();
+
 
         return Task.CompletedTask;
     }
@@ -460,8 +459,16 @@ public class ChampionBuild
 
             coreSets.Add(coreSet);
         }
-        CoreItems = coreSets.OrderByDescending(x => x.TotalGames / coreSets.Sum(x => x.TotalGames)).First();
 
+        float winrateWeight = 0.9f;
+        float pickrateWeight = 1 - winrateWeight;
+
+        coreSets = coreSets.Where(x => (x.TotalGames / coreSets.Sum(x => x.TotalGames)) > 0.03).ToList();
+
+        coreSets = coreSets.OrderByDescending(x => (x.TotalGames / coreSets.Sum(x => x.TotalGames) * pickrateWeight + x.Winrate * winrateWeight)).ToList();
+
+        CoreItems = coreSets.First();
+        
         return Task.CompletedTask;
     }
     
@@ -551,26 +558,10 @@ public class ChampionBuild
             skillPrioritySets.Add(skillPrioritySetData);
         }
 
-        List<SkillOrder> skillOrderSets = new();
-
-        var skillOrderData = buildDataExtra.SelectToken("skills")!.SelectToken("skill15");
-
-        foreach (var skillOrderSet in skillOrderData!)
-        {
-            SkillOrder skillOrderSetData = new();
-            skillOrderSetData.Order = skillOrderSet.First().ToString();
-            skillOrderSetData.Winrate = skillOrderSet.ElementAt(2).ToObject<float>() / skillOrderSet.ElementAt(1).ToObject<float>() * 100;
-            skillOrderSetData.Pickrate = skillOrderSet.ElementAt(1).ToObject<float>() / buildData.SelectToken("n")!.ToObject<float>() * 100;
-            skillOrderSetData.TotalGames = skillOrderSet.ElementAt(1).ToObject<int>();
-
-            skillOrderSets.Add(skillOrderSetData);
-        }
-
         float winRateWeight = 0.4f;
         float pickRateWeight = 1 - winRateWeight;
 
         SkillPriority = skillPrioritySets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
-        SkillOrder = skillOrderSets.OrderByDescending(x => x.Winrate * winRateWeight + x.Pickrate * pickRateWeight).First();
 
         return Task.CompletedTask;
     }

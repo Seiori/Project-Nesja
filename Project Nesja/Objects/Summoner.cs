@@ -1,6 +1,6 @@
 ﻿namespace Project_Nesja.Objects
 {
-    public class SummonerData
+    public class Summoner
     {
         public string? PUUID;
         public int AccountID;

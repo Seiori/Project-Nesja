@@ -1,24 +1,15 @@
 ﻿using Project_Nesja.Data;
 using Project_Nesja.Objects;
 using Newtonsoft.Json.Linq;
-using PoniLCU;
-using static PoniLCU.LeagueClient;
-using System.Runtime.InteropServices;
 
 namespace Project_Nesja.Forms
 {
-    public partial class Profile : Form
+    public partial class ProfileLookup : Form
     {
-        static readonly LeagueClient leagueClient = new (credentials.cmd);
-        private SummonerData Summoner;
-        
-        public Profile(SummonerData summonerData)
+        Summoner Summoner = ClientData.Summoner;
+        public ProfileLookup()
         {
             InitializeComponent();
-            if (summonerData == null)
-                this.Summoner = new SummonerData();
-            else
-                this.Summoner = summonerData;
         }
 
         private void Profile_Load(object sender, EventArgs e)
@@ -26,19 +17,17 @@ namespace Project_Nesja.Forms
             SearchPlayerListBox.Visible = false;
 
             if (Summoner.Name != null)
-                ParseLiveSummonerData();
+            {
+                RegionSelector.Text = Summoner.Region!.ToUpper();
+                UpdateButton.PerformClick();
+            }
         }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        
-        static extern bool AllocConsole();
-        
         private async void LoadSummonerData()
         {
             SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + Summoner.IconID + ".png", "Icons", Summoner.IconID.ToString());
             SummonerName.Text = Summoner.Name;
-            SummonerRegion.Text = Summoner.Region.ToUpper();
+            SummonerRegion.Text = Summoner.Region!.ToUpper();
             SummonerLevel.Text = Summoner.Level.ToString();
             SummonerRank.Text = "Ladder Ranked: " + Summoner.SoloRank.ToString();
 
@@ -62,9 +51,9 @@ namespace Project_Nesja.Forms
             return await WebRequests.GetJsonObject(apiUrl) as JObject;
         }
 
-        private static SummonerData ParseSummonerData(JObject summonerData)
+        private static Summoner ParseSummonerData(JObject summonerData)
         {
-            SummonerData summoner = new()
+            Summoner summoner = new()
             {
                 Name = summonerData["name"]?.ToString(),
                 Region = summonerData["region"]?.ToString(),
@@ -84,35 +73,6 @@ namespace Project_Nesja.Forms
             };
 
             return summoner;
-        }
-        
-        private async void ParseLiveSummonerData()
-        {
-            // Fetching Ranked Data
-            var data = JObject.Parse(await leagueClient.Request(requestMethod.GET, "/lol-ranked/v1/ranked-stats/" + Summoner.PUUID));
-
-            // Seperates queue specific data
-            var soloRankedData = data["queues"].First();
-            var flexRankedData = data["queues"].ElementAt(1);
-
-            // Parsing Solo data
-            Summoner.SoloTier = soloRankedData.Children().ElementAt(2).ToString().Split(':')[1].Trim().Replace("\"", ""); ;
-            Summoner.SoloDivision = soloRankedData.Children().First().ToString().Split(':')[1].Trim().Replace("\"", ""); ;
-            Summoner.SoloLP = (int)soloRankedData.Children().ElementAt(4);
-            Summoner.SoloWins = (int)soloRankedData.Children().ElementAt(18);
-            Summoner.SoloLosses = (int)soloRankedData.Children().ElementAt(5);
-
-            // Parsing Flex data
-            Summoner.FlexTier = flexRankedData.Children().ElementAt(2).ToString().Split(':')[1].Trim().Replace("\"", ""); ;
-            Summoner.FlexDivision = flexRankedData.Children().First().ToString().Split(':')[1].Trim().Replace("\"", ""); ;
-            Summoner.FlexLP = (int)flexRankedData.Children().ElementAt(4);
-            Summoner.FlexWins = (int)flexRankedData.Children().ElementAt(18);
-            Summoner.FlexLosses = (int)flexRankedData.Children().ElementAt(5);
-
-            // Set the region selector
-            RegionSelector.SelectedIndex = RegionSelector.FindString(Summoner.Region);
-
-            UpdateButton.PerformClick();
         }
         
         private async void SearchPlayerTextBox_KeyDown(object sender, KeyEventArgs e)

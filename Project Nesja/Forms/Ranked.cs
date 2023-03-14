@@ -22,12 +22,7 @@ namespace Project_Nesja.Forms
             currentRole = "default";
         }
 
-        private void Ranked_Load(object sender, EventArgs e)
-        {
-            FetchRankedData();
-        }
-
-        private async void FetchRankedData()
+        private async void Ranked_Load(object sender, EventArgs e)
         {
             string apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=platinum_plus&queue=420&region=all";
 
@@ -42,7 +37,7 @@ namespace Project_Nesja.Forms
 
             int totalRoleGames = 0;
 
-            foreach (var champion in rankedData.SelectToken("current").SelectToken("lane").SelectToken(currentRole).SelectToken("cid"))
+            foreach (var champion in rankedData.SelectToken("current")!.SelectToken("lane")!.SelectToken(currentRole)!.SelectToken("cid")!)
             {
                 ChampionRole championRoleData = new()
                 {
@@ -57,25 +52,25 @@ namespace Project_Nesja.Forms
                 switch (championRoleData.Role)
                 {
                     case 1:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(1);
+                        totalRoleGames = (int)rankedData.SelectToken("current")!.SelectToken("totals")!.ElementAt(1);
                         break;
                     case 2:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(2);
+                        totalRoleGames = (int)rankedData.SelectToken("current")!.SelectToken("totals")!.ElementAt(2);
                         break;
                     case 3:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(3);
+                        totalRoleGames = (int)rankedData.SelectToken("current")!.SelectToken("totals")!.ElementAt(3);
                         break;
                     case 4:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(4);
+                        totalRoleGames = (int)rankedData.SelectToken("current")!.SelectToken("totals")!.ElementAt(4);
                         break;
                     case 5:
-                        totalRoleGames = (int)rankedData.SelectToken("current").SelectToken("totals").ElementAt(5);
+                        totalRoleGames = (int)rankedData.SelectToken("current")!.SelectToken("totals")!.ElementAt(5);
                         break;
                 }
                 championRoleData.Pickrate = ((float)championRoleData.TotalGames / (float)totalRoleGames) * 2;
                 championRoleData.Banrate = (float)champion.First().Last();
 
-                rankedQueue.Add(championRoleData.ChampionData.ID, championRoleData);
+                rankedQueue.Add((int)championRoleData.ChampionData.ID, championRoleData);
             }
             LoadRankedData();
         }
@@ -91,13 +86,11 @@ namespace Project_Nesja.Forms
                 .OrderByDescending(x => x.Value.Winrate * 0.7f + (float)x.Value.TotalGames / rankedQueue.Sum(x => x.Value.TotalGames) * 0.3f)
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-            await Task.WhenAll(rankedQueue.Values.Select(x => x.ChampionData.FetchChampionData()));
-
+            await Task.WhenAll(rankedQueue.Values.Select(x => x.ChampionData!.FetchSprite()));
+            
             foreach (var champion in rankedQueue)
             {
                 PBI = (champion.Value.Winrate - (rankedQueue.Sum(x => x.Value.Winrate) / rankedQueue.Count)) * 100 * champion.Value.Pickrate / (100 - champion.Value.Banrate);
-                
-                await champion.Value.ChampionData.FetchChampionData();
                 
                 switch(champion.Value.Role)
                 {
@@ -117,7 +110,7 @@ namespace Project_Nesja.Forms
                         role = "Support";
                         break;
                 }
-                rankedDataGrid.Rows.Add(champion.Value.ChampionData.SpriteImage, champion.Value.ChampionData.Name, role, System.Math.Round(champion.Value.RolePercentage * 100, 2) + "%", System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%", System.Math.Round(champion.Value.Banrate, 2) + "%", System.Math.Round(PBI * 10000, 0), champion.Value.TotalGames);
+                rankedDataGrid.Rows.Add(champion.Value.ChampionData!.Sprite, champion.Value.ChampionData.Name, role, System.Math.Round(champion.Value.RolePercentage * 100, 2) + "%", System.Math.Round(champion.Value.Winrate * 100, 2) + "%", System.Math.Round(champion.Value.Pickrate * 100, 2) + "%", System.Math.Round(champion.Value.Banrate, 2) + "%", System.Math.Round(PBI * 10000, 0), champion.Value.TotalGames);
             }
         }
 
@@ -127,7 +120,7 @@ namespace Project_Nesja.Forms
             {
                 case 0:
                     if (currentRole != null)
-                    currentRole = null;
+                    currentRole = null!;
                     break;
                 case 1:
                     if (currentRole != "top")
@@ -256,8 +249,8 @@ namespace Project_Nesja.Forms
                 DataGridViewCell cell = rankedDataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 if (cell.Value is Image)
                 {
-                    ChampionData champion = GameData.ChampionList.Where(x => x.Value.Name == rankedDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
-                    this.mainForm.OpenChildForm(new Champion(null, null, champion, currentRole));
+                    Champion champion = GameData.ChampionList.Where(x => x.Value.Name == rankedDataGrid.Rows[e.RowIndex].Cells[1].Value.ToString()).FirstOrDefault().Value;
+                    this.mainForm.OpenChildForm(new ChampionLookup(champion, currentRole));
                 }
             }
         }

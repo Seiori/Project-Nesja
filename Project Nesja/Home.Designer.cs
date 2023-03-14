@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             Logo = new PictureBox();
             PanelMenu = new Panel();
+            ActiveSummoner = new Label();
+            CurrentPatch = new Label();
             AramButton = new FontAwesome.Sharp.IconButton();
             ProfileButton = new FontAwesome.Sharp.IconButton();
             RankedButton = new FontAwesome.Sharp.IconButton();
@@ -41,10 +43,9 @@
             LabelFormTitle = new Label();
             IconCurrentForm = new FontAwesome.Sharp.IconPictureBox();
             PanelDesktop = new Panel();
-            CurrentPatch = new Label();
-            ActiveSummoner = new Label();
             searchChampionListBox = new ListBox();
             searchChampionTextBox = new TextBox();
+            ClientConnectButton = new Button();
             ((System.ComponentModel.ISupportInitialize)Logo).BeginInit();
             PanelMenu.SuspendLayout();
             PanelTitleBar.SuspendLayout();
@@ -69,6 +70,9 @@
             PanelMenu.AutoSize = true;
             PanelMenu.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             PanelMenu.BackColor = SystemColors.ControlText;
+            PanelMenu.Controls.Add(ClientConnectButton);
+            PanelMenu.Controls.Add(ActiveSummoner);
+            PanelMenu.Controls.Add(CurrentPatch);
             PanelMenu.Controls.Add(AramButton);
             PanelMenu.Controls.Add(ProfileButton);
             PanelMenu.Controls.Add(RankedButton);
@@ -80,6 +84,30 @@
             PanelMenu.Name = "PanelMenu";
             PanelMenu.Size = new Size(189, 586);
             PanelMenu.TabIndex = 2;
+            // 
+            // ActiveSummoner
+            // 
+            ActiveSummoner.AutoSize = true;
+            ActiveSummoner.BackColor = SystemColors.ControlText;
+            ActiveSummoner.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            ActiveSummoner.ForeColor = SystemColors.ControlLightLight;
+            ActiveSummoner.Location = new Point(3, 489);
+            ActiveSummoner.Name = "ActiveSummoner";
+            ActiveSummoner.Size = new Size(136, 20);
+            ActiveSummoner.TabIndex = 2;
+            ActiveSummoner.Text = "Current Summoner:";
+            // 
+            // CurrentPatch
+            // 
+            CurrentPatch.AutoSize = true;
+            CurrentPatch.BackColor = SystemColors.ControlText;
+            CurrentPatch.ForeColor = SystemColors.ControlLightLight;
+            CurrentPatch.Location = new Point(3, 538);
+            CurrentPatch.Name = "CurrentPatch";
+            CurrentPatch.Size = new Size(78, 15);
+            CurrentPatch.TabIndex = 3;
+            CurrentPatch.Text = "Patch Version";
+            CurrentPatch.TextAlign = ContentAlignment.MiddleRight;
             // 
             // AramButton
             // 
@@ -240,8 +268,6 @@
             // PanelDesktop
             // 
             PanelDesktop.BorderStyle = BorderStyle.Fixed3D;
-            PanelDesktop.Controls.Add(CurrentPatch);
-            PanelDesktop.Controls.Add(ActiveSummoner);
             PanelDesktop.Controls.Add(searchChampionListBox);
             PanelDesktop.Controls.Add(searchChampionTextBox);
             PanelDesktop.Dock = DockStyle.Fill;
@@ -249,28 +275,6 @@
             PanelDesktop.Name = "PanelDesktop";
             PanelDesktop.Size = new Size(870, 511);
             PanelDesktop.TabIndex = 4;
-            // 
-            // CurrentPatch
-            // 
-            CurrentPatch.AutoSize = true;
-            CurrentPatch.ForeColor = SystemColors.ActiveCaptionText;
-            CurrentPatch.Location = new Point(3, 462);
-            CurrentPatch.Name = "CurrentPatch";
-            CurrentPatch.Size = new Size(78, 15);
-            CurrentPatch.TabIndex = 3;
-            CurrentPatch.Text = "Patch Version";
-            CurrentPatch.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // ActiveSummoner
-            // 
-            ActiveSummoner.AutoSize = true;
-            ActiveSummoner.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            ActiveSummoner.ForeColor = SystemColors.Desktop;
-            ActiveSummoner.Location = new Point(1, 1);
-            ActiveSummoner.Name = "ActiveSummoner";
-            ActiveSummoner.Size = new Size(136, 20);
-            ActiveSummoner.TabIndex = 2;
-            ActiveSummoner.Text = "Current Summoner:";
             // 
             // searchChampionListBox
             // 
@@ -296,6 +300,18 @@
             searchChampionTextBox.TabIndex = 0;
             searchChampionTextBox.TextChanged += SearchChampionTextBox_TextChanged;
             // 
+            // ClientConnectButton
+            // 
+            ClientConnectButton.BackColor = SystemColors.ControlLightLight;
+            ClientConnectButton.ForeColor = SystemColors.ControlText;
+            ClientConnectButton.Location = new Point(3, 512);
+            ClientConnectButton.Name = "ClientConnectButton";
+            ClientConnectButton.Size = new Size(75, 23);
+            ClientConnectButton.TabIndex = 2;
+            ClientConnectButton.Text = "Retry";
+            ClientConnectButton.UseVisualStyleBackColor = false;
+            ClientConnectButton.Click += ClientConnectButton_Click;
+            // 
             // MainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -312,6 +328,7 @@
             Resize += MainMenu_Resize;
             ((System.ComponentModel.ISupportInitialize)Logo).EndInit();
             PanelMenu.ResumeLayout(false);
+            PanelMenu.PerformLayout();
             PanelTitleBar.ResumeLayout(false);
             PanelTitleBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)IconCurrentForm).EndInit();
@@ -339,5 +356,6 @@
         private TextBox searchChampionTextBox;
         private Label CurrentPatch;
         private Label ActiveSummoner;
+        private Button ClientConnectButton;
     }
 }
