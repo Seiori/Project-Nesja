@@ -115,7 +115,7 @@ public class ChampionBuild
         Winrate = statData["wr"]!.ToObject<double>();
         Pickrate = statData["pr"]!.ToObject<double>();
         Banrate = statData["br"]!.ToObject<double>();
-
+        TotalGames = statData["n"]!.ToObject<int>();
 
         return Task.CompletedTask;
     }
