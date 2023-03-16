@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChampionLookup));
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             championImage = new PictureBox();
             championName = new Label();
             championTitle = new Label();
@@ -124,6 +124,9 @@
             runePageTitle = new Label();
             runePageData = new Label();
             ImportButton = new Button();
+            checkBox1 = new CheckBox();
+            checkBox2 = new CheckBox();
+            checkBox3 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)championImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)firstAbility).BeginInit();
             ((System.ComponentModel.ISupportInitialize)secondCoreItem).BeginInit();
@@ -967,10 +970,10 @@
             // Image
             // 
             Image.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = resources.GetObject("dataGridViewCellStyle1.NullValue");
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            Image.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.NullValue = resources.GetObject("dataGridViewCellStyle3.NullValue");
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            Image.DefaultCellStyle = dataGridViewCellStyle3;
             Image.HeaderText = "Image";
             Image.ImageLayout = DataGridViewImageCellLayout.Stretch;
             Image.Name = "Image";
@@ -978,15 +981,15 @@
             // 
             // Winrate
             // 
-            dataGridViewCellStyle2.ForeColor = Color.Black;
-            Winrate.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.ForeColor = Color.Black;
+            Winrate.DefaultCellStyle = dataGridViewCellStyle4;
             Winrate.HeaderText = "Winrate";
             Winrate.Name = "Winrate";
             Winrate.Width = 94;
             // 
             // KeystoneImage
             // 
-            KeystoneImage.Location = new Point(368, 210);
+            KeystoneImage.Location = new Point(345, 210);
             KeystoneImage.Name = "KeystoneImage";
             KeystoneImage.Size = new Size(41, 38);
             KeystoneImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -995,7 +998,7 @@
             // 
             // PrimRuneFirstRowImage
             // 
-            PrimRuneFirstRowImage.Location = new Point(415, 210);
+            PrimRuneFirstRowImage.Location = new Point(392, 210);
             PrimRuneFirstRowImage.Name = "PrimRuneFirstRowImage";
             PrimRuneFirstRowImage.Size = new Size(41, 38);
             PrimRuneFirstRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1004,7 +1007,7 @@
             // 
             // PrimRuneSecRowImage
             // 
-            PrimRuneSecRowImage.Location = new Point(462, 210);
+            PrimRuneSecRowImage.Location = new Point(439, 210);
             PrimRuneSecRowImage.Name = "PrimRuneSecRowImage";
             PrimRuneSecRowImage.Size = new Size(41, 38);
             PrimRuneSecRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1013,7 +1016,7 @@
             // 
             // PrimRuneThirdRowImage
             // 
-            PrimRuneThirdRowImage.Location = new Point(509, 210);
+            PrimRuneThirdRowImage.Location = new Point(486, 210);
             PrimRuneThirdRowImage.Name = "PrimRuneThirdRowImage";
             PrimRuneThirdRowImage.Size = new Size(41, 38);
             PrimRuneThirdRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1022,7 +1025,7 @@
             // 
             // SecRuneFirstOptionImage
             // 
-            SecRuneFirstOptionImage.Location = new Point(450, 254);
+            SecRuneFirstOptionImage.Location = new Point(427, 254);
             SecRuneFirstOptionImage.Name = "SecRuneFirstOptionImage";
             SecRuneFirstOptionImage.Size = new Size(41, 38);
             SecRuneFirstOptionImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1031,7 +1034,7 @@
             // 
             // SecRuneSecOptionImage
             // 
-            SecRuneSecOptionImage.Location = new Point(497, 254);
+            SecRuneSecOptionImage.Location = new Point(474, 254);
             SecRuneSecOptionImage.Name = "SecRuneSecOptionImage";
             SecRuneSecOptionImage.Size = new Size(41, 38);
             SecRuneSecOptionImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1040,7 +1043,7 @@
             // 
             // StatModFirstRowImage
             // 
-            StatModFirstRowImage.Location = new Point(562, 192);
+            StatModFirstRowImage.Location = new Point(392, 308);
             StatModFirstRowImage.Name = "StatModFirstRowImage";
             StatModFirstRowImage.Size = new Size(41, 38);
             StatModFirstRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1049,7 +1052,7 @@
             // 
             // StatModSecRowImage
             // 
-            StatModSecRowImage.Location = new Point(562, 236);
+            StatModSecRowImage.Location = new Point(439, 308);
             StatModSecRowImage.Name = "StatModSecRowImage";
             StatModSecRowImage.Size = new Size(41, 38);
             StatModSecRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1058,7 +1061,7 @@
             // 
             // StatModThirdRowImage
             // 
-            StatModThirdRowImage.Location = new Point(562, 280);
+            StatModThirdRowImage.Location = new Point(486, 308);
             StatModThirdRowImage.Name = "StatModThirdRowImage";
             StatModThirdRowImage.Size = new Size(41, 38);
             StatModThirdRowImage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -1068,7 +1071,7 @@
             // panel9
             // 
             panel9.BackColor = SystemColors.ActiveCaptionText;
-            panel9.Location = new Point(368, 174);
+            panel9.Location = new Point(345, 174);
             panel9.Name = "panel9";
             panel9.Size = new Size(11, 16);
             panel9.TabIndex = 88;
@@ -1077,7 +1080,7 @@
             // 
             runePageTitle.AutoSize = true;
             runePageTitle.ForeColor = SystemColors.ActiveCaptionText;
-            runePageTitle.Location = new Point(385, 174);
+            runePageTitle.Location = new Point(362, 174);
             runePageTitle.Name = "runePageTitle";
             runePageTitle.Size = new Size(63, 15);
             runePageTitle.TabIndex = 89;
@@ -1087,7 +1090,7 @@
             // 
             runePageData.AutoSize = true;
             runePageData.ForeColor = SystemColors.ActiveCaptionText;
-            runePageData.Location = new Point(368, 192);
+            runePageData.Location = new Point(345, 192);
             runePageData.Name = "runePageData";
             runePageData.Size = new Size(139, 15);
             runePageData.TabIndex = 90;
@@ -1097,7 +1100,7 @@
             // ImportButton
             // 
             ImportButton.ForeColor = SystemColors.Desktop;
-            ImportButton.Location = new Point(415, 308);
+            ImportButton.Location = new Point(565, 184);
             ImportButton.Name = "ImportButton";
             ImportButton.Size = new Size(75, 23);
             ImportButton.TabIndex = 91;
@@ -1106,11 +1109,44 @@
             ImportButton.Visible = false;
             ImportButton.Click += ImportButton_Click;
             // 
-            // Champion
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(562, 213);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(118, 19);
+            checkBox1.TabIndex = 92;
+            checkBox1.Text = "Summoner Spells";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(562, 238);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(58, 19);
+            checkBox2.TabIndex = 93;
+            checkBox2.Text = "Runes";
+            checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            checkBox3.AutoSize = true;
+            checkBox3.Location = new Point(562, 263);
+            checkBox3.Name = "checkBox3";
+            checkBox3.Size = new Size(69, 19);
+            checkBox3.TabIndex = 94;
+            checkBox3.Text = "Item Set";
+            checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // ChampionLookup
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(854, 472);
+            Controls.Add(checkBox3);
+            Controls.Add(checkBox2);
+            Controls.Add(checkBox1);
             Controls.Add(ImportButton);
             Controls.Add(runePageData);
             Controls.Add(runePageTitle);
@@ -1194,7 +1230,7 @@
             Controls.Add(championName);
             Controls.Add(championImage);
             Controls.Add(panel1);
-            Name = "Champion";
+            Name = "ChampionLookup";
             Text = "Home";
             Load += Home_Load;
             ((System.ComponentModel.ISupportInitialize)championImage).EndInit();
@@ -1333,5 +1369,8 @@
         private Label runePageTitle;
         private Label runePageData;
         private Button ImportButton;
+        private CheckBox checkBox1;
+        private CheckBox checkBox2;
+        private CheckBox checkBox3;
     }
 }

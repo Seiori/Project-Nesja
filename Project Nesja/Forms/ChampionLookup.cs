@@ -40,7 +40,7 @@ namespace Project_Nesja.Forms
                 await champion.ChampionData!.FetchSprite();
                 championMatchupData.Rows.Add(champion.ChampionData.Sprite, champion.Winrate.ToString());
             }
-            
+
             // Display Selected Champion Information
             championName.Text = selectedChampion.Name;
             championTitle.Text = selectedChampion.Title;

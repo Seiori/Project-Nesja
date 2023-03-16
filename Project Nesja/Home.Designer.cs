@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             Logo = new PictureBox();
             PanelMenu = new Panel();
+            ClientConnectButton = new Button();
             ActiveSummoner = new Label();
             CurrentPatch = new Label();
             AramButton = new FontAwesome.Sharp.IconButton();
@@ -45,7 +46,7 @@
             PanelDesktop = new Panel();
             searchChampionListBox = new ListBox();
             searchChampionTextBox = new TextBox();
-            ClientConnectButton = new Button();
+            Title = new Label();
             ((System.ComponentModel.ISupportInitialize)Logo).BeginInit();
             PanelMenu.SuspendLayout();
             PanelTitleBar.SuspendLayout();
@@ -84,6 +85,18 @@
             PanelMenu.Name = "PanelMenu";
             PanelMenu.Size = new Size(189, 586);
             PanelMenu.TabIndex = 2;
+            // 
+            // ClientConnectButton
+            // 
+            ClientConnectButton.BackColor = SystemColors.ControlLightLight;
+            ClientConnectButton.ForeColor = SystemColors.ControlText;
+            ClientConnectButton.Location = new Point(3, 512);
+            ClientConnectButton.Name = "ClientConnectButton";
+            ClientConnectButton.Size = new Size(75, 23);
+            ClientConnectButton.TabIndex = 2;
+            ClientConnectButton.Text = "Retry";
+            ClientConnectButton.UseVisualStyleBackColor = false;
+            ClientConnectButton.Click += ClientConnectButton_Click;
             // 
             // ActiveSummoner
             // 
@@ -248,9 +261,9 @@
             LabelFormTitle.AutoSize = true;
             LabelFormTitle.Location = new Point(58, 26);
             LabelFormTitle.Name = "LabelFormTitle";
-            LabelFormTitle.Size = new Size(63, 15);
+            LabelFormTitle.Size = new Size(40, 15);
             LabelFormTitle.TabIndex = 1;
-            LabelFormTitle.Text = "Champion";
+            LabelFormTitle.Text = "Home";
             // 
             // IconCurrentForm
             // 
@@ -268,6 +281,7 @@
             // PanelDesktop
             // 
             PanelDesktop.BorderStyle = BorderStyle.Fixed3D;
+            PanelDesktop.Controls.Add(Title);
             PanelDesktop.Controls.Add(searchChampionListBox);
             PanelDesktop.Controls.Add(searchChampionTextBox);
             PanelDesktop.Dock = DockStyle.Fill;
@@ -300,17 +314,16 @@
             searchChampionTextBox.TabIndex = 0;
             searchChampionTextBox.TextChanged += SearchChampionTextBox_TextChanged;
             // 
-            // ClientConnectButton
+            // Title
             // 
-            ClientConnectButton.BackColor = SystemColors.ControlLightLight;
-            ClientConnectButton.ForeColor = SystemColors.ControlText;
-            ClientConnectButton.Location = new Point(3, 512);
-            ClientConnectButton.Name = "ClientConnectButton";
-            ClientConnectButton.Size = new Size(75, 23);
-            ClientConnectButton.TabIndex = 2;
-            ClientConnectButton.Text = "Retry";
-            ClientConnectButton.UseVisualStyleBackColor = false;
-            ClientConnectButton.Click += ClientConnectButton_Click;
+            Title.AutoSize = true;
+            Title.Font = new Font("Segoe UI", 26.25F, FontStyle.Regular, GraphicsUnit.Point);
+            Title.ForeColor = SystemColors.ControlText;
+            Title.Location = new Point(267, 86);
+            Title.Name = "Title";
+            Title.Size = new Size(293, 47);
+            Title.TabIndex = 2;
+            Title.Text = "Search Champion";
             // 
             // MainMenu
             // 
@@ -357,5 +370,6 @@
         private Label CurrentPatch;
         private Label ActiveSummoner;
         private Button ClientConnectButton;
+        private Label Title;
     }
 }
