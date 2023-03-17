@@ -11,8 +11,8 @@ public class ChampionBuild
     public double Pickrate;
     public double Banrate;
     public RunePage RunePageChoice;
-    public ItemSet StartingItems;
-    public ItemSet CoreItems;
+    public ItemGroup StartingItems;
+    public ItemGroup CoreItems;
     public List<Item> FourthItemChoice;
     public List<Item>  FifthItemChoice;
     public List<Item> SixthItemChoice;
@@ -411,13 +411,13 @@ public class ChampionBuild
 
     private Task FetchStartingItems(JToken buildDataExtra)
     {
-        List<ItemSet> startSets = new();
+        List<ItemGroup> startSets = new();
         
         var startItemData = buildDataExtra.SelectToken("startSet");
 
         foreach (var startItem in startItemData ?? 0)
         {
-            ItemSet startSet = new();
+            ItemGroup startSet = new();
             string[] parts = startItem.First().ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
             string itemName = parts[0].TrimStart('\"').TrimEnd('\"');
             parts = itemName.Split('_');
@@ -439,13 +439,13 @@ public class ChampionBuild
 
     private Task FetchCoreItems(JToken buildDataExtra, JToken buildData)
     {
-        List<ItemSet> coreSets = new();
+        List<ItemGroup> coreSets = new();
         
         var coreItemData = buildDataExtra.SelectToken("itemSets")!.SelectToken("itemBootSet3");
 
         foreach (var coreItem in coreItemData ?? 0)
         {
-            ItemSet coreSet = new();
+            ItemGroup coreSet = new();
             string[] parts = coreItem.ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
             string itemName = parts[0].TrimStart('\"').TrimEnd('\"');
             parts = itemName.Split('_');

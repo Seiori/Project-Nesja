@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChampionLookup));
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             championImage = new PictureBox();
             championName = new Label();
             championTitle = new Label();
@@ -124,9 +124,9 @@
             runePageTitle = new Label();
             runePageData = new Label();
             ImportButton = new Button();
-            checkBox1 = new CheckBox();
-            checkBox2 = new CheckBox();
-            checkBox3 = new CheckBox();
+            SummonersImport = new CheckBox();
+            RunesImport = new CheckBox();
+            ItemsImport = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)championImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)firstAbility).BeginInit();
             ((System.ComponentModel.ISupportInitialize)secondCoreItem).BeginInit();
@@ -970,10 +970,10 @@
             // Image
             // 
             Image.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.NullValue = resources.GetObject("dataGridViewCellStyle3.NullValue");
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            Image.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = resources.GetObject("dataGridViewCellStyle1.NullValue");
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Image.DefaultCellStyle = dataGridViewCellStyle1;
             Image.HeaderText = "Image";
             Image.ImageLayout = DataGridViewImageCellLayout.Stretch;
             Image.Name = "Image";
@@ -981,8 +981,8 @@
             // 
             // Winrate
             // 
-            dataGridViewCellStyle4.ForeColor = Color.Black;
-            Winrate.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            Winrate.DefaultCellStyle = dataGridViewCellStyle2;
             Winrate.HeaderText = "Winrate";
             Winrate.Name = "Winrate";
             Winrate.Width = 94;
@@ -1109,44 +1109,50 @@
             ImportButton.Visible = false;
             ImportButton.Click += ImportButton_Click;
             // 
-            // checkBox1
+            // SummonersImport
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(562, 213);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(118, 19);
-            checkBox1.TabIndex = 92;
-            checkBox1.Text = "Summoner Spells";
-            checkBox1.UseVisualStyleBackColor = true;
+            SummonersImport.AutoSize = true;
+            SummonersImport.ForeColor = SystemColors.Desktop;
+            SummonersImport.Location = new Point(562, 213);
+            SummonersImport.Name = "SummonersImport";
+            SummonersImport.Size = new Size(118, 19);
+            SummonersImport.TabIndex = 92;
+            SummonersImport.Text = "Summoner Spells";
+            SummonersImport.UseVisualStyleBackColor = true;
+            SummonersImport.CheckedChanged += SummonersImport_CheckedChanged;
             // 
-            // checkBox2
+            // RunesImport
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(562, 238);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(58, 19);
-            checkBox2.TabIndex = 93;
-            checkBox2.Text = "Runes";
-            checkBox2.UseVisualStyleBackColor = true;
+            RunesImport.AutoSize = true;
+            RunesImport.ForeColor = SystemColors.Desktop;
+            RunesImport.Location = new Point(562, 238);
+            RunesImport.Name = "RunesImport";
+            RunesImport.Size = new Size(58, 19);
+            RunesImport.TabIndex = 93;
+            RunesImport.Text = "Runes";
+            RunesImport.UseVisualStyleBackColor = true;
+            RunesImport.CheckedChanged += RunesImport_CheckedChanged;
             // 
-            // checkBox3
+            // ItemsImport
             // 
-            checkBox3.AutoSize = true;
-            checkBox3.Location = new Point(562, 263);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(69, 19);
-            checkBox3.TabIndex = 94;
-            checkBox3.Text = "Item Set";
-            checkBox3.UseVisualStyleBackColor = true;
+            ItemsImport.AutoSize = true;
+            ItemsImport.ForeColor = SystemColors.Desktop;
+            ItemsImport.Location = new Point(562, 263);
+            ItemsImport.Name = "ItemsImport";
+            ItemsImport.Size = new Size(69, 19);
+            ItemsImport.TabIndex = 94;
+            ItemsImport.Text = "Item Set";
+            ItemsImport.UseVisualStyleBackColor = true;
+            ItemsImport.CheckedChanged += ItemsImport_CheckedChanged;
             // 
             // ChampionLookup
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(854, 472);
-            Controls.Add(checkBox3);
-            Controls.Add(checkBox2);
-            Controls.Add(checkBox1);
+            Controls.Add(ItemsImport);
+            Controls.Add(RunesImport);
+            Controls.Add(SummonersImport);
             Controls.Add(ImportButton);
             Controls.Add(runePageData);
             Controls.Add(runePageTitle);
@@ -1369,8 +1375,8 @@
         private Label runePageTitle;
         private Label runePageData;
         private Button ImportButton;
-        private CheckBox checkBox1;
-        private CheckBox checkBox2;
-        private CheckBox checkBox3;
+        private CheckBox SummonersImport;
+        private CheckBox RunesImport;
+        private CheckBox ItemsImport;
     }
 }

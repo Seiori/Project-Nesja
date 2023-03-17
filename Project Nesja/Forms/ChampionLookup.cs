@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Project_Nesja.Data;
 using static PoniLCU.LeagueClient;
 
@@ -9,6 +10,9 @@ namespace Project_Nesja.Forms
         private Champion selectedChampion;
         private ChampionBuild championBuild;
         private string role;
+        private bool runePageImport = false;
+        private bool itemSetImport = false;
+        private bool summonerSpellImport = false;
 
         public ChampionLookup(Champion chosenChampion, string role)
         {
@@ -218,8 +222,102 @@ namespace Project_Nesja.Forms
 
         private async void ImportButton_Click(object sender, EventArgs e)
         {
-            var postBody = "{\"name\":\"" + selectedChampion.Name + " " + role + " Runes\", \"selectedPerkIds\": " + JArray.FromObject(this.championBuild.RunePageChoice.GetRunePageIDs()).ToString() + ", \"primaryStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.Keystone!.RuneTree) + ", \"subStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.SecTreeFirstOption!.RuneTree) + ", \"current\": true}";
-            await ClientData.SetSummonerRunes(postBody);
+            if (runePageImport)
+            {
+                var jsonString = "{\"name\":\"" + selectedChampion.Name + " " + role + " Runes\", \"selectedPerkIds\": " + JArray.FromObject(this.championBuild.RunePageChoice.GetRunePageIDs()).ToString() + ", \"primaryStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.Keystone!.RuneTree) + ", \"subStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.SecTreeFirstOption!.RuneTree) + ", \"current\": true}";
+                await ClientData.SetRunePage(jsonString);
+            }
+
+            if (itemSetImport)
+            {
+                Block startingItemsBlock = new()
+                {
+                    type = "Starting Items",
+                };
+
+                ItemInfo startingFirst = new ItemInfo { id = championBuild.StartingItems.FirstItem!.ID.ToString(), count = 1 };
+                string startingSecondItemId = championBuild.StartingItems.SecondItem?.ID!.ToString() ?? "defaultItemId";
+                ItemInfo startingSecond = new ItemInfo { id = startingSecondItemId, count = 1 };
+                startingItemsBlock.items = new List<ItemInfo> { startingFirst, startingSecond };
+
+
+                Block coreItemsBlock = new()
+                {
+                    type = "Core Items",
+                };
+
+                ItemInfo coreFirst = new ItemInfo { id = championBuild.CoreItems.FirstItem!.ID.ToString(), count = 1 };
+                ItemInfo coreSecond = new ItemInfo { id = championBuild.CoreItems.SecondItem!.ID.ToString(), count = 1 };
+                ItemInfo coreThird = new ItemInfo { id = championBuild.CoreItems.ThirdItem!.ID.ToString(), count = 1 };
+                coreItemsBlock.items = new List<ItemInfo> { coreFirst, coreSecond, coreThird };
+
+                Block fourthItemsBlock = new()
+                {
+                    type = "Fourth Item Choices",
+                };
+
+                ItemInfo fourthFirst = new ItemInfo { id = championBuild.FourthItemChoice.FirstOrDefault()!.ItemAsset!.ID.ToString(), count = 1 };
+                ItemInfo fourthSecond = new ItemInfo { id = championBuild.FourthItemChoice.ElementAt(1)!.ItemAsset!.ID.ToString(), count = 1 };
+                ItemInfo fourthThird = new ItemInfo { id = championBuild.FourthItemChoice.LastOrDefault()!.ItemAsset!.ID.ToString(), count = 1 };
+                fourthItemsBlock.items = new List<ItemInfo> { fourthFirst, fourthSecond, fourthThird };
+
+                Block fifthItemsBlock = new()
+                {
+                    type = "Fifth Item Choices",
+                };
+
+                ItemInfo fifthFirst = new ItemInfo { id = championBuild.FifthItemChoice.FirstOrDefault()!.ItemAsset!.ID.ToString(), count = 1 };
+                ItemInfo fifthSecond = new ItemInfo { id = championBuild.FifthItemChoice.ElementAt(1)!.ItemAsset!.ID.ToString(), count = 1 };
+                ItemInfo fifthThird = new ItemInfo { id = championBuild.FifthItemChoice.LastOrDefault()!.ItemAsset!.ID.ToString(), count = 1 };
+                fifthItemsBlock.items = new List<ItemInfo> { fifthFirst, fifthSecond, fifthThird };
+
+                Block sixthItemsBlock = new()
+                {
+                    type = "Sixth Item Choices",
+                };
+
+                ItemInfo sixthFirst = new ItemInfo { id = championBuild.SixthItemChoice.FirstOrDefault()!.ItemAsset!.ID.ToString(), count = 1 };
+                ItemInfo sixthSecond = new ItemInfo { id = championBuild.SixthItemChoice.ElementAt(1)!.ItemAsset!.ID.ToString(), count = 1 };
+                ItemInfo sixthThird = new ItemInfo { id = championBuild.SixthItemChoice.LastOrDefault()!.ItemAsset!.ID.ToString(), count = 1 };
+                sixthItemsBlock.items = new List<ItemInfo> { sixthFirst, sixthSecond, sixthThird };
+
+                ItemSet itemSet = new ItemSet()
+                {
+                    associatedChampions = new List<int> { selectedChampion.ID },
+                    associatedMaps = new List<int> { 11, 12 },
+                    blocks = new List<Block> { startingItemsBlock, coreItemsBlock, fourthItemsBlock, fifthItemsBlock, sixthItemsBlock },
+                    map = "SR",
+                    mode = "any",
+                    preferredItemSlots = new List<int>(),
+                    sortrank = 9999,
+                    title = selectedChampion.Name + " " + championBuild.role.ToUpper() + " Item Set",
+                    type = "custom",
+                    uid = Guid.NewGuid().ToString()
+                };
+
+                List<ItemSet> itemSets = new();
+                itemSets.Add(itemSet);
+
+                Dictionary<string, object> requestBody = new();
+
+                requestBody.Add("accountId", ClientData.Summoner.AccountID);
+                requestBody.Add("itemSets", itemSets);
+                requestBody.Add("timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+
+                string jsonString = JsonConvert.SerializeObject(requestBody);
+                await ClientData.SetItemSet(jsonString);
+            }
+
+            if (summonerSpellImport)
+            {
+                Dictionary<string, object> requestBody = new();
+
+                requestBody.Add("spell1Id", championBuild.SummonerSpells.FirstSpellData!.ID);
+                requestBody.Add("spell2Id", championBuild.SummonerSpells.SecondSpellData!.ID);
+
+                string jsonString = JsonConvert.SerializeObject(requestBody);
+                await ClientData.SetSummonerSpells(jsonString);
+            }
         }
 
         private void TopSelection_Click(object sender, EventArgs e)
@@ -245,6 +343,21 @@ namespace Project_Nesja.Forms
         private void SupportSelection_Click(object sender, EventArgs e)
         {
             SelectRole("support");
+        }
+
+        private void SummonersImport_CheckedChanged(object sender, EventArgs e)
+        {
+            summonerSpellImport = !summonerSpellImport;
+        }
+
+        private void RunesImport_CheckedChanged(object sender, EventArgs e)
+        {
+            runePageImport = !runePageImport;
+        }
+
+        private void ItemsImport_CheckedChanged(object sender, EventArgs e)
+        {
+            itemSetImport = !itemSetImport;
         }
     }
 }
