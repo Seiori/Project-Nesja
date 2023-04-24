@@ -99,7 +99,7 @@ namespace Project_Nesja.Data
             {
                 statusMessage = statusMessage
             }); ;
-            await LeagueClient.Request(requestMethod.PUT, "/lol-chat/v1/me", body);
+            var response = await LeagueClient.Request(requestMethod.PUT, "/lol-chat/v1/me", body);
         }
 
         private static void OnDisconnectHandler()
