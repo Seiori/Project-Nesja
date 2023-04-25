@@ -18,7 +18,8 @@ namespace Project_Nesja
         {
             if (subFolder == null && fileName == null)
             {
-                var json = await client.GetStringAsync(url);
+                var urlWithCacheBusting = url + "?cacheBuster=" + DateTime.Now.Ticks;
+                var json = await client.GetStringAsync(urlWithCacheBusting);
                 return JToken.Parse(json);
             }
 

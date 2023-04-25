@@ -25,7 +25,7 @@ namespace Project_Nesja.Forms
 
         private void Ranked_Load(object sender, EventArgs e)
         {
-            GetRankedData();
+            RankLevelSelection.SelectedIndex = 10;
         }
 
         private async void GetRankedData()
@@ -34,7 +34,13 @@ namespace Project_Nesja.Forms
 
             string apiUrl = "";
 
-            if (!highElo.Checked)
+            if (RankLevelSelection.SelectedIndex == 9)
+            {
+                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=platinum_plus&queue=420&region=all";
+
+                this.rankedQueue.Add(0, await WebRequests.GetJsonObject(apiUrl) as JObject);
+            }
+            else if (RankLevelSelection.SelectedIndex == 10)
             {
                 apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=iron&queue=420&region=all";
 
@@ -54,20 +60,20 @@ namespace Project_Nesja.Forms
             }
             else
             {
-                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=platinum_plus&queue=420&region=all";
+                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=" + RankLevelSelection.SelectedItem.ToString().ToLower() + "&queue=420&region=all";
 
                 this.rankedQueue.Add(0, await WebRequests.GetJsonObject(apiUrl) as JObject);
             }
             ParseRankedData();
         }
-        
+
         private void ParseRankedData()
         {
             rankedQueueData.Clear();
 
             int totalRoleGames = 0;
 
-            if (!highElo.Checked)
+            if (RankLevelSelection.SelectedIndex == 10)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -339,7 +345,7 @@ namespace Project_Nesja.Forms
             }
         }
 
-        private void highElo_CheckedChanged(object sender, EventArgs e)
+        private void RankLevelSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetRankedData();
         }

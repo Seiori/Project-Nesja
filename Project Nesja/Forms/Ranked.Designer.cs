@@ -54,7 +54,8 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
-            highElo = new CheckBox();
+            RankLevelSelection = new ComboBox();
+            RankLevelLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)rankedDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -251,24 +252,34 @@
             label4.TabIndex = 9;
             label4.Text = "Role Selection";
             // 
-            // highElo
+            // RankLevelSelection
             // 
-            highElo.AutoSize = true;
-            highElo.ForeColor = SystemColors.Desktop;
-            highElo.Location = new Point(153, 21);
-            highElo.Name = "highElo";
-            highElo.Size = new Size(71, 19);
-            highElo.TabIndex = 12;
-            highElo.Text = "High Elo";
-            highElo.UseVisualStyleBackColor = true;
-            highElo.CheckedChanged += highElo_CheckedChanged;
+            RankLevelSelection.FormattingEnabled = true;
+            RankLevelSelection.Items.AddRange(new object[] { "Challenger", "Grandmaster", "Master", "Diamond", "Platinum", "Gold", "Silver", "Bronze", "Iron", "Platinum-Challenger", "Iron-Gold" });
+            RankLevelSelection.Location = new Point(153, 19);
+            RankLevelSelection.Name = "RankLevelSelection";
+            RankLevelSelection.Size = new Size(121, 23);
+            RankLevelSelection.TabIndex = 13;
+            RankLevelSelection.Text = "All";
+            RankLevelSelection.SelectedIndexChanged += RankLevelSelection_SelectedIndexChanged;
+            // 
+            // RankLevelLabel
+            // 
+            RankLevelLabel.AutoSize = true;
+            RankLevelLabel.ForeColor = SystemColors.Desktop;
+            RankLevelLabel.Location = new Point(153, 1);
+            RankLevelLabel.Name = "RankLevelLabel";
+            RankLevelLabel.Size = new Size(63, 15);
+            RankLevelLabel.TabIndex = 14;
+            RankLevelLabel.Text = "Rank Level";
             // 
             // Ranked
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(854, 472);
-            Controls.Add(highElo);
+            Controls.Add(RankLevelLabel);
+            Controls.Add(RankLevelSelection);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -308,6 +319,7 @@
         private Label label2;
         private Label label3;
         private Label label4;
-        private CheckBox highElo;
+        private ComboBox RankLevelSelection;
+        private Label RankLevelLabel;
     }
 }

@@ -36,7 +36,7 @@ public class ChampionBuild
         SkillPriority = new();
         SummonerSpells = new();
         Matchups = new();
-        winrateWeight = 0.6f;
+        winrateWeight = 0.7f;
         pickrateWeight = 1 - winrateWeight;
     }
 
@@ -406,7 +406,9 @@ public class ChampionBuild
             };
             summonerSpells.Add(spellSet);
         }
-        SummonerSpells = summonerSpells.OrderByDescending(x => x.Winrate * winrateWeight + x.Pickrate * pickrateWeight).First();
+        SummonerSpells = summonerSpells.Where(x => x.Pickrate > 0.3).ToList()
+            .OrderByDescending(x => x.Winrate * winrateWeight + x.Pickrate * pickrateWeight)
+            .First();
         
         return Task.CompletedTask;
     }
@@ -434,11 +436,9 @@ public class ChampionBuild
 
             startSets.Add(startSet);
         }
-        startSets = startSets.Where(x => (x.TotalGames / startSets.Sum(x => x.TotalGames)) > 0.03).ToList();
-
-        startSets = startSets.OrderByDescending(x => (x.TotalGames / startSets.Sum(x => x.TotalGames)) * (x.Winrate * winrateWeight + x.Pickrate * pickrateWeight)).ToList();
-
-        StartingItems = startSets.First();
+        StartingItems = startSets.Where(x => (x.TotalGames / startSets.Sum(x => x.TotalGames)) > 0.03).ToList()
+            .OrderByDescending(x => x.Winrate * winrateWeight).ToList()
+            .First();
 
         return Task.CompletedTask;
     }
@@ -447,7 +447,7 @@ public class ChampionBuild
     {
         List<ItemGroup> coreSets = new();
         
-        var coreItemData = buildData.SelectToken("itemSets")!.SelectToken("itemBootSet3");
+        var coreItemData = buildDataExtra.SelectToken("itemSets")!.SelectToken("itemBootSet3");
 
         foreach (var coreItem in coreItemData ?? 0)
         {
@@ -465,11 +465,9 @@ public class ChampionBuild
 
             coreSets.Add(coreSet);
         }
-        coreSets = coreSets.Where(x => (x.TotalGames / coreSets.Sum(x => x.TotalGames)) > 0.02).ToList();
-
-        coreSets = coreSets.OrderByDescending(x => (x.TotalGames / coreSets.Sum(x => x.TotalGames) * pickrateWeight + x.Winrate * winrateWeight)).ToList();
-
-        CoreItems = coreSets.First();
+        CoreItems = coreSets.Where(x => (x.TotalGames / coreSets.Sum(x => x.TotalGames)) > 0.02).ToList()
+            .OrderByDescending(x => (x.TotalGames / coreSets.Sum(x => x.TotalGames) * pickrateWeight + x.Winrate * winrateWeight)).ToList()
+            .First();
 
         return Task.CompletedTask;
     }
@@ -492,7 +490,7 @@ public class ChampionBuild
 
             fourthItemSets.Add(fourthItemSet);
         }
-        FourthItemChoice.AddRange(fourthItemSets.OrderByDescending(x => x.TotalGames / (fourthItemSets.Sum(x => x.TotalGames))).Take(3));
+        FourthItemChoice.AddRange(fourthItemSets.OrderByDescending(x => x.TotalGames / fourthItemSets.Sum(x => x.TotalGames)).Take(3));
 
         return Task.CompletedTask;
     }
@@ -515,7 +513,7 @@ public class ChampionBuild
 
             fifthItemSets.Add(fifthItemSet);
         }
-        FifthItemChoice.AddRange(fifthItemSets.OrderByDescending(x => x.TotalGames / (fifthItemSets.Sum(x => x.TotalGames))).Take(3));
+        FifthItemChoice.AddRange(fifthItemSets.OrderByDescending(x => x.TotalGames / fifthItemSets.Sum(x => x.TotalGames)).Take(3));
 
         return Task.CompletedTask;
     }
@@ -538,7 +536,7 @@ public class ChampionBuild
 
             sixthItemSets.Add(sixthItemSet);
         }
-        SixthItemChoice.AddRange(sixthItemSets.OrderByDescending(x => x.TotalGames / (sixthItemSets.Sum(x => x.TotalGames))).Take(3));
+        SixthItemChoice.AddRange(sixthItemSets.OrderByDescending(x => x.TotalGames / sixthItemSets.Sum(x => x.TotalGames)).Take(3));
 
         return Task.CompletedTask;
     }
@@ -559,7 +557,7 @@ public class ChampionBuild
 
             skillPrioritySets.Add(skillPrioritySetData);
         }
-        SkillPriority = skillPrioritySets.OrderByDescending(x => x.Winrate * winrateWeight + x.Pickrate * pickrateWeight).First();
+        SkillPriority = skillPrioritySets.OrderByDescending(x => x.Winrate * winrateWeight + (x.TotalGames / skillPrioritySets.Sum(x => x.TotalGames)) * pickrateWeight).First();
 
         return Task.CompletedTask;
     }
@@ -573,14 +571,15 @@ public class ChampionBuild
             ChampionRole matchupData = new()
             {
                 ChampionData = GameData.ChampionList.FirstOrDefault(x => x.Value.ID == int.Parse((string)matchup.First()!)).Value,
-                Winrate = matchup.ElementAt(3).ToObject<float>(),
+                Winrate = 100 - matchup.ElementAt(3).ToObject<float>(),
                 TotalGames = matchup.ElementAt(1).ToObject<int>(),
                 Pickrate = matchup.ElementAt(1).ToObject<float>() / buildData.SelectToken("header")!.SelectToken("n")!.ToObject<float>() * 100
             };
 
             Matchups.Add(matchupData);
         }
-        Matchups = Matchups.OrderByDescending(x => x.Winrate * winrateWeight + x.Pickrate * pickrateWeight).ToList();
+        Matchups = Matchups.Where(x => x.Pickrate > 0.2)
+            .OrderByDescending(x => x.Winrate * winrateWeight + (x.TotalGames / Matchups.Sum(x => x.TotalGames)) * pickrateWeight).ToList();
 
         return Task.CompletedTask;
     }
