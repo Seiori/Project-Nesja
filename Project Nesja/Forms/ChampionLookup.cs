@@ -62,6 +62,7 @@ namespace Project_Nesja.Forms
             summonerSpell2.Image = championBuild.SummonerSpells.SecondSpellData?.Image ?? null;
 
             // Adds the Images of the Rune Page to the Form
+            runePageData.Text = System.Math.Round(championBuild.RunePageChoice.Winrate, 2).ToString() + "% WR (" + championBuild.RunePageChoice.TotalGames + ")";
             KeystoneImage.Image = championBuild.RunePageChoice.Keystone!.RuneAsset!.Image;
             PrimRuneFirstRowImage.Image = championBuild.RunePageChoice.PrimTreeFirstRow!.RuneAsset!.Image;
             PrimRuneSecRowImage.Image = championBuild.RunePageChoice.PrimTreeSecondRow!.RuneAsset!.Image;

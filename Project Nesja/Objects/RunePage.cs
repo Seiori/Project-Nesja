@@ -9,6 +9,8 @@
     public StatMod? firstRowOption;
     public StatMod? secondRowOption;
     public StatMod? thirdRowOption;
+    public float Winrate;
+    public float TotalGames;
 
     public int[] GetRunePageIDs()
     {

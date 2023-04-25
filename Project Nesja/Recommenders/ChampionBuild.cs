@@ -36,7 +36,7 @@ public class ChampionBuild
         SkillPriority = new();
         SummonerSpells = new();
         Matchups = new();
-        winrateWeight = 0.7f;
+        winrateWeight = 0.6f;
         pickrateWeight = 1 - winrateWeight;
     }
 
@@ -354,7 +354,6 @@ public class ChampionBuild
                         statModData.StatModType = StatModType.AdaptiveForce;
                         secondRowStatMod.Add(statModData);
                         break;
-                        break;
                     case "5005":
                         statModData.StatModType = StatModType.AttackSpeed;
                         firstRowStatMod.Add(statModData);
@@ -370,8 +369,8 @@ public class ChampionBuild
                 }
             }
         }
-        primaryRunes = primaryRunes.OrderByDescending(x => x.TotalGames).ToList();
-        secondaryRunes = secondaryRunes.OrderByDescending(x => x.TotalGames).ToList();
+        primaryRunes = primaryRunes.Where(x => x.Pickrate > 0.3).OrderByDescending(x => x.Winrate * winrateWeight + x.Pickrate * pickrateWeight).ToList();
+        secondaryRunes = secondaryRunes.Where(x => x.Pickrate > 0.3).OrderByDescending(x => x.Winrate * winrateWeight + x.Pickrate * pickrateWeight).ToList();
 
         RunePageChoice.Keystone = primaryRunes.First(x => x.RuneType == RuneType.Keystone);
         RunePageChoice.PrimTreeFirstRow = primaryRunes.First(x => x.RuneType == RuneType.FirstRow && x.RuneTree == RunePageChoice.Keystone.RuneTree);
@@ -382,7 +381,8 @@ public class ChampionBuild
         RunePageChoice.firstRowOption = firstRowStatMod.OrderByDescending(x => x.TotalGames).First();
         RunePageChoice.secondRowOption = secondRowStatMod.OrderByDescending(x => x.TotalGames).First();
         RunePageChoice.thirdRowOption = thirdRowStatMod.OrderByDescending(x => x.TotalGames).First();
-
+        RunePageChoice.Winrate = (RunePageChoice.Keystone.Winrate + RunePageChoice.PrimTreeFirstRow.Winrate + RunePageChoice.Winrate + RunePageChoice.PrimTreeSecondRow.Winrate + RunePageChoice.PrimTreeThirdRow.Winrate + RunePageChoice.SecTreeFirstOption.Winrate + RunePageChoice.SecTreeSecondOption.Winrate) / 6;
+        RunePageChoice.TotalGames = (RunePageChoice.Keystone.TotalGames + RunePageChoice.PrimTreeFirstRow.TotalGames + RunePageChoice.PrimTreeSecondRow.TotalGames + RunePageChoice.PrimTreeThirdRow.TotalGames + RunePageChoice.SecTreeFirstOption.TotalGames + RunePageChoice.SecTreeSecondOption.TotalGames) / 6;
         return Task.CompletedTask;
     }
 
@@ -407,7 +407,7 @@ public class ChampionBuild
             summonerSpells.Add(spellSet);
         }
         SummonerSpells = summonerSpells.Where(x => x.Pickrate > 0.3).ToList()
-            .OrderByDescending(x => x.Winrate * winrateWeight + x.Pickrate * pickrateWeight)
+            .OrderByDescending(x => x.Winrate * winrateWeight + (x.TotalGames / summonerSpells.Sum(x => x.TotalGames)) * pickrateWeight)
             .First();
         
         return Task.CompletedTask;
