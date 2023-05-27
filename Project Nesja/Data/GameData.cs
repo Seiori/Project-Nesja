@@ -139,6 +139,8 @@ namespace Project_Nesja.Data
             if (!File.Exists("CurrentVersion"))
             {
                 File.WriteAllText("CurrentVersion", JsonConvert.SerializeObject(CurrentVersion));
+                Directory.CreateDirectory("Data");
+                Directory.CreateDirectory("Img");
                 return false;
             }
             string currentDataVersion = JsonConvert.DeserializeObject<string>(File.ReadAllText("CurrentVersion"))!;
@@ -164,7 +166,8 @@ namespace Project_Nesja.Data
         {
             string rootFolder = "Img";
 
-            ChampionList = JsonConvert.DeserializeObject<Dictionary<int, Champion>>(File.ReadAllText(Path.Combine("Data", "ChampionList")))!;
+            if (File.Exists(Path.Combine("Data", "ChampionList")))
+                ChampionList = JsonConvert.DeserializeObject<Dictionary<int, Champion>>(File.ReadAllText(Path.Combine("Data", "ChampionList")))!;
 
             foreach (var champion in ChampionList)
             {
@@ -204,7 +207,8 @@ namespace Project_Nesja.Data
                 }
             }
 
-            Assets = JsonConvert.DeserializeObject<Dictionary<int, Asset>>(File.ReadAllText(Path.Combine("Data", "Assets")))!;
+            if (File.Exists(Path.Combine("Data", "Assets")))
+                Assets = JsonConvert.DeserializeObject<Dictionary<int, Asset>>(File.ReadAllText(Path.Combine("Data", "Assets")))!;
 
             foreach (var asset in Assets)
             {

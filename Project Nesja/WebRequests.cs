@@ -16,29 +16,37 @@ namespace Project_Nesja
 
         public static async Task<JToken?> GetJsonObject(string url, string subFolder = null!, string fileName = null!)
         {
-            if (subFolder == null && fileName == null)
+            if (subFolder != null && fileName != null)
+            {
+                var directoryPath = Path.Combine("Data", subFolder);
+                Directory.CreateDirectory(directoryPath); // Create directory if it doesn't exist
+
+                var filePath = Path.Combine(directoryPath, fileName + ".json");
+
+                if (File.Exists(filePath))
+                {
+                    var json = await File.ReadAllTextAsync(filePath);
+                    return JToken.Parse(json);
+                }
+
+                var downloadedJson = await client.GetStringAsync(url);
+                await File.WriteAllTextAsync(filePath, downloadedJson);
+                return JToken.Parse(downloadedJson);
+            }
+            else
             {
                 var urlWithCacheBusting = url + "?cacheBuster=" + DateTime.Now.Ticks;
                 var json = await client.GetStringAsync(urlWithCacheBusting);
                 return JToken.Parse(json);
             }
-
-            var filePath = Path.Combine("Data", subFolder!, fileName + ".json");
-
-            if (File.Exists(filePath))
-            {
-                var json = await File.ReadAllTextAsync(filePath);
-                return JToken.Parse(json);
-            }
-
-            var downloadedJson = await client.GetStringAsync(url);
-            await File.WriteAllTextAsync(filePath, downloadedJson);
-            return JToken.Parse(downloadedJson);
         }
 
         public static async Task<Image?> DownloadImage(string url, string subFolder, string fileName)
         {
-            var filePath = Path.Combine("Img", subFolder, fileName + ".jpg");
+            var directoryPath = Path.Combine("Img", subFolder);
+            Directory.CreateDirectory(directoryPath); // Create directory if it doesn't exist
+
+            var filePath = Path.Combine(directoryPath, fileName + ".jpg");
 
             if (File.Exists(filePath))
             {
