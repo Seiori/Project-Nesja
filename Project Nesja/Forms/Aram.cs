@@ -9,7 +9,7 @@ namespace Project_Nesja.Forms
     {
         private readonly MainMenu mainForm;
         private Dictionary<int, ChampionRole> aramQueue;
-        
+
         public Aram(MainMenu mainMenu)
         {
             InitializeComponent();
@@ -24,7 +24,7 @@ namespace Project_Nesja.Forms
 
         private async void FetchAramData()
         {
-            string apiUrl = $"https://axe.lolalytics.com/tierlist/2/?lane=middle&patch=" + GameData.CurrentVersion + "&tier=platinum_plus&queue=450&region=all";
+            string apiUrl = $"https://ax.lolalytics.com/tierlist/1/?lane=middle&patch=" + GameData.CurrentVersion + "&tier=all&queue=450&region=all";
 
             JObject aramData = (JObject)await WebRequests.GetJsonObject(apiUrl);
 
@@ -40,7 +40,7 @@ namespace Project_Nesja.Forms
             }
             LoadAramData();
         }
-        
+
         private async void LoadAramData()
         {
             int TotalGames = aramQueue.Sum(x => x.Value.TotalGames);

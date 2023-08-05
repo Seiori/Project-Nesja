@@ -36,9 +36,15 @@ namespace Project_Nesja
             await GameData.FetchGameData();
 
             if (ClientData.LeagueClient.IsConnected)
-                ActiveSummoner.Text = "Current Summoner: " + ClientData.Summoner.Name;
+            {
+                ActiveSummoner.Text = "Current Summoner: ";
+                ActiveSummonerName.Text = ClientData.Summoner.Name;
+            }
             else
+            {
                 ActiveSummoner.Text = "Client Not Connected";
+                ActiveSummonerName.Text = "N/A";
+            }
 
             CurrentPatch.Text = "v" + GameData.CurrentVersion;
         }
@@ -216,9 +222,15 @@ namespace Project_Nesja
         private async void ClientConnectButton_Click(object sender, EventArgs e)
         {
             if (await ClientData.ConnectToClient())
-                ActiveSummoner.Text = "Current Summoner: " + ClientData.Summoner.Name;
+            {
+                ActiveSummoner.Text = "Current Summoner: ";
+                ActiveSummonerName.Text = ClientData.Summoner.Name;
+            }
             else
+            {
                 ActiveSummoner.Text = "Client Not Connected";
+                ActiveSummonerName.Text = "N/A";
+            }
         }
     }
 }

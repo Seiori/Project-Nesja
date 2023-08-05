@@ -36,31 +36,31 @@ namespace Project_Nesja.Forms
 
             if (RankLevelSelection.SelectedIndex == 9)
             {
-                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=platinum_plus&queue=420&region=all";
+                apiUrl = $"https://ax.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=platinum_plus&queue=420&region=all";
 
                 this.rankedQueue.Add(0, await WebRequests.GetJsonObject(apiUrl) as JObject);
             }
             else if (RankLevelSelection.SelectedIndex == 10)
             {
-                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=iron&queue=420&region=all";
+                apiUrl = $"https://ax.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=iron&queue=420&region=all";
 
                 this.rankedQueue.Add(0, await WebRequests.GetJsonObject(apiUrl) as JObject);
 
-                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=bronze&queue=420&region=all";
+                apiUrl = $"https://ax.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=bronze&queue=420&region=all";
 
                 this.rankedQueue.Add(1, await WebRequests.GetJsonObject(apiUrl) as JObject);
 
-                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=silver&queue=420&region=all";
+                apiUrl = $"https://ax.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=silver&queue=420&region=all";
 
                 this.rankedQueue.Add(2, await WebRequests.GetJsonObject(apiUrl) as JObject);
 
-                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=gold&queue=420&region=all";
+                apiUrl = $"https://ax.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=gold&queue=420&region=all";
 
                 this.rankedQueue.Add(3, await WebRequests.GetJsonObject(apiUrl) as JObject);
             }
             else
             {
-                apiUrl = $"https://axe.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=" + RankLevelSelection.SelectedItem.ToString().ToLower() + "&queue=420&region=all";
+                apiUrl = $"https://ax.lolalytics.com/patch/1/?patch=" + GameData.CurrentVersion + "&tier=" + RankLevelSelection.SelectedItem.ToString().ToLower() + "&queue=420&region=all";
 
                 this.rankedQueue.Add(0, await WebRequests.GetJsonObject(apiUrl) as JObject);
             }

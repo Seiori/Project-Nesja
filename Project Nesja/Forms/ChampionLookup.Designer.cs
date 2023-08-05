@@ -201,7 +201,7 @@
             // 
             searchChampionTextBox.Anchor = AnchorStyles.Top;
             searchChampionTextBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            searchChampionTextBox.Location = new Point(308, 9);
+            searchChampionTextBox.Location = new Point(469, 9);
             searchChampionTextBox.Name = "searchChampionTextBox";
             searchChampionTextBox.Size = new Size(249, 29);
             searchChampionTextBox.TabIndex = 3;
@@ -213,7 +213,7 @@
             searchChampionListBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             searchChampionListBox.FormattingEnabled = true;
             searchChampionListBox.ItemHeight = 20;
-            searchChampionListBox.Location = new Point(308, 34);
+            searchChampionListBox.Location = new Point(469, 34);
             searchChampionListBox.Name = "searchChampionListBox";
             searchChampionListBox.Size = new Size(249, 84);
             searchChampionListBox.TabIndex = 4;
@@ -958,13 +958,13 @@
             championMatchupData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             championMatchupData.Columns.AddRange(new DataGridViewColumn[] { Image, Winrate });
             championMatchupData.EnableHeadersVisualStyles = false;
-            championMatchupData.Location = new Point(694, 12);
+            championMatchupData.Location = new Point(1017, 12);
             championMatchupData.Name = "championMatchupData";
             championMatchupData.RightToLeft = RightToLeft.No;
             championMatchupData.RowHeadersVisible = false;
             championMatchupData.RowHeadersWidth = 20;
             championMatchupData.RowTemplate.Height = 35;
-            championMatchupData.Size = new Size(143, 451);
+            championMatchupData.Size = new Size(143, 701);
             championMatchupData.TabIndex = 78;
             // 
             // Image
@@ -1149,7 +1149,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(854, 472);
+            ClientSize = new Size(1177, 722);
             Controls.Add(ItemsImport);
             Controls.Add(RunesImport);
             Controls.Add(SummonersImport);

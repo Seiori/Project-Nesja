@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             Logo = new PictureBox();
             PanelMenu = new Panel();
+            ActiveSummonerName = new Label();
             ClientConnectButton = new Button();
             ActiveSummoner = new Label();
             CurrentPatch = new Label();
@@ -44,9 +45,9 @@
             LabelFormTitle = new Label();
             IconCurrentForm = new FontAwesome.Sharp.IconPictureBox();
             PanelDesktop = new Panel();
+            Title = new Label();
             searchChampionListBox = new ListBox();
             searchChampionTextBox = new TextBox();
-            Title = new Label();
             ((System.ComponentModel.ISupportInitialize)Logo).BeginInit();
             PanelMenu.SuspendLayout();
             PanelTitleBar.SuspendLayout();
@@ -71,6 +72,7 @@
             PanelMenu.AutoSize = true;
             PanelMenu.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             PanelMenu.BackColor = SystemColors.ControlText;
+            PanelMenu.Controls.Add(ActiveSummonerName);
             PanelMenu.Controls.Add(ClientConnectButton);
             PanelMenu.Controls.Add(ActiveSummoner);
             PanelMenu.Controls.Add(CurrentPatch);
@@ -83,14 +85,24 @@
             PanelMenu.ForeColor = SystemColors.Control;
             PanelMenu.Location = new Point(0, 0);
             PanelMenu.Name = "PanelMenu";
-            PanelMenu.Size = new Size(189, 586);
+            PanelMenu.Size = new Size(189, 836);
             PanelMenu.TabIndex = 2;
+            // 
+            // ActiveSummonerName
+            // 
+            ActiveSummonerName.AutoSize = true;
+            ActiveSummonerName.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            ActiveSummonerName.Location = new Point(3, 744);
+            ActiveSummonerName.Name = "ActiveSummonerName";
+            ActiveSummonerName.Size = new Size(36, 20);
+            ActiveSummonerName.TabIndex = 5;
+            ActiveSummonerName.Text = "N/A";
             // 
             // ClientConnectButton
             // 
             ClientConnectButton.BackColor = SystemColors.ControlLightLight;
             ClientConnectButton.ForeColor = SystemColors.ControlText;
-            ClientConnectButton.Location = new Point(3, 512);
+            ClientConnectButton.Location = new Point(3, 767);
             ClientConnectButton.Name = "ClientConnectButton";
             ClientConnectButton.Size = new Size(75, 23);
             ClientConnectButton.TabIndex = 2;
@@ -104,7 +116,7 @@
             ActiveSummoner.BackColor = SystemColors.ControlText;
             ActiveSummoner.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             ActiveSummoner.ForeColor = SystemColors.ControlLightLight;
-            ActiveSummoner.Location = new Point(3, 489);
+            ActiveSummoner.Location = new Point(3, 724);
             ActiveSummoner.Name = "ActiveSummoner";
             ActiveSummoner.Size = new Size(136, 20);
             ActiveSummoner.TabIndex = 2;
@@ -115,7 +127,7 @@
             CurrentPatch.AutoSize = true;
             CurrentPatch.BackColor = SystemColors.ControlText;
             CurrentPatch.ForeColor = SystemColors.ControlLightLight;
-            CurrentPatch.Location = new Point(3, 538);
+            CurrentPatch.Location = new Point(3, 793);
             CurrentPatch.Name = "CurrentPatch";
             CurrentPatch.Size = new Size(78, 15);
             CurrentPatch.TabIndex = 3;
@@ -220,7 +232,7 @@
             PanelTitleBar.Dock = DockStyle.Top;
             PanelTitleBar.Location = new Point(189, 0);
             PanelTitleBar.Name = "PanelTitleBar";
-            PanelTitleBar.Size = new Size(870, 75);
+            PanelTitleBar.Size = new Size(1193, 75);
             PanelTitleBar.TabIndex = 3;
             PanelTitleBar.MouseDown += PanelTitleBar_MouseDown;
             // 
@@ -233,7 +245,7 @@
             MinimiseButton.IconColor = Color.White;
             MinimiseButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
             MinimiseButton.IconSize = 15;
-            MinimiseButton.Location = new Point(804, -3);
+            MinimiseButton.Location = new Point(1127, -3);
             MinimiseButton.Name = "MinimiseButton";
             MinimiseButton.Size = new Size(35, 29);
             MinimiseButton.TabIndex = 4;
@@ -249,7 +261,7 @@
             ExitButton.IconColor = Color.White;
             ExitButton.IconFont = FontAwesome.Sharp.IconFont.Solid;
             ExitButton.IconSize = 15;
-            ExitButton.Location = new Point(835, 0);
+            ExitButton.Location = new Point(1158, 0);
             ExitButton.Name = "ExitButton";
             ExitButton.Size = new Size(35, 29);
             ExitButton.TabIndex = 2;
@@ -287,32 +299,8 @@
             PanelDesktop.Dock = DockStyle.Fill;
             PanelDesktop.Location = new Point(189, 75);
             PanelDesktop.Name = "PanelDesktop";
-            PanelDesktop.Size = new Size(870, 511);
+            PanelDesktop.Size = new Size(1193, 761);
             PanelDesktop.TabIndex = 4;
-            // 
-            // searchChampionListBox
-            // 
-            searchChampionListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            searchChampionListBox.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            searchChampionListBox.FormattingEnabled = true;
-            searchChampionListBox.ItemHeight = 30;
-            searchChampionListBox.Location = new Point(274, 171);
-            searchChampionListBox.Name = "searchChampionListBox";
-            searchChampionListBox.ScrollAlwaysVisible = true;
-            searchChampionListBox.Size = new Size(279, 184);
-            searchChampionListBox.TabIndex = 1;
-            searchChampionListBox.Visible = false;
-            searchChampionListBox.SelectedIndexChanged += SearchChampionListBox_SelectedIndexChanged;
-            // 
-            // searchChampionTextBox
-            // 
-            searchChampionTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            searchChampionTextBox.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            searchChampionTextBox.Location = new Point(274, 136);
-            searchChampionTextBox.Name = "searchChampionTextBox";
-            searchChampionTextBox.Size = new Size(279, 35);
-            searchChampionTextBox.TabIndex = 0;
-            searchChampionTextBox.TextChanged += SearchChampionTextBox_TextChanged;
             // 
             // Title
             // 
@@ -325,12 +313,36 @@
             Title.TabIndex = 2;
             Title.Text = "Search Champion";
             // 
+            // searchChampionListBox
+            // 
+            searchChampionListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            searchChampionListBox.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            searchChampionListBox.FormattingEnabled = true;
+            searchChampionListBox.ItemHeight = 30;
+            searchChampionListBox.Location = new Point(274, 171);
+            searchChampionListBox.Name = "searchChampionListBox";
+            searchChampionListBox.ScrollAlwaysVisible = true;
+            searchChampionListBox.Size = new Size(602, 424);
+            searchChampionListBox.TabIndex = 1;
+            searchChampionListBox.Visible = false;
+            searchChampionListBox.SelectedIndexChanged += SearchChampionListBox_SelectedIndexChanged;
+            // 
+            // searchChampionTextBox
+            // 
+            searchChampionTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            searchChampionTextBox.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            searchChampionTextBox.Location = new Point(274, 136);
+            searchChampionTextBox.Name = "searchChampionTextBox";
+            searchChampionTextBox.Size = new Size(602, 35);
+            searchChampionTextBox.TabIndex = 0;
+            searchChampionTextBox.TextChanged += SearchChampionTextBox_TextChanged;
+            // 
             // MainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLightLight;
-            ClientSize = new Size(1059, 586);
+            ClientSize = new Size(1382, 836);
             Controls.Add(PanelDesktop);
             Controls.Add(PanelTitleBar);
             Controls.Add(PanelMenu);
@@ -371,5 +383,6 @@
         private Label ActiveSummoner;
         private Button ClientConnectButton;
         private Label Title;
+        private Label ActiveSummonerName;
     }
 }

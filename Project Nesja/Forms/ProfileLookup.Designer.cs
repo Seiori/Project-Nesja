@@ -44,11 +44,11 @@
             RankedFlexGames = new Label();
             RankedFlexWinrate = new Label();
             panel1 = new Panel();
+            RegionSelector = new ComboBox();
             label1 = new Label();
             StatusMessage = new TextBox();
             SummonerRegion = new Label();
             UpdateButton = new Button();
-            RegionSelector = new ComboBox();
             panel3 = new Panel();
             RankedSoloDivision = new Label();
             RankedSoloImage = new PictureBox();
@@ -71,11 +71,11 @@
             // 
             // SearchPlayerTextBox
             // 
-            SearchPlayerTextBox.Anchor = AnchorStyles.Top;
+            SearchPlayerTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             SearchPlayerTextBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            SearchPlayerTextBox.Location = new Point(593, 12);
+            SearchPlayerTextBox.Location = new Point(916, 13);
             SearchPlayerTextBox.Name = "SearchPlayerTextBox";
-            SearchPlayerTextBox.Size = new Size(249, 29);
+            SearchPlayerTextBox.Size = new Size(250, 29);
             SearchPlayerTextBox.TabIndex = 5;
             SearchPlayerTextBox.KeyDown += SearchPlayerTextBox_KeyDown;
             // 
@@ -245,20 +245,33 @@
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = SystemColors.Desktop;
+            panel1.Controls.Add(RegionSelector);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(StatusMessage);
             panel1.Controls.Add(SummonerRegion);
+            panel1.Controls.Add(SearchPlayerTextBox);
             panel1.Controls.Add(UpdateButton);
-            panel1.Controls.Add(RegionSelector);
             panel1.Controls.Add(SummonerLevel);
             panel1.Controls.Add(SummonerIcon);
             panel1.Controls.Add(SummonerRank);
             panel1.Controls.Add(SummonerName);
             panel1.Location = new Point(-1, -2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(867, 181);
+            panel1.Size = new Size(1182, 181);
             panel1.TabIndex = 21;
+            // 
+            // RegionSelector
+            // 
+            RegionSelector.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            RegionSelector.FormattingEnabled = true;
+            RegionSelector.Items.AddRange(new object[] { "BR", "EUNE", "EUW", "JP", "KR", "LAN", "LAS", "NA", "OCE", "PH", "RU", "SG", "TH", "TR", "TW", "VN" });
+            RegionSelector.Location = new Point(1099, 48);
+            RegionSelector.Name = "RegionSelector";
+            RegionSelector.Size = new Size(67, 23);
+            RegionSelector.TabIndex = 24;
+            RegionSelector.Text = "Region";
             // 
             // label1
             // 
@@ -301,16 +314,6 @@
             UpdateButton.Text = "Update";
             UpdateButton.UseVisualStyleBackColor = false;
             UpdateButton.Click += UpdateButton_Click;
-            // 
-            // RegionSelector
-            // 
-            RegionSelector.FormattingEnabled = true;
-            RegionSelector.Items.AddRange(new object[] { "BR", "EUNE", "EUW", "JP", "KR", "LAN", "LAS", "NA", "OCE", "PH", "RU", "SG", "TH", "TR", "TW", "VN" });
-            RegionSelector.Location = new Point(467, 14);
-            RegionSelector.Name = "RegionSelector";
-            RegionSelector.Size = new Size(121, 23);
-            RegionSelector.TabIndex = 24;
-            RegionSelector.Text = "Region";
             // 
             // panel3
             // 
@@ -412,11 +415,10 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(854, 472);
+            ClientSize = new Size(1177, 722);
             Controls.Add(SecondChampion);
             Controls.Add(FirstChampion);
             Controls.Add(ThirdChampion);
-            Controls.Add(SearchPlayerTextBox);
             Controls.Add(panel1);
             Controls.Add(panel3);
             Controls.Add(panel2);
@@ -436,7 +438,6 @@
             ((System.ComponentModel.ISupportInitialize)FirstChampion).EndInit();
             ((System.ComponentModel.ISupportInitialize)SecondChampion).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion

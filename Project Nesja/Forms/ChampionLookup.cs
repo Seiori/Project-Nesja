@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Project_Nesja.Data;
-using static PoniLCU.LeagueClient;
 
 namespace Project_Nesja.Forms
 {
@@ -39,11 +38,13 @@ namespace Project_Nesja.Forms
             // Adds Matchup Data
             championMatchupData.Rows.Clear();
 
-            foreach (var champion in championBuild.Matchups)
+            var fetchTasks = championBuild.Matchups.Select(async champion =>
             {
                 await champion.ChampionData!.FetchSprite();
                 championMatchupData.Rows.Add(champion.ChampionData.Sprite, champion.Winrate.ToString());
-            }
+            });
+
+            await Task.WhenAll(fetchTasks);
 
             // Display Selected Champion Information
             championName.Text = selectedChampion.Name;

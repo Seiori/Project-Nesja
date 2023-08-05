@@ -125,7 +125,7 @@
             dataGridViewCellStyle5.ForeColor = Color.Black;
             rankedDataGrid.RowsDefaultCellStyle = dataGridViewCellStyle5;
             rankedDataGrid.RowTemplate.Height = 60;
-            rankedDataGrid.Size = new Size(783, 402);
+            rankedDataGrid.Size = new Size(1106, 652);
             rankedDataGrid.TabIndex = 2;
             rankedDataGrid.CellClick += RankedDataGrid_CellClick;
             // 
@@ -277,7 +277,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(854, 472);
+            ClientSize = new Size(1177, 722);
             Controls.Add(RankLevelLabel);
             Controls.Add(RankLevelSelection);
             Controls.Add(label4);

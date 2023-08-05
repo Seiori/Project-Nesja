@@ -35,7 +35,7 @@ namespace Project_Nesja
             }
             else
             {
-                var urlWithCacheBusting = url + "?cacheBuster=" + DateTime.Now.Ticks;
+                var urlWithCacheBusting = url;
                 var json = await client.GetStringAsync(urlWithCacheBusting);
                 return JToken.Parse(json);
             }

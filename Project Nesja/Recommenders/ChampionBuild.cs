@@ -43,8 +43,8 @@ public class ChampionBuild
     public async Task<ChampionBuild> FetchChampionBuild()
     {
         // Fetches all Relevant Champion Statistics in a Specific Role
-        string apiUrl = $"https://axe.lolalytics.com/mega/?ep=champion&p=d&v=1&patch={GameData.CurrentVersion}&cid={championData.ID}&lane={role}&tier=platinum_plus&queue=420&region=all";
-        string apiExtraUrl = $"https://axe.lolalytics.com/mega/?ep=champion2&p=d&v=1&patch={GameData.CurrentVersion}&cid={championData.ID}&lane={role}&tier=platinum_plus&queue=420&region=all";
+        string apiUrl = $"https://ax.lolalytics.com/mega/?ep=champion&p=d&v=1&patch={GameData.CurrentVersion}&cid={championData.ID}&lane={role}&tier=platinum_plus&queue=420&region=all";
+        string apiExtraUrl = $"https://ax.lolalytics.com/mega/?ep=champion2&p=d&v=1&patch={GameData.CurrentVersion}&cid={championData.ID}&lane={role}&tier=platinum_plus&queue=420&region=all";
 
         var tasks = new Task<JToken>[] {
             WebRequests.GetJsonObject(apiUrl)!,

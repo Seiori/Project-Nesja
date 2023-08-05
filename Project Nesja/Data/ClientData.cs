@@ -1,14 +1,11 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using PoniLCU;
 using Project_Nesja.Objects;
-using System.Net.WebSockets;
-using System.Text;
 using static PoniLCU.LeagueClient;
 
 namespace Project_Nesja.Data
 {
-    public static class ClientData
+    public class ClientData
     {
         public static readonly LeagueClient LeagueClient = new(credentials.cmd);
         public static Summoner Summoner = new();
@@ -16,7 +13,7 @@ namespace Project_Nesja.Data
         static ClientData()
         {
             _ = ConnectToClient();
-            LeagueClient.OnDisconnected += OnDisconnectHandler;
+            LeagueClient.ClearAllListeners();
         }
         
         public static async Task<bool> ConnectToClient()
@@ -100,14 +97,6 @@ namespace Project_Nesja.Data
                 statusMessage = statusMessage
             }); ;
             var response = await LeagueClient.Request(requestMethod.PUT, "/lol-chat/v1/me", body);
-        }
-
-        private static void OnDisconnectHandler()
-        {
-            // Handle the disconnection event
-            // Perform any necessary cleanup operations
-
-            MessageBox.Show("Client disconnected. Please restart the application to use the related features!");
         }
     }
 }

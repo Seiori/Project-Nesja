@@ -37,14 +37,14 @@ namespace Project_Nesja.Forms
             SummonerLevel.Text = Summoner.Level.ToString();
             SummonerRank.Text = "Ladder Ranked: " + Summoner.SoloRank.ToString();
 
-            RankedSoloImage.Image = await WebRequests.DownloadImage("https://cdn.xdx.gg/op/img/emblems/" + Summoner.SoloTier!.ToLower() + ".png", "RankedIcons", Summoner.SoloTier.ToLower());
+            RankedSoloImage.Image = GetRankedIcon(Summoner.SoloTier!.ToLower());
             RankedSoloTier.Text = Summoner.SoloTier.ToUpper();
             RankedSoloDivision.Text = Summoner.SoloDivision;
             RankedSoloGames.Text = Summoner.SoloWins.ToString() + "W " + Summoner.SoloLosses.ToString() + "L";
             RankedSoloLP.Text = Summoner.SoloLP.ToString() + " LP";
             RankedSoloWinrate.Text = "Winrate " + System.Math.Round(((float)Summoner.SoloWins / ((float)Summoner.SoloWins + (float)Summoner.SoloLosses) * 100), 2).ToString() + "%";
 
-            RankedFlexImage.Image = await WebRequests.DownloadImage("https://cdn.xdx.gg/op/img/emblems/" + Summoner.FlexTier!.ToLower() + ".png", "RankedIcons", Summoner.FlexTier.ToLower());
+            RankedFlexImage.Image = GetRankedIcon(Summoner.FlexTier!.ToLower());
             RankedFlexTier.Text = Summoner.FlexTier.ToUpper();
             RankedFlexDivision.Text = Summoner.FlexDivision;
             RankedFlexGames.Text = Summoner.FlexWins.ToString() + "W " + Summoner.FlexLosses.ToString() + "L";
@@ -87,19 +87,19 @@ namespace Project_Nesja.Forms
         {
             if (e.KeyCode == Keys.Enter)
             {
-                string apiUrl = "https://api.xdx.gg/summoner/1/" + RegionSelector.Text.ToLower() + "/" + SearchPlayerTextBox.Text + "/?cache_bust=" + DateTime.UtcNow.Ticks;
+                string apiUrl = "https://pp1.xdx.gg/summoner/1/" + RegionSelector.Text.ToLower() + "/" + SearchPlayerTextBox.Text;
 
                 Summoner = ClientData.SearchSummoner(SearchPlayerTextBox.Text).Result;
 
                 Summoner = ParseSummonerData(await FetchSummonerData(apiUrl));
-                
+
                 LoadSummonerData();
             }
         }
 
         private async void UpdateButton_Click(object sender, EventArgs e)
         {
-            string apiUrl = "https://api.xdx.gg/summoner/1/" + RegionSelector.Text.ToLower() + "/" + Summoner.Name + "/?cache_bust=" + DateTime.UtcNow.Ticks;
+            string apiUrl = "https://pp1.xdx.gg/summoner/1/" + RegionSelector.Text.ToLower() + "/" + Summoner.Name.ToLower();
 
             Summoner = ParseSummonerData(await FetchSummonerData(apiUrl));
 
@@ -111,6 +111,35 @@ namespace Project_Nesja.Forms
             if (e.KeyCode == Keys.Enter && ClientData.LeagueClient.IsConnected)
             {
                 await ClientData.SetStatus(StatusMessage.Text);
+            }
+        }
+
+        private Image GetRankedIcon(string rankedTier)
+        {
+            switch (rankedTier.ToLower())
+            {
+                case "iron":
+                    return Properties.Resources.iron;
+                case "bronze":
+                    return Properties.Resources.bronze;
+                case "silver":
+                    return Properties.Resources.silver;
+                case "gold":
+                    return Properties.Resources.gold;
+                case "platinum":
+                    return Properties.Resources.platinum;
+                case "emerald":
+                    return Properties.Resources.emerald;
+                case "diamond":
+                    return Properties.Resources.diamond;
+                case "master":
+                    return Properties.Resources.master;
+                case "grandmaster":
+                    return Properties.Resources.grandmaster;
+                case "challenger":
+                    return Properties.Resources.challenger;
+                default:
+                    return Properties.Resources.unranked;
             }
         }
     }
