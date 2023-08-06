@@ -21,5 +21,6 @@
         public int FlexLP;
         public int FlexWins;
         public int FlexLosses;
+        public List<Match>? Matches;
     }
 }
