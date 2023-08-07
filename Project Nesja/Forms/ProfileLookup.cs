@@ -1,13 +1,14 @@
 ﻿using Project_Nesja.Data;
 using Project_Nesja.Objects;
 using Newtonsoft.Json.Linq;
-using System.Linq;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Project_Nesja.Forms
 {
     public partial class ProfileLookup : Form
     {
-        private static Summoner Summoner;
+        private static Summoner? Summoner;
         public ProfileLookup()
         {
             InitializeComponent();
@@ -17,7 +18,7 @@ namespace Project_Nesja.Forms
         private void Profile_Load(object sender, EventArgs e)
         {
             Summoner = ClientData.Summoner;
-            if (Summoner.Name != null)
+            if (ClientData.LeagueClient.IsConnected)
             {
                 RegionSelector.Text = Summoner.Region!.ToUpper();
 
@@ -26,15 +27,11 @@ namespace Project_Nesja.Forms
 
                 UpdateButton.PerformClick();
             }
-            else
-            {
-                SummonerName.Text = "Client not Connected!";
-            }
         }
 
         private async void LoadSummonerData()
         {
-            if (Summoner.Name != null)
+            if (Summoner!.Name != null)
             {
                 SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + Summoner.IconID + ".png", "Icons", Summoner.IconID.ToString());
                 SummonerName.Text = Summoner.Name;
@@ -55,22 +52,25 @@ namespace Project_Nesja.Forms
                 RankedFlexGames.Text = Summoner.FlexWins.ToString() + "W " + Summoner.FlexLosses.ToString() + "L";
                 RankedFlexLP.Text = Summoner.FlexLP.ToString() + " LP";
                 RankedFlexWinrate.Text = "Winrate " + System.Math.Round(((float)Summoner.FlexWins / ((float)Summoner.FlexWins + (float)Summoner.FlexLosses) * 100), 2).ToString() + "%";
+
+                foreach (IMatchData match in Summoner.Matches!)
+                {
+                    var fiwq = match.GetType();
+                }
             }
 
             //JObject top3Champions = ClientData.GetTopMastery(Summoner.SummonerID).Result;
             //FirstChampion.Image = GameData.ChampionList.First(x => x.Value.ID == top3Champions.First!.First!.ElementAt(0).SelectToken("championId")!.ToObject<int>()).Value.Sprite;
             //SecondChampion.Image = GameData.ChampionList.First(x => x.Value.ID == top3Champions.First!.First!.ElementAt(1).SelectToken("championId")!.ToObject<int>()).Value.Sprite;
             //ThirdChampion.Image = GameData.ChampionList.First(x => x.Value.ID == top3Champions.First!.First!.ElementAt(2).SelectToken("championId")!.ToObject<int>()).Value.Sprite;
+
+            // IMPLEMENT DATA BINDING MAYBE
+            // IMPLEMENT SYSTEM TO DISPLAY MATCH HISTORY
         }
 
-        private static async Task<JObject?> FetchSummonerData(string apiUrl)
+        private async Task ParseSummonerData(JObject summonerData)
         {
-            return await WebRequests.GetJsonObject(apiUrl) as JObject;
-        }
-
-        private static Summoner ParseSummonerData(JObject summonerData)
-        {
-            Summoner.Name = summonerData["name"]?.ToString();
+            Summoner!.Name = summonerData["name"]?.ToString();
             Summoner.Region = summonerData["region"]?.ToString();
             Summoner.Level = int.TryParse(summonerData["level"]?.ToString(), out int level) ? level : 0;
             Summoner.IconID = int.TryParse(summonerData["icon"]?.ToString(), out int iconID) ? iconID : 0;
@@ -85,28 +85,35 @@ namespace Project_Nesja.Forms
             Summoner.FlexLP = int.TryParse(summonerData["flex-lp"]?.ToString(), out int flexLP) ? flexLP : 0;
             Summoner.FlexWins = int.TryParse(summonerData["flex-wins"]?.ToString(), out int flexWins) ? flexWins : 0;
             Summoner.FlexLosses = int.TryParse(summonerData["flex-losses"]?.ToString(), out int flexLosses) ? flexLosses : 0;
-            Summoner.Matches = new List<Match>();
+            Summoner.Matches = new List<IMatchData>();
 
-            foreach (var match in summonerData["matches"].Children())
+            var tasks = summonerData["matches"]!.Children().Select(async matchList =>
             {
-                Match tempMatch = new Match();
+                string matchId = matchList.First().ToString();
+                JObject matchData = (await WebRequests.GetJsonObject("https://pp1.xdx.gg/match/1/euw/" + matchId + "/") as JObject)!;
 
-                tempMatch.GameID = match[0]!.ToObject<double>();    // First element
-
-                if (match.Count() == 4)
+                if (matchData.HasValues)
                 {
-                    tempMatch.ChampionID = int.TryParse(match[1]!.ToString(), out int championID) ? championID : 0;   // Second element
-                    tempMatch.QueueID = int.TryParse(match[2]!.ToString(), out int queueID) ? queueID : 0;      // Third element
-                    tempMatch.UnixTime = int.TryParse(match[3]!.ToString(), out int unixTime) ? unixTime : 0;  // Fourth element
+                    switch ((int)matchData.SelectToken("queue")!)
+                    {
+                        case 400:
+                        case 420:
+                        case 450:
+                            Normal normalMatch = JsonConvert.DeserializeObject<Normal>(matchData.ToString())!;
+                            Summoner.Matches.Add(normalMatch);
+                            break;
+                        case 1700:
+                            Arena arenaMatch = JsonConvert.DeserializeObject<Arena>(matchData.ToString())!;
+                            Summoner.Matches.Add(arenaMatch);
+                            break;
+                    }
                 }
+            });
 
-                Summoner.Matches.Add(tempMatch);
-            }
-
-            return Summoner;
+            await Task.WhenAll(tasks);
         }
 
-        private async void SearchPlayerTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void SearchPlayerTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -116,29 +123,32 @@ namespace Project_Nesja.Forms
                 }
                 else
                 {
-                    string apiUrl = "https://pp1.xdx.gg/summoner/1/" + RegionSelector.Text.ToLower() + "/" + SearchPlayerTextBox.Text;
-
-                    Summoner = ParseSummonerData(await FetchSummonerData(apiUrl));
-
-                    LoadSummonerData();
+                    GetSummonerData();
                 }
             }
         }
 
-        private async void UpdateButton_Click(object sender, EventArgs e)
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
+            GetSummonerData();
+        }
+
+        private async void GetSummonerData()
         {
             string apiUrl = "https://pp1.xdx.gg/summoner/1/" + RegionSelector.Text.ToLower() + "/" + Summoner.Name.ToLower();
 
-            Summoner = ParseSummonerData(await FetchSummonerData(apiUrl));
+            JObject summonerData = (await WebRequests.GetJsonObject(apiUrl) as JObject)!;
+
+            await ParseSummonerData(summonerData);
 
             LoadSummonerData();
         }
 
-        private async void StatusMessage_KeyDown(object sender, KeyEventArgs e)
+        private void StatusMessage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && ClientData.LeagueClient.IsConnected)
             {
-                await ClientData.SetStatus(StatusMessage.Text);
+                ClientData.SetStatus(StatusMessage.Text);
             }
         }
 

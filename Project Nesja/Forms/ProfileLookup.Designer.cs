@@ -55,18 +55,17 @@
             panel2 = new Panel();
             RankedFlexDivision = new Label();
             RankedFlexImage = new PictureBox();
-            ThirdChampion = new PictureBox();
-            FirstChampion = new PictureBox();
-            SecondChampion = new PictureBox();
+            DataGridTest = new DataGridView();
+            Image = new DataGridViewImageColumn();
+            Kills = new DataGridViewTextBoxColumn();
+            Deaths = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)SummonerIcon).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)RankedSoloImage).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)RankedFlexImage).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ThirdChampion).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)FirstChampion).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)SecondChampion).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DataGridTest).BeginInit();
             SuspendLayout();
             // 
             // SearchPlayerTextBox
@@ -387,38 +386,37 @@
             RankedFlexImage.TabIndex = 26;
             RankedFlexImage.TabStop = false;
             // 
-            // ThirdChampion
+            // DataGridTest
             // 
-            ThirdChampion.Location = new Point(593, 265);
-            ThirdChampion.Name = "ThirdChampion";
-            ThirdChampion.Size = new Size(144, 131);
-            ThirdChampion.TabIndex = 27;
-            ThirdChampion.TabStop = false;
+            DataGridTest.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DataGridTest.Columns.AddRange(new DataGridViewColumn[] { Image, Kills, Deaths });
+            DataGridTest.Location = new Point(181, 182);
+            DataGridTest.Name = "DataGridTest";
+            DataGridTest.RowTemplate.Height = 25;
+            DataGridTest.Size = new Size(1000, 525);
+            DataGridTest.TabIndex = 25;
             // 
-            // FirstChampion
+            // Image
             // 
-            FirstChampion.Location = new Point(443, 241);
-            FirstChampion.Name = "FirstChampion";
-            FirstChampion.Size = new Size(144, 131);
-            FirstChampion.TabIndex = 28;
-            FirstChampion.TabStop = false;
+            Image.HeaderText = "ChampionImage";
+            Image.Name = "Image";
             // 
-            // SecondChampion
+            // Kills
             // 
-            SecondChampion.Location = new Point(293, 265);
-            SecondChampion.Name = "SecondChampion";
-            SecondChampion.Size = new Size(144, 131);
-            SecondChampion.TabIndex = 29;
-            SecondChampion.TabStop = false;
+            Kills.HeaderText = "Kills";
+            Kills.Name = "Kills";
+            // 
+            // Deaths
+            // 
+            Deaths.HeaderText = "Deaths";
+            Deaths.Name = "Deaths";
             // 
             // ProfileLookup
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1177, 722);
-            Controls.Add(SecondChampion);
-            Controls.Add(FirstChampion);
-            Controls.Add(ThirdChampion);
+            Controls.Add(DataGridTest);
             Controls.Add(panel1);
             Controls.Add(panel3);
             Controls.Add(panel2);
@@ -434,9 +432,7 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)RankedFlexImage).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ThirdChampion).EndInit();
-            ((System.ComponentModel.ISupportInitialize)FirstChampion).EndInit();
-            ((System.ComponentModel.ISupportInitialize)SecondChampion).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DataGridTest).EndInit();
             ResumeLayout(false);
         }
 
@@ -468,8 +464,9 @@
         private Label SummonerRegion;
         private Label label1;
         private TextBox StatusMessage;
-        private PictureBox ThirdChampion;
-        private PictureBox FirstChampion;
-        private PictureBox SecondChampion;
+        private DataGridView DataGridTest;
+        private DataGridViewImageColumn Image;
+        private DataGridViewTextBoxColumn Kills;
+        private DataGridViewTextBoxColumn Deaths;
     }
 }
