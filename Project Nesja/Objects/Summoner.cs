@@ -5,7 +5,7 @@
         public string? PUUID;
         public long AccountID;
         public int SummonerID;
-        public string? Name { get; set; }
+        public string? Name;
         public string? InternalName;
         public string? Region;
         public int Level;

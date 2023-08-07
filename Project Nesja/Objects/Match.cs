@@ -5,12 +5,7 @@ namespace Project_Nesja.Objects
 {
     public interface IMatchData
     {
-        public enum MatchType
-        {
-            Normal,
-            Bot,
-            Arena
-        }
+
     }
 
     public class Normal : IMatchData

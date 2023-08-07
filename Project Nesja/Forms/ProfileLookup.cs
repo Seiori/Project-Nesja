@@ -52,11 +52,6 @@ namespace Project_Nesja.Forms
                 RankedFlexGames.Text = Summoner.FlexWins.ToString() + "W " + Summoner.FlexLosses.ToString() + "L";
                 RankedFlexLP.Text = Summoner.FlexLP.ToString() + " LP";
                 RankedFlexWinrate.Text = "Winrate " + System.Math.Round(((float)Summoner.FlexWins / ((float)Summoner.FlexWins + (float)Summoner.FlexLosses) * 100), 2).ToString() + "%";
-
-                foreach (IMatchData match in Summoner.Matches!)
-                {
-                    var fiwq = match.GetType();
-                }
             }
 
             //JObject top3Champions = ClientData.GetTopMastery(Summoner.SummonerID).Result;
@@ -86,31 +81,6 @@ namespace Project_Nesja.Forms
             Summoner.FlexWins = int.TryParse(summonerData["flex-wins"]?.ToString(), out int flexWins) ? flexWins : 0;
             Summoner.FlexLosses = int.TryParse(summonerData["flex-losses"]?.ToString(), out int flexLosses) ? flexLosses : 0;
             Summoner.Matches = new List<IMatchData>();
-
-            var tasks = summonerData["matches"]!.Children().Select(async matchList =>
-            {
-                string matchId = matchList.First().ToString();
-                JObject matchData = (await WebRequests.GetJsonObject("https://pp1.xdx.gg/match/1/euw/" + matchId + "/") as JObject)!;
-
-                if (matchData.HasValues)
-                {
-                    switch ((int)matchData.SelectToken("queue")!)
-                    {
-                        case 400:
-                        case 420:
-                        case 450:
-                            Normal normalMatch = JsonConvert.DeserializeObject<Normal>(matchData.ToString())!;
-                            Summoner.Matches.Add(normalMatch);
-                            break;
-                        case 1700:
-                            Arena arenaMatch = JsonConvert.DeserializeObject<Arena>(matchData.ToString())!;
-                            Summoner.Matches.Add(arenaMatch);
-                            break;
-                    }
-                }
-            });
-
-            await Task.WhenAll(tasks);
         }
 
         private void SearchPlayerTextBox_KeyDown(object sender, KeyEventArgs e)
