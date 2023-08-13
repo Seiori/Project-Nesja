@@ -63,7 +63,7 @@ namespace Project_Nesja.Forms
             // IMPLEMENT SYSTEM TO DISPLAY MATCH HISTORY
         }
 
-        private async Task ParseSummonerData(JObject summonerData)
+        private void ParseSummonerData(JObject summonerData)
         {
             Summoner!.Name = summonerData["name"]?.ToString();
             Summoner.Region = summonerData["region"]?.ToString();
@@ -109,7 +109,7 @@ namespace Project_Nesja.Forms
 
             JObject summonerData = (await WebRequests.GetJsonObject(apiUrl) as JObject)!;
 
-            await ParseSummonerData(summonerData);
+            ParseSummonerData(summonerData);
 
             LoadSummonerData();
         }

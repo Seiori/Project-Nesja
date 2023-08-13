@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Project_Nesja.Data;
+using System.Configuration;
 
 namespace Project_Nesja.Forms
 {
@@ -13,20 +14,22 @@ namespace Project_Nesja.Forms
         private bool itemSetImport = false;
         private bool summonerSpellImport = false;
 
-        public ChampionLookup(Champion chosenChampion, string role)
+        public ChampionLookup(Champion selectedChampion, string role)
         {
             InitializeComponent();
-            this.selectedChampion = chosenChampion;
+
+            this.selectedChampion = selectedChampion;
+
+            this.selectedChampion ??= GameData.ChampionList.Values.First();
+
             this.role = role;
 
-            if (selectedChampion == null)
-                selectedChampion = GameData.ChampionList.Values.First();
+            LoadChamptionData();
         }
 
         private void Home_Load(object sender, EventArgs e)
         {
             searchChampionListBox.Visible = false;
-            SelectRole(role);
 
             if (ClientData.LeagueClient.IsConnected!)
                 ImportButton.Visible = true;
@@ -34,9 +37,18 @@ namespace Project_Nesja.Forms
 
         private async void LoadChamptionData()
         {
+            // Gather the Champion Data
+            championBuild = new ChampionBuild(selectedChampion, role);
 
             // Adds Matchup Data
             championMatchupData.Rows.Clear();
+
+            // Combine these Await calls
+            await selectedChampion.FetchAll();
+            await championBuild.FetchChampionBuild();
+
+            // Applies the Role Selection
+            SelectRole();
 
             var fetchTasks = championBuild.Matchups.Select(async champion =>
             {
@@ -96,7 +108,8 @@ namespace Project_Nesja.Forms
             firstCoreItem.Image = championBuild.CoreItems.FirstItem?.Image ?? null;
             secondCoreItem.Image = championBuild.CoreItems.SecondItem?.Image ?? null;
             thirdCoreItem.Image = championBuild.CoreItems.ThirdItem?.Image ?? null;
-            coreItemData.Text = System.Math.Round(championBuild.CoreItems.Winrate * 100, 2).ToString() + "% WR (" + championBuild.CoreItems.TotalGames + ")";
+            coreItemWinrate.Text = System.Math.Round(championBuild.CoreItems.Winrate * 100, 2).ToString() + "% WR";
+            coreItemMatches.Text = championBuild.TotalGames.ToString() + " Matches";
 
             // Adds the Images/Data of the Fourth Item choices to the Form
             firstFourthChoice.Image = championBuild.FourthItemChoice.FirstOrDefault()?.ItemAsset!.Image ?? null;
@@ -173,8 +186,10 @@ namespace Project_Nesja.Forms
             // Grab the ChampionData from the Dictionary of ChampionData Values using the ChampionName
             selectedChampion = GameData.ChampionList.Where(x => x.Value.Name == searchChampionListBox.SelectedItem.ToString()).FirstOrDefault().Value;
 
+            role = "";
+
             // Load the Selected Champions ChampionData to the UI
-            SelectRole(null);
+            LoadChamptionData();
 
             // Clear the Results
             searchChampionListBox.Items.Clear();
@@ -183,50 +198,11 @@ namespace Project_Nesja.Forms
             searchChampionTextBox.Clear();
         }
 
-        private async void SelectRole(string? role)
-        {
-            championBuild = new ChampionBuild(selectedChampion, role!);
-
-            await selectedChampion.FetchAll();
-            await championBuild.FetchChampionBuild();
-
-            topSelection.BackColor = SystemColors.Control;
-            jungleSelection.BackColor = SystemColors.Control;
-            midSelection.BackColor = SystemColors.Control;
-            bottomSelection.BackColor = SystemColors.Control;
-            supportSelection.BackColor = SystemColors.Control;
-
-            switch (championBuild.role)
-            {
-                case "top":
-                    this.role = "Top";
-                    topSelection.BackColor = Color.Black;
-                    break;
-                case "jungle":
-                    this.role = "Jungle";
-                    jungleSelection.BackColor = Color.Black;
-                    break;
-                case "middle":
-                    this.role = "Mid";
-                    midSelection.BackColor = Color.Black;
-                    break;
-                case "bottom":
-                    this.role = "Adc";
-                    bottomSelection.BackColor = Color.Black;
-                    break;
-                case "support":
-                    this.role = "Supp";
-                    supportSelection.BackColor = Color.Black;
-                    break;
-            }
-            LoadChamptionData();
-        }
-
         private async void ImportButton_Click(object sender, EventArgs e)
         {
             if (runePageImport)
             {
-                var jsonString = "{\"name\":\"" + selectedChampion.Name + " " + role + " Runes\", \"selectedPerkIds\": " + JArray.FromObject(this.championBuild.RunePageChoice.GetRunePageIDs()).ToString() + ", \"primaryStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.Keystone!.RuneTree) + ", \"subStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.SecTreeFirstOption!.RuneTree) + ", \"current\": true}";
+                var jsonString = "{\"name\":\"" + selectedChampion.Name + " " + championBuild.role + " Runes\", \"selectedPerkIds\": " + JArray.FromObject(this.championBuild.RunePageChoice.GetRunePageIDs()).ToString() + ", \"primaryStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.Keystone!.RuneTree) + ", \"subStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.SecTreeFirstOption!.RuneTree) + ", \"current\": true}";
                 await ClientData.SetRunePage(jsonString);
             }
 
@@ -322,29 +298,62 @@ namespace Project_Nesja.Forms
             }
         }
 
+        private void SelectRole()
+        {
+            topSelection.BackColor = SystemColors.Control;
+            jungleSelection.BackColor = SystemColors.Control;
+            midSelection.BackColor = SystemColors.Control;
+            bottomSelection.BackColor = SystemColors.Control;
+            supportSelection.BackColor = SystemColors.Control;
+
+            switch (role)
+            {
+                case "top":
+                    topSelection.BackColor = Color.Black;
+                    break;
+                case "jungle":
+                    jungleSelection.BackColor = Color.Black;
+                    break;
+                case "middle":
+                    midSelection.BackColor = Color.Black;
+                    break;
+                case "bottom":
+                    bottomSelection.BackColor = Color.Black;
+                    break;
+                case "support":
+                    supportSelection.BackColor = Color.Black;
+                    break;
+            }
+        }
+
         private void TopSelection_Click(object sender, EventArgs e)
         {
-            SelectRole("top");
+            role = "top";
+            LoadChamptionData();
         }
 
         private void JungleSelection_Click(object sender, EventArgs e)
         {
-            SelectRole("jungle");
+            role = "jungle";
+            LoadChamptionData();
         }
 
         private void MidSelection_Click(object sender, EventArgs e)
         {
-            SelectRole("middle");
+            role = "middle";
+            LoadChamptionData();
         }
 
         private void BottomSelection_Click(object sender, EventArgs e)
         {
-            SelectRole("bottom");
+            role = "bottom";
+            LoadChamptionData();
         }
 
         private void SupportSelection_Click(object sender, EventArgs e)
         {
-            SelectRole("support");
+            role = "support";
+            LoadChamptionData();
         }
 
         private void SummonersImport_CheckedChanged(object sender, EventArgs e)

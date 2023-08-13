@@ -1,10 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Project_Nesja;
 using Project_Nesja.Data;
+using Project_Nesja.Objects;
 
 public class ChampionBuild
 {
     private readonly Champion championData;
+    private ChampionRankedData championRankedData;
     public string role;
     public int TotalGames;
     public double Winrate;
@@ -21,11 +24,11 @@ public class ChampionBuild
     public List<ChampionRole> Matchups;
     private float winrateWeight;
     private float pickrateWeight;
-        
 
-    public ChampionBuild(Champion championData, string role)
+    public ChampionBuild(Champion championData, string role = "")
     {
         this.championData = championData;
+        championRankedData = new();
         this.role = role;
         RunePageChoice = new();
         StartingItems = new();
@@ -44,30 +47,24 @@ public class ChampionBuild
     {
         // Fetches all Relevant Champion Statistics in a Specific Role
         string apiUrl = $"https://ax.lolalytics.com/mega/?ep=champion&p=d&v=1&patch={GameData.CurrentVersion}&cid={championData.ID}&lane={role}&tier=platinum_plus&queue=420&region=all";
-        string apiExtraUrl = $"https://ax.lolalytics.com/mega/?ep=champion2&p=d&v=1&patch={GameData.CurrentVersion}&cid={championData.ID}&lane={role}&tier=platinum_plus&queue=420&region=all";
 
-        var tasks = new Task<JToken>[] {
-            WebRequests.GetJsonObject(apiUrl)!,
-            WebRequests.GetJsonObject(apiExtraUrl)!
-        };
-
-        JToken[] results = await Task.WhenAll(tasks);
+        championRankedData = JsonConvert.DeserializeObject<ChampionRankedData>((await WebRequests.GetJsonObject(apiUrl))!.ToString())!;
 
         // Grabs the Specific Role from the JSON
-        this.role = results[0].SelectToken("header")!.SelectToken("lane")!.ToString();
+        role = championRankedData.Header!.Values().ElementAt(2).ToString();
         
         // Parses all Relevant Data into Specific Categories for Comparison
         await Task.WhenAll(
-            FetchChampionStats(results[0]),
-            FetchRunes(results[0]),
-            FetchSummonerSpells(results[0]),
-            FetchStartingItems(results[1]),
-            FetchCoreItems(results[1], results[0]),
-            FetchFourthItemChoices(results[0]),
-            FetchFifthItemChoices(results[0]),
-            FetchSixthItemChoices(results[0]),
-            FetchSkillOrder(results[0], results[1]),
-            FetchMatchups(results[0])
+            FetchChampionStats(),
+            FetchRunes(),
+            FetchSummonerSpells(),
+            FetchStartingItems(),
+            FetchCoreItems(),
+            FetchFourthItemChoices(),
+            FetchFifthItemChoices(),
+            FetchSixthItemChoices(),
+            FetchSkillOrder(),
+            FetchMatchups()
         );
 
         // Fetches Image Information for All Relevant Build Assets
@@ -106,16 +103,16 @@ public class ChampionBuild
             SummonerSpells.SecondSpellData!.FetchAssetImage()
         });
         
-        tasks.AddRange(FourthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
-        tasks.AddRange(FifthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
-        tasks.AddRange(SixthItemChoice.Select(c => c.ItemAsset.FetchAssetImage()));
+        tasks.AddRange(FourthItemChoice.Select(c => c.ItemAsset!.FetchAssetImage()));
+        tasks.AddRange(FifthItemChoice.Select(c => c.ItemAsset!.FetchAssetImage()));
+        tasks.AddRange(SixthItemChoice.Select(c => c.ItemAsset!.FetchAssetImage()));
 
         await Task.WhenAll(tasks).ConfigureAwait(false);
     }
     
-    private Task FetchChampionStats(JToken buildData)
+    private Task FetchChampionStats()
     {
-        JObject statData = (JObject)buildData.SelectToken("header")!;
+        JObject statData = championRankedData.Header!;
         
         Winrate = statData["wr"]!.ToObject<double>();
         Pickrate = statData["pr"]!.ToObject<double>();
@@ -125,9 +122,9 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
 
-    private Task FetchRunes(JToken buildData)
+    private Task FetchRunes()
     {
-        JObject allRuneData = (JObject)buildData.SelectToken("runes")!.SelectToken("stats")!;
+        JObject allRuneData = (JObject)championRankedData.Runes!.Values().First();
 
         List<Rune> primaryRunes = new();
         List<Rune> secondaryRunes = new();
@@ -386,13 +383,13 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
 
-    private Task FetchSummonerSpells(JToken buildData)
+    private Task FetchSummonerSpells()
     {
         List<SummonerSpells> summonerSpells = new ();
 
-        JArray allSpellSets = (JArray)buildData.SelectToken("spells")!;
+        var allSpellSets = championRankedData.Spells;
 
-        foreach (JArray eachSpellSet in allSpellSets)
+        foreach (var eachSpellSet in allSpellSets!)
         {
             string[] spellIds = eachSpellSet[0]!.ToString().Split('_');
             
@@ -413,13 +410,13 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
 
-    private Task FetchStartingItems(JToken buildDataExtra)
+    private Task FetchStartingItems()
     {
         List<ItemGroup> startSets = new();
         
-        var startItemData = buildDataExtra.SelectToken("startSet");
+        var startItemData = championRankedData.StartSet;
 
-        foreach (var startItem in startItemData ?? 0)
+        foreach (var startItem in startItemData!)
         {
             ItemGroup startSet = new();
             string[] parts = startItem.First().ToString().Split(new string[] { "\": [" }, StringSplitOptions.None);
@@ -443,11 +440,11 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
 
-    private Task FetchCoreItems(JToken buildDataExtra, JToken buildData)
+    private Task FetchCoreItems()
     {
         List<ItemGroup> coreSets = new();
         
-        var coreItemData = buildDataExtra.SelectToken("itemSets")!.SelectToken("itemBootSet3");
+        var coreItemData = championRankedData.ItemSets!.Values().Last();
 
         foreach (var coreItem in coreItemData ?? 0)
         {
@@ -460,7 +457,7 @@ public class ChampionBuild
             coreSet.SecondItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[1])).Value;
             coreSet.ThirdItem = GameData.Assets.FirstOrDefault(x => x.Value.ID == int.Parse(parts[2])).Value;
             coreSet.Winrate = coreItem.First().Last().ToObject<float>() / coreItem.First().First().ToObject<float>();
-            coreSet.Pickrate = coreItem.First().First().ToObject<float>() / buildData.SelectToken("header")!.SelectToken("n")!.ToObject<float>() * 100;
+            coreSet.Pickrate = coreItem.First().First().ToObject<float>() / championRankedData.N * 100;
             coreSet.TotalGames = coreItem.First().First().ToObject<int>();
 
             coreSets.Add(coreSet);
@@ -472,13 +469,13 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
     
-    private Task FetchFourthItemChoices(JToken buildData)
+    private Task FetchFourthItemChoices()
     {
         List<Item> fourthItemSets = new();
 
-        var fourthItemData = buildData.SelectToken("item3");
+        var fourthItemData = championRankedData.Item3;
 
-        foreach (var fourthItem in fourthItemData ?? 0)
+        foreach (var fourthItem in fourthItemData!)
         {
             Item fourthItemSet = new();
             string[] parts = fourthItem.First().ToString().Split('_');
@@ -495,13 +492,13 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
     
-    private Task FetchFifthItemChoices(JToken buildData)
+    private Task FetchFifthItemChoices()
     {
         List<Item> fifthItemSets = new();
 
-        var fifthItemData = buildData.SelectToken("item4");
+        var fifthItemData = championRankedData.Item4;
 
-        foreach (var fifthItem in fifthItemData ?? 0)
+        foreach (var fifthItem in fifthItemData!)
         {
             Item fifthItemSet = new();
             string[] parts = fifthItem.First().ToString().Split('_');
@@ -518,13 +515,16 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
 
-    private Task FetchSixthItemChoices(JToken buildData)
+    private Task FetchSixthItemChoices()
     {
         List<Item> sixthItemSets = new();
 
-        var sixthItemData = buildData.SelectToken("item5");
+        var sixthItemData = championRankedData.Item5;
 
-        foreach (var sixthItem in sixthItemData ?? 0)
+        if (sixthItemData == null)
+            return Task.CompletedTask;
+
+        foreach (var sixthItem in sixthItemData!)
         {
             Item sixthItemSet = new();
             string[] parts = sixthItem.First().ToString().Split('_');
@@ -541,19 +541,21 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
 
-    private Task FetchSkillOrder(JToken buildData, JToken buildDataExtra)
+    private Task FetchSkillOrder()
     {
         List<SkillPriority> skillPrioritySets = new();
 
-        var skillPriorityData = buildDataExtra.SelectToken("skills")!.SelectToken("skillOrder");
+        var skillPriorityData = championRankedData.Skills!.Values().Last();
 
         foreach (var skillPrioritySet in skillPriorityData!)
         {
-            SkillPriority skillPrioritySetData = new();
-            skillPrioritySetData.Priority = skillPrioritySet.First().ToString();
-            skillPrioritySetData.Winrate = skillPrioritySet.ElementAt(2).ToObject<float>() / skillPrioritySet.ElementAt(1).ToObject<float>() * 100;
-            skillPrioritySetData.Pickrate = skillPrioritySet.ElementAt(1).ToObject<float>() / buildData.SelectToken("header")!.SelectToken("n")!.ToObject<float>() * 100;
-            skillPrioritySetData.TotalGames = skillPrioritySet.ElementAt(1).ToObject<int>();
+            SkillPriority skillPrioritySetData = new()
+            {
+                Priority = skillPrioritySet.First().ToString(),
+                Winrate = skillPrioritySet.ElementAt(2).ToObject<float>() / skillPrioritySet.ElementAt(1).ToObject<float>() * 100,
+                Pickrate = skillPrioritySet.ElementAt(1).ToObject<float>() / championRankedData.N * 100,
+                TotalGames = skillPrioritySet.ElementAt(1).ToObject<int>()
+            };
 
             skillPrioritySets.Add(skillPrioritySetData);
         }
@@ -562,22 +564,25 @@ public class ChampionBuild
         return Task.CompletedTask;
     }
 
-    private Task FetchMatchups(JToken buildData)
+    private Task FetchMatchups()
     {
-        var allMatchupData = buildData.SelectToken("enemy_" + buildData.SelectToken("header")!.SelectToken("lane")!.ToString());
+        // Grabs the Relevant Matchup Data, and Parses it into a List of ChampionRole Objects
+        var allMatchupData = championRankedData.GetOppositeRole(role)!;
 
-        foreach (var matchup in allMatchupData!)
+        foreach (var matchup in allMatchupData)
         {
             ChampionRole matchupData = new()
             {
                 ChampionData = GameData.ChampionList.FirstOrDefault(x => x.Value.ID == int.Parse((string)matchup.First()!)).Value,
                 Winrate = 100 - matchup.ElementAt(3).ToObject<float>(),
                 TotalGames = matchup.ElementAt(1).ToObject<int>(),
-                Pickrate = matchup.ElementAt(1).ToObject<float>() / buildData.SelectToken("header")!.SelectToken("n")!.ToObject<float>() * 100
+                Pickrate = matchup.ElementAt(1).ToObject<float>() / championRankedData.N * 100
             };
 
             Matchups.Add(matchupData);
         }
+
+        // Filters out the Matchups of Pickrate < 0.2%, and then Orders by Winrate Weight and Pickrate Weight
         Matchups = Matchups.Where(x => x.Pickrate > 0.2)
             .OrderByDescending(x => x.Winrate * winrateWeight + (x.TotalGames / Matchups.Sum(x => x.TotalGames)) * pickrateWeight).ToList();
 
