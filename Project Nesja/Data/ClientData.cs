@@ -8,7 +8,7 @@ namespace Project_Nesja.Data
     public class ClientData
     {
         public static readonly LeagueClient LeagueClient = new(credentials.cmd);
-        public static Summoner Summoner = new();
+        public static SummonerData Summoner = new();
         
         static ClientData()
         {
@@ -25,14 +25,14 @@ namespace Project_Nesja.Data
                 
                 Summoner = new()
                 {
-                    PUUID = data!["puuid"]!.ToString(),
-                    AccountID = data["accountId"]!.ToObject<long>(),
-                    SummonerID = data["summonerId"]!.ToObject<int>(),
-                    Name = data["displayName"]!.ToString(),
-                    InternalName = data["internalName"]!.ToString(),
-                    Region = region!["region"]!.ToString(),
-                    Level = data["summonerLevel"]!.ToObject<int>(),
-                    IconID = data["profileIconId"]!.ToObject<int>()
+                    //PUUID = data!["puuid"]!.ToString(),
+                    //AccountID = data["accountId"]!.ToObject<long>(),
+                    //SummonerID = data["summonerId"]!.ToObject<int>(),
+                    //Name = data["displayName"]!.ToString(),
+                    //InternalName = data["internalName"]!.ToString(),
+                    //Region = region!["region"]!.ToString(),
+                    //Level = data["summonerLevel"]!.ToObject<int>(),
+                    //IconID = data["profileIconId"]!.ToObject<int>()
                 };
                 return true;
             }
@@ -43,19 +43,19 @@ namespace Project_Nesja.Data
             }
         }
 
-        public static async Task<Summoner> SearchSummoner(string summonerName)
+        public static async Task<SummonerData> SearchSummoner(string summonerName)
         {
             JObject data = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/lol-summoner/v1/summoners?name=" + summonerName));
 
-            Summoner summoner = new()
+            SummonerData summoner = new()
             {
-                AccountID = data["accountId"]!.ToObject<long>(),
-                Name = summonerName,
-                InternalName = data["internalName"]!.ToString(),
-                IconID = data["profileIconId"]!.ToObject<int>(),
-                PUUID = data["puuid"]!.ToString(),
-                SummonerID = data["summonerId"]!.ToObject<int>(),
-                Level = data["summonerLevel"]!.ToObject<int>(),
+                //AccountID = data["accountId"]!.ToObject<long>(),
+                //Name = summonerName,
+                //InternalName = data["internalName"]!.ToString(),
+                //IconID = data["profileIconId"]!.ToObject<int>(),
+                //PUUID = data["puuid"]!.ToString(),
+                //SummonerID = data["summonerId"]!.ToObject<int>(),
+                //evel = data["summonerLevel"]!.ToObject<int>(),
             };
             return summoner;
         }
@@ -70,7 +70,7 @@ namespace Project_Nesja.Data
 
         public static async Task SetItemSet(string jsonString)
         {
-            var response = await LeagueClient.Request(requestMethod.PUT, $"/lol-item-sets/v1/item-sets/{Summoner.SummonerID}/sets", jsonString);
+            //var response = await LeagueClient.Request(requestMethod.PUT, $"/lol-item-sets/v1/item-sets/{Summoner.SummonerID}/sets", jsonString);
         }
         
         public static async Task SetSummonerSpells(string jsonString)

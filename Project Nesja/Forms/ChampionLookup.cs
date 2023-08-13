@@ -278,7 +278,7 @@ namespace Project_Nesja.Forms
 
                 Dictionary<string, object> requestBody = new();
 
-                requestBody.Add("accountId", ClientData.Summoner.AccountID);
+                //requestBody.Add("accountId", ClientData.Summoner.AccountID);
                 requestBody.Add("itemSets", itemSets);
                 requestBody.Add("timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
 

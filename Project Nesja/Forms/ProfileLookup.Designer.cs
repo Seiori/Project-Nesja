@@ -56,9 +56,6 @@
             RankedFlexDivision = new Label();
             RankedFlexImage = new PictureBox();
             DataGridTest = new DataGridView();
-            Image = new DataGridViewImageColumn();
-            Kills = new DataGridViewTextBoxColumn();
-            Deaths = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)SummonerIcon).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -389,27 +386,11 @@
             // DataGridTest
             // 
             DataGridTest.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataGridTest.Columns.AddRange(new DataGridViewColumn[] { Image, Kills, Deaths });
             DataGridTest.Location = new Point(181, 182);
             DataGridTest.Name = "DataGridTest";
             DataGridTest.RowTemplate.Height = 25;
             DataGridTest.Size = new Size(1000, 525);
             DataGridTest.TabIndex = 25;
-            // 
-            // Image
-            // 
-            Image.HeaderText = "ChampionImage";
-            Image.Name = "Image";
-            // 
-            // Kills
-            // 
-            Kills.HeaderText = "Kills";
-            Kills.Name = "Kills";
-            // 
-            // Deaths
-            // 
-            Deaths.HeaderText = "Deaths";
-            Deaths.Name = "Deaths";
             // 
             // ProfileLookup
             // 
@@ -465,8 +446,5 @@
         private Label label1;
         private TextBox StatusMessage;
         private DataGridView DataGridTest;
-        private DataGridViewImageColumn Image;
-        private DataGridViewTextBoxColumn Kills;
-        private DataGridViewTextBoxColumn Deaths;
     }
 }
