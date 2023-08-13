@@ -27,6 +27,7 @@ public class ChampionBuild
 
     public ChampionBuild(Champion championData, string role = "")
     {
+        // test
         this.championData = championData;
         championRankedData = new();
         this.role = role;
