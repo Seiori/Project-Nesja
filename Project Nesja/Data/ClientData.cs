@@ -98,5 +98,18 @@ namespace Project_Nesja.Data
             }); ;
             var response = await LeagueClient.Request(requestMethod.PUT, "/lol-chat/v1/me", body);
         }
+
+        public static async Task GetWallet()
+        {
+            // Gets All Currency Information on Account
+            var response = await LeagueClient.Request(requestMethod.GET, "/lol-inventory/v1/wallet/0");
+
+            // Generate Client Wallet Object to Store Data
+        }
+
+        public static async Task GetClashLobby()
+        {
+            var response = await LeagueClient.Request(requestMethod.GET, "/lol-clash/v1/lobby");
+        }
     }
 }
