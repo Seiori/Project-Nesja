@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
-using PoniLCU;
 using Project_Nesja.Data;
 using Project_Nesja.Forms;
 
@@ -40,7 +39,6 @@ namespace Project_Nesja
             {
                 ActiveSummoner.Text = "Current Summoner: ";
                 ActiveSummonerName.Text = ClientData.Summoner.Name;
-                ClientData.GetClashLobby();
             }
             else
             {

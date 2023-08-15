@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
-using PoniLCU;
 using Project_Nesja.Objects;
-using static PoniLCU.LeagueClient;
+using Project_Nesja.Models;
+using static Project_Nesja.Models.LeagueClient;
 
 namespace Project_Nesja.Data
 {
@@ -23,16 +23,16 @@ namespace Project_Nesja.Data
                 JObject data = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner"));
                 JObject region = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"));
                 
-                Summoner = new()
+                ClientData.Summoner = new()
                 {
-                    //PUUID = data!["puuid"]!.ToString(),
+                    PUUID = data!["puuid"]!.ToString(),
                     //AccountID = data["accountId"]!.ToObject<long>(),
-                    //SummonerID = data["summonerId"]!.ToObject<int>(),
-                    //Name = data["displayName"]!.ToString(),
+                    SID = data["summonerId"]!.ToString(),
+                    Name = data["displayName"]!.ToString(),
                     //InternalName = data["internalName"]!.ToString(),
-                    //Region = region!["region"]!.ToString(),
-                    //Level = data["summonerLevel"]!.ToObject<int>(),
-                    //IconID = data["profileIconId"]!.ToObject<int>()
+                    Region = region!["region"]!.ToString(),
+                    Level = data["summonerLevel"]!.ToString(),
+                    Icon = data["profileIconId"]!.ToString()
                 };
                 return true;
             }

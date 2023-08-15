@@ -1,9 +1,6 @@
 ﻿using Project_Nesja.Data;
 using Project_Nesja.Objects;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System.Text.RegularExpressions;
-using System.Data;
 
 namespace Project_Nesja.Forms
 {
@@ -19,48 +16,44 @@ namespace Project_Nesja.Forms
 
         private void Profile_Load(object sender, EventArgs e)
         {
-            Summoner = ClientData.Summoner;
-
             if (ClientData.LeagueClient.IsConnected)
             {
-                RegionSelector.Text = Summoner.Region!.ToUpper();
+                RegionSelector.Text = ClientData.Summoner.Region;
 
-                var statusMessage = ClientData.GetStatus();
-                StatusMessage.Text = statusMessage.Result;
-
-                GetSummonerData(Summoner.Name);
+                GetSummonerData(ClientData.Summoner.Name!);
             }
         }
 
         private async void LoadSummonerData()
         {
-            if (Summoner!.Name != null)
-            {
-                SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + Summoner.Icon + ".png", "Icons", Summoner.Icon!);
-                SummonerName.Text = Summoner.Name;
-                SummonerRegion.Text = Summoner.Region!.ToUpper();
-                SummonerLevel.Text = Summoner.Level!.ToString();
-                SummonerRank.Text = "Ladder Ranked: " + Summoner.SoloRank!.ToString();
+            // Display Summoner Data
+            SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + Summoner.Icon + ".png", "Icons", Summoner.Icon!);
+            SummonerName.Text = Summoner.Name;
+            SummonerRegion.Text = Summoner.Region!.ToUpper();
+            SummonerLevel.Text = Summoner.Level!.ToString();
+            SummonerRank.Text = "Ladder Ranked: " + Summoner.SoloRank!.ToString();
 
-                RankedSoloImage.Image = GetRankedIcon(Summoner.SoloTier!.ToLower());
-                RankedSoloTier.Text = Summoner.SoloTier.ToUpper();
-                RankedSoloDivision.Text = Summoner.SoloDivision;
-                RankedSoloGames.Text = Summoner.SoloWins.ToString() + "W " + Summoner.SoloLosses!.ToString() + "L";
-                RankedSoloLP.Text = Summoner.SoloLP.ToString() + " LP";
-                RankedSoloWinrate.Text = "Winrate " + System.Math.Round((float.Parse(Summoner.SoloWins) / (float.Parse(Summoner.SoloWins) + float.Parse(Summoner.SoloLosses)) * 100), 2).ToString() + "%";
+            // Display Solo Data
+            RankedSoloImage.Image = GetRankedIcon(Summoner.SoloTier!.ToLower());
+            RankedSoloTier.Text = Summoner.SoloTier.ToUpper();
+            RankedSoloDivision.Text = Summoner.SoloDivision;
+            RankedSoloGames.Text = Summoner.SoloWins!.ToString() + "W " + Summoner.SoloLosses!.ToString() + "L";
+            RankedSoloLP.Text = Summoner.SoloLP!.ToString() + " LP";
 
-                RankedFlexImage.Image = GetRankedIcon(Summoner.FlexTier!.ToLower());
-                RankedFlexTier.Text = Summoner.FlexTier.ToUpper();
-                RankedFlexDivision.Text = Summoner.FlexDivision;
-                RankedFlexGames.Text = Summoner.FlexWins.ToString() + "W " + Summoner.FlexLosses!.ToString() + "L";
-                RankedFlexLP.Text = Summoner.FlexLP.ToString() + " LP";
-                float flexWins;
-                float.TryParse(Summoner.FlexWins, out flexWins);
-                float flexLosses;
-                float.TryParse(Summoner.FlexLosses, out flexLosses);
-                RankedFlexWinrate.Text = "Winrate " + System.Math.Round((flexWins / (flexWins + flexLosses) * 100), 2).ToString() + "%";
-                // Calcutate Winrate, ensure values are not null before hand
-            }
+            float.TryParse(Summoner.SoloWins, out float soloWins);
+            float.TryParse(Summoner.SoloLosses, out float soloLosses);
+            RankedSoloWinrate.Text = "Winrate " + System.Math.Round((soloWins / (soloWins + soloLosses) * 100), 2).ToString() + "%";
+
+            // Display Flex Data
+            RankedFlexImage.Image = GetRankedIcon(Summoner.FlexTier!.ToLower());
+            RankedFlexTier.Text = Summoner.FlexTier.ToUpper();
+            RankedFlexDivision.Text = Summoner.FlexDivision;
+            RankedFlexGames.Text = Summoner.FlexWins!.ToString() + "W " + Summoner.FlexLosses!.ToString() + "L";
+            RankedFlexLP.Text = Summoner.FlexLP!.ToString() + " LP";
+
+            float.TryParse(Summoner.FlexWins, out float flexWins);
+            float.TryParse(Summoner.FlexLosses, out float flexLosses);
+            RankedFlexWinrate.Text = "Winrate " + System.Math.Round((flexWins / (flexWins + flexLosses) * 100), 2).ToString() + "%";
         }
 
         private void SearchPlayerTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -87,16 +80,17 @@ namespace Project_Nesja.Forms
         {
             string apiUrl = "https://pp1.xdx.gg/summoner/1/" + RegionSelector.Text.ToLower() + "/" + name.ToLower();
 
-            Summoner = JsonConvert.DeserializeObject<SummonerData>((await WebRequests.GetJsonObject(apiUrl)).ToString());
+            var summonderData = await WebRequests.GetJsonObject(apiUrl);
 
-            LoadSummonerData();
-        }
-
-        private void StatusMessage_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && ClientData.LeagueClient.IsConnected)
+            if (summonderData != null)
             {
-                ClientData.SetStatus(StatusMessage.Text);
+                Summoner = JsonConvert.DeserializeObject<SummonerData>((string)summonderData!);
+
+                LoadSummonerData();
+            }
+            else
+            {
+                MessageBox.Show("Incorrect Summoner Name, Please Check the Summoner Name or Region");
             }
         }
 

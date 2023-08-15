@@ -5,7 +5,7 @@ namespace Project_Nesja.Objects
 {
     public class SummonerData
     {
-        public string? Region;
+        public string? Region { get; set; }
         public string? Summoner;
         public string? PUUID;
         [JsonProperty("modified-summoner")]

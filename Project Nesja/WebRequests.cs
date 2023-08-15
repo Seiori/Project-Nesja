@@ -16,52 +16,66 @@ namespace Project_Nesja
 
         public static async Task<JToken?> GetJsonObject(string url, string subFolder = null!, string fileName = null!)
         {
-            if (subFolder != null && fileName != null)
+            try
             {
-                var directoryPath = Path.Combine("Data", subFolder);
-                Directory.CreateDirectory(directoryPath); // Create directory if it doesn't exist
-
-                var filePath = Path.Combine(directoryPath, fileName + ".json");
-
-                if (File.Exists(filePath))
+                if (subFolder != null && fileName != null)
                 {
-                    var json = await File.ReadAllTextAsync(filePath);
+                    var directoryPath = Path.Combine("Data", subFolder);
+                    Directory.CreateDirectory(directoryPath); // Create directory if it doesn't exist
+
+                    var filePath = Path.Combine(directoryPath, fileName + ".json");
+
+                    if (File.Exists(filePath))
+                    {
+                        var json = await File.ReadAllTextAsync(filePath);
+                        return JToken.Parse(json);
+                    }
+
+                    var downloadedJson = await client.GetStringAsync(url);
+                    await File.WriteAllTextAsync(filePath, downloadedJson);
+                    return JToken.Parse(downloadedJson);
+                }
+                else
+                {
+                    var urlWithCacheBusting = url;
+                    var json = await client.GetStringAsync(urlWithCacheBusting);
                     return JToken.Parse(json);
                 }
-
-                var downloadedJson = await client.GetStringAsync(url);
-                await File.WriteAllTextAsync(filePath, downloadedJson);
-                return JToken.Parse(downloadedJson);
             }
-            else
+            catch
             {
-                var urlWithCacheBusting = url;
-                var json = await client.GetStringAsync(urlWithCacheBusting);
-                return JToken.Parse(json);
+                return null;
             }
         }
 
         public static async Task<Image?> DownloadImage(string url, string subFolder, string fileName)
         {
-            var directoryPath = Path.Combine("Img", subFolder);
-            Directory.CreateDirectory(directoryPath); // Create directory if it doesn't exist
-
-            var filePath = Path.Combine(directoryPath, fileName + ".jpg");
-
-            if (File.Exists(filePath))
+            try
             {
-                using var fileStream = File.OpenRead(filePath);
-                var img = Image.FromStream(fileStream);
-                return img;
+                var directoryPath = Path.Combine("Img", subFolder);
+                Directory.CreateDirectory(directoryPath); // Create directory if it doesn't exist
+
+                var filePath = Path.Combine(directoryPath, fileName + ".jpg");
+
+                if (File.Exists(filePath))
+                {
+                    using var fileStream = File.OpenRead(filePath);
+                    var img = Image.FromStream(fileStream);
+                    return img;
+                }
+                else
+                {
+                    var imageBytes = await client.GetByteArrayAsync(url);
+                    using var ms = new MemoryStream(imageBytes);
+                    var img = Image.FromStream(ms);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    File.WriteAllBytes(filePath, imageBytes);
+                    return img;
+                }
             }
-            else
+            catch
             {
-                var imageBytes = await client.GetByteArrayAsync(url);
-                using var ms = new MemoryStream(imageBytes);
-                var img = Image.FromStream(ms);
-                ms.Seek(0, SeekOrigin.Begin);
-                File.WriteAllBytes(filePath, imageBytes);
-                return img;
+                return null;
             }
         }
     }

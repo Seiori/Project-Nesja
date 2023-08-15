@@ -45,8 +45,6 @@
             RankedFlexWinrate = new Label();
             panel1 = new Panel();
             RegionSelector = new ComboBox();
-            label1 = new Label();
-            StatusMessage = new TextBox();
             SummonerRegion = new Label();
             UpdateButton = new Button();
             panel3 = new Panel();
@@ -244,8 +242,6 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.BackColor = SystemColors.Desktop;
             panel1.Controls.Add(RegionSelector);
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(StatusMessage);
             panel1.Controls.Add(SummonerRegion);
             panel1.Controls.Add(SearchPlayerTextBox);
             panel1.Controls.Add(UpdateButton);
@@ -268,26 +264,6 @@
             RegionSelector.Size = new Size(67, 23);
             RegionSelector.TabIndex = 24;
             RegionSelector.Text = "Region";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.ForeColor = SystemColors.ControlLight;
-            label1.Location = new Point(184, 77);
-            label1.Name = "label1";
-            label1.Size = new Size(49, 20);
-            label1.TabIndex = 28;
-            label1.Text = "Status";
-            // 
-            // StatusMessage
-            // 
-            StatusMessage.ForeColor = SystemColors.ControlText;
-            StatusMessage.Location = new Point(186, 100);
-            StatusMessage.Name = "StatusMessage";
-            StatusMessage.Size = new Size(402, 23);
-            StatusMessage.TabIndex = 27;
-            StatusMessage.KeyDown += StatusMessage_KeyDown;
             // 
             // SummonerRegion
             // 
@@ -443,8 +419,6 @@
         private Label RankedSoloDivision;
         private Label RankedFlexDivision;
         private Label SummonerRegion;
-        private Label label1;
-        private TextBox StatusMessage;
         private DataGridView DataGridTest;
     }
 }
