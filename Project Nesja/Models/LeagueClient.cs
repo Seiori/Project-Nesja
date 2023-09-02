@@ -43,7 +43,7 @@ namespace Project_Nesja.Models
         }
         #endregion
         #region important_variabls
-        private static HttpClient client;
+        public static HttpClient client;
 
         private Dictionary<string, List<Action<OnWebsocketEventArgs>>> Subscribers = new Dictionary<string, List<Action<OnWebsocketEventArgs>>>();
 
@@ -200,8 +200,9 @@ namespace Project_Nesja.Models
             string authInfo = userName + ":" + userPassword;
             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
-            return new KeyValuePair<string, string>("Authorization", "Basic " + authInfo);
+            return new KeyValuePair<string, string>("Authorization", "Bearer " + authInfo);
         }
+
         private void TryConnect()
         {
             try

@@ -33,19 +33,19 @@ public class Champion
     
     public async Task<Champion> FetchJson()
     {
-        ChampionJson = (JArray)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/data/en_US/champion/" + NameID + ".json", "ChampionJson", NameID!))!.SelectToken("data")!.SelectToken(NameID!)!.SelectToken("spells")!;
+        ChampionJson = (JArray)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/data/en_US/champion/" + NameID + ".json"))!.SelectToken("data")!.SelectToken(NameID!)!.SelectToken("spells")!;
         return this;
     }
 
     public async Task<Champion> FetchSplash()
     {
-        Splash = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg", "Splash", NameID!);
+        Splash = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + NameID + "_0.jpg");
         return this;
     }
 
     public async Task<Champion> FetchSprite()
     {
-        Sprite = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png", "Sprite", NameID!);
+        Sprite = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/champion/" + NameID + ".png");
         return this;
     }
 
@@ -64,28 +64,28 @@ public class Champion
     public async Task<Champion> FetchQImage()
     {
         string abilityUrl = (string)ChampionJson!.ElementAt(0)!.SelectToken("image")!.First!;
-        Q = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + abilityUrl, "Abilities", NameID + "Q");
+        Q = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + abilityUrl);
         return this;
     }
 
     public async Task<Champion> FetchWImage()
     {
         string abilityUrl = (string)ChampionJson!.ElementAt(1)!.SelectToken("image")!.First!;
-        W = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + abilityUrl, "Abilities", NameID + "W");
+        W = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + abilityUrl);
         return this;
     }
 
     public async Task<Champion> FetchEImage()
     {
         string abilityUrl = (string)ChampionJson!.ElementAt(2)!.SelectToken("image")!.First!;
-        E = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + abilityUrl, "Abilities", NameID + "E");
+        E = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + abilityUrl);
         return this;
     }
 
     public async Task<Champion> FetchRImage()
     {
         string abilityUrl = (string)ChampionJson!.ElementAt(3)!.SelectToken("image")!.First!;
-        R = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + abilityUrl, "Abilities", NameID + "R");
+        R = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + abilityUrl);
         return this;
     }
 }

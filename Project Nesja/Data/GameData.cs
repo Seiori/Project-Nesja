@@ -4,35 +4,32 @@ using Project_Nesja.Objects;
 
 namespace Project_Nesja.Data
 {
-    public static class GameData
+    static class GameData
     {
         public static string? CurrentVersion { get; set; }
-        public static Dictionary<int, Champion> ChampionList { get; set; }
-        public static Dictionary<int, Asset> Assets { get; set; }
+        public static Dictionary<int, Champion>? ChampionList { get; set; }
+        public static Dictionary<int, Asset>? Assets { get; set; }
 
         static GameData()
         {
+            CurrentVersion = "";
             ChampionList = new Dictionary<int, Champion>();
             Assets = new Dictionary<int, Asset>();
+
+            _ = FetchGameData();
         }
-        
+
         public static async Task FetchGameData()
         {
             // Grabs Current Live Patch Version
             CurrentVersion = (await WebRequests.GetJsonObject("https://ddragon.leagueoflegends.com/api/versions.json"))!.FirstOrDefault()!.ToString();
 
-            if (GetCurrentVersion())
-                await LoadGameData();
-            else
-            {
-                await Task.WhenAll(
-                    FetchChampionData(),
-                    FetchItemData(),
-                    FetchAllRuneData(),
-                    FetchSummonerSpellData()
-                );
-                await SaveGameData();
-            }
+            await Task.WhenAll(
+                FetchChampionData(),
+                FetchItemData(),
+                FetchAllRuneData(),
+                FetchSummonerSpellData()
+            );
         }
         
         private static async Task FetchChampionData()
@@ -52,7 +49,7 @@ namespace Project_Nesja.Data
                     NameID = eachChampionData["id"]!.ToString(),
                     ID = eachChampionData["key"]!.ToObject<int>()
                 };
-                ChampionList.Add(championData.ID, championData);
+                ChampionList!.Add(championData.ID, championData);
             }
             
             // Saves Updated ChampionList to File
@@ -75,13 +72,13 @@ namespace Project_Nesja.Data
                     ID = int.Parse(eachItemData["image"]!["full"]!.ToString().Split('.')[0]),
                     AssetType = AssetType.Items
                 };
-                Assets.Add(itemData.ID, itemData);
+                Assets!.Add(itemData.ID, itemData);
             }
         }
 
         private static async Task FetchAllRuneData()
         {
-            JArray allRunePages = (JArray)await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/runesReforged.json");
+            JArray allRunePages = (JArray)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/runesReforged.json"))!;
 
             foreach (JObject eachRunePage in allRunePages!.Cast<JObject>())
             {
@@ -93,7 +90,7 @@ namespace Project_Nesja.Data
                     AssetType = AssetType.Runes
                 };
 
-                Assets.Add(runeData.ID, runeData);
+                Assets!.Add(runeData.ID, runeData);
                 
                 foreach (JObject eachRuneRow in eachRunePage["slots"]!.Cast<JObject>())
                 {
@@ -116,13 +113,14 @@ namespace Project_Nesja.Data
         private static async Task FetchSummonerSpellData()
         {
             // Grabs All SummonerSpell Data
-            JObject allSummonerSpells = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json"))!.SelectToken("data")!;
+            JObject allSummonerSpells = ((JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json"))!.SelectToken("data")!);
+
 
             // Parses the Summoner Spell Data into an Easily Accessible Dictionary of Relevant SummonerSpellData
             foreach (var eachSummonerSpell in allSummonerSpells!)
             {
                 JObject eachSummonerSpellData = (JObject)eachSummonerSpell.Value!;
-                
+
                 Asset summonerSpellData = new()
                 {
                     Name = eachSummonerSpellData["name"]!.ToString(),
@@ -130,7 +128,7 @@ namespace Project_Nesja.Data
                     ID = eachSummonerSpellData["key"]!.ToObject<int>(),
                     AssetType = AssetType.SummonerSpells
                 };
-                Assets.Add(summonerSpellData.ID, summonerSpellData);
+                Assets!.Add(summonerSpellData.ID, summonerSpellData);
             }
         }
 
@@ -149,73 +147,6 @@ namespace Project_Nesja.Data
             else
             File.WriteAllText("CurrentVersion", JsonConvert.SerializeObject(CurrentVersion));
             return false;
-        }
-        
-        private static Task SaveGameData()
-        {
-            foreach (var asset in Assets)
-            {
-                asset.Value.Image = null;
-            }
-            File.WriteAllText(Path.Combine("Data", "Assets"), JsonConvert.SerializeObject(Assets));
-
-            return Task.CompletedTask;
-        }
-        
-        private static Task LoadGameData()
-        {
-            string rootFolder = "Img";
-
-            if (File.Exists(Path.Combine("Data", "ChampionList")))
-                ChampionList = JsonConvert.DeserializeObject<Dictionary<int, Champion>>(File.ReadAllText(Path.Combine("Data", "ChampionList")))!;
-
-            foreach (var champion in ChampionList)
-            {
-                var splashPath = Path.Combine(rootFolder, "Splash", champion.Value.NameID + ".jpg");
-                if (File.Exists(splashPath))
-                {
-                    using FileStream stream = new(splashPath, FileMode.Open, FileAccess.Read);
-                    champion.Value.Splash = Image.FromStream(stream);
-                }
-
-                var spritePath = Path.Combine(rootFolder, "Sprite", champion.Value.NameID + ".jpg");
-                if (File.Exists(spritePath))
-                {
-                    using FileStream stream = new(spritePath, FileMode.Open, FileAccess.Read);
-                    champion.Value.Sprite = Image.FromStream(stream);
-                }
-
-                var qAbilityPath = Path.Combine(rootFolder, "Abilities", champion.Value.NameID + "Q.jpg");
-                if (File.Exists(qAbilityPath))
-                {
-                    using FileStream stream = new(qAbilityPath, FileMode.Open, FileAccess.Read);
-                    champion.Value.Q = Image.FromStream(stream);
-                }
-
-                var wAbilityPath = Path.Combine(rootFolder, "Abilities", champion.Value.NameID + "W.jpg");
-                if (File.Exists(wAbilityPath))
-                {
-                    using FileStream stream = new(wAbilityPath, FileMode.Open, FileAccess.Read);
-                    champion.Value.W = Image.FromStream(stream);
-                }
-
-                var eAbilityPath = Path.Combine(rootFolder, "Abilities", champion.Value.NameID + "E.jpg");
-                if (File.Exists(eAbilityPath))
-                {
-                    using FileStream stream = new(eAbilityPath, FileMode.Open, FileAccess.Read);
-                    champion.Value.E = Image.FromStream(stream);
-                }
-            }
-
-            if (File.Exists(Path.Combine("Data", "Assets")))
-                Assets = JsonConvert.DeserializeObject<Dictionary<int, Asset>>(File.ReadAllText(Path.Combine("Data", "Assets")))!;
-
-            foreach (var asset in Assets)
-            {
-                if (File.Exists(Path.Combine(rootFolder, asset.Value.AssetType.ToString(), asset.Value.ID + ".jpg")))
-                    asset.Value.Image = Image.FromFile(Path.Combine(rootFolder, asset.Value.AssetType.ToString(), asset.Value.ID + ".jpg"));
-            }
-            return Task.CompletedTask;
-        }
+        }  
     }
 }

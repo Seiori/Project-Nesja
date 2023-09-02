@@ -28,13 +28,12 @@ namespace Project_Nesja
             this.ControlBox = false;
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+
+            _ = GameData.FetchGameData();
         }
 
-        private async void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
-            // Fetches Data from the API sources
-            await GameData.FetchGameData();
-
             if (ClientData.LeagueClient.IsConnected)
             {
                 ActiveSummoner.Text = "Current Summoner: ";
@@ -196,7 +195,7 @@ namespace Project_Nesja
                 // Add the filtered list to the listbox
                 foreach (var champion in filteredList)
                 {
-                    searchChampionListBox.Items.Add(champion.Value.Name);
+                    searchChampionListBox.Items.Add(champion.Value.Name!);
                 }
 
                 if (searchChampionTextBox.Text != "")
@@ -216,7 +215,7 @@ namespace Project_Nesja
             string selectedChampion = searchChampionListBox.SelectedItem.ToString()!;
 
             // Open the new form and pass the selected champion as a parameter
-            OpenChildForm(new ChampionLookup(GameData.ChampionList.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value, null!));
+            OpenChildForm(new ChampionLookup(GameData.ChampionList!.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value, null!));
         }
 
         private async void ClientConnectButton_Click(object sender, EventArgs e)

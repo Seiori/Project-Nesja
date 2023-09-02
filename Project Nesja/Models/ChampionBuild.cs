@@ -68,7 +68,7 @@ public class ChampionBuild
         );
 
         // Fetches Image Information for All Relevant Build Assets
-        await FetchImageAssetsAsync();
+        _ = FetchImageAssetsAsync();
 
         return this;
     }
@@ -80,9 +80,7 @@ public class ChampionBuild
 
         // Checks if Champion only Starts with One Item
         if (StartingItems.SecondItem != null)
-        {
             tasks.Add(StartingItems.SecondItem.FetchAssetImage());
-        }
         
         tasks.AddRange(new Task[]
         {
@@ -101,13 +99,14 @@ public class ChampionBuild
             CoreItems.ThirdItem!.FetchAssetImage(),
             SummonerSpells.FirstSpellData!.FetchAssetImage(),
             SummonerSpells.SecondSpellData!.FetchAssetImage()
+
         });
-        
+
         tasks.AddRange(FourthItemChoice.Select(c => c.ItemAsset!.FetchAssetImage()));
         tasks.AddRange(FifthItemChoice.Select(c => c.ItemAsset!.FetchAssetImage()));
         tasks.AddRange(SixthItemChoice.Select(c => c.ItemAsset!.FetchAssetImage()));
 
-        await Task.WhenAll(tasks).ConfigureAwait(false);
+        await Task.WhenAll(tasks);
     }
     
     private Task FetchChampionStats()

@@ -19,9 +19,7 @@ namespace Project_Nesja.Forms
             InitializeComponent();
 
             this.selectedChampion = selectedChampion;
-
-            this.selectedChampion ??= GameData.ChampionList.Values.First();
-
+            this.selectedChampion ??= GameData.ChampionList!.Values.First();
             this.role = role;
 
             LoadChamptionData();

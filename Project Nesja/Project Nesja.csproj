@@ -15,6 +15,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FontAwesome.Sharp" Version="6.2.1" />
+    <PackageReference Include="MikaelDui.RiotGames.LeagueOfLegends.LeagueClient.LockFile" Version="1.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="System.Management" Version="7.0.2" />
     <PackageReference Include="websocketsharp.core" Version="1.0.0" />

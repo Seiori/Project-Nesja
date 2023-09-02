@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using static Project_Nesja.Models.LeagueClient;
+using Newtonsoft.Json.Linq;
 using Project_Nesja.Objects;
 using Project_Nesja.Models;
-using static Project_Nesja.Models.LeagueClient;
+using RiotGames.LeagueOfLegends.LeagueClient;
 
 namespace Project_Nesja.Data
 {
@@ -9,7 +10,7 @@ namespace Project_Nesja.Data
     {
         public static readonly LeagueClient LeagueClient = new(credentials.cmd);
         public static SummonerData Summoner = new();
-        
+
         static ClientData()
         {
             _ = ConnectToClient();
@@ -110,6 +111,19 @@ namespace Project_Nesja.Data
         public static async Task GetClashLobby()
         {
             var response = await LeagueClient.Request(requestMethod.GET, "/lol-clash/v1/lobby");
+        }
+
+        // Change summoner name through client
+        public static async Task ChangeSummonerName(string newName)
+        {
+            try
+            {
+                LeagueClientLockFile lockFile = LeagueClientLockFile.FromProcess();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Client Is Not Open!", ex.ToString());
+            }
         }
     }
 }

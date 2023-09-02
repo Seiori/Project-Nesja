@@ -1,5 +1,6 @@
 ﻿using Project_Nesja.Data;
 using Project_Nesja;
+using Newtonsoft.Json;
 
 public enum AssetType
 {
@@ -12,15 +13,20 @@ public enum AssetType
 
 public class Asset
 {
+    [JsonProperty("name")]
     public string? Name;
+    [JsonProperty("key")]
     public string? NameID;
+    [JsonProperty("id")]
     public int ID;
+    [JsonIgnore]
     public AssetType AssetType;
+    [JsonIgnore]
     public Image? Image;
 
-    private async Task<Asset> DownloadImage(string Url, string subFolder, string fileName)
+    private async Task<Asset> DownloadImage(string Url)
     {
-        Image = await WebRequests.DownloadImage(Url, subFolder, fileName);
+        Image = await WebRequests.DownloadImage(Url);
         return this;
     }
     
@@ -28,11 +34,11 @@ public class Asset
     {
         return AssetType switch
         {
-            AssetType.Items => await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/item/" + ID + ".png", "Items", ID.ToString()),
-            AssetType.Runes => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png", "Runes", NameID!),
-            AssetType.RunePages => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkStyle/" + ID + ".png", "RunePages", ID.ToString()),
-            AssetType.StatMods => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png", "StatMods", ID.ToString()),
-            AssetType.SummonerSpells => await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + NameID + ".png", "SummonerSpells", NameID!),
+            AssetType.Items => await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/item/" + ID + ".png"),
+            AssetType.Runes => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perk/" + ID + ".png"),
+            AssetType.RunePages => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkStyle/" + ID + ".png"),
+            AssetType.StatMods => await DownloadImage("https://opgg-static.akamaized.net/meta/images/lol/perkShard/" + ID + ".png"),
+            AssetType.SummonerSpells => await DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/spell/" + NameID + ".png"),
             _ => this,
         };
     }

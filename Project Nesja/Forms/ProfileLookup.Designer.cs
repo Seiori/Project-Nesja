@@ -54,6 +54,7 @@
             RankedFlexDivision = new Label();
             RankedFlexImage = new PictureBox();
             DataGridTest = new DataGridView();
+            nameChangeButton = new Button();
             ((System.ComponentModel.ISupportInitialize)SummonerIcon).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -373,6 +374,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1177, 722);
+            Controls.Add(nameChangeButton);
             Controls.Add(DataGridTest);
             Controls.Add(panel1);
             Controls.Add(panel3);
@@ -420,5 +422,6 @@
         private Label RankedFlexDivision;
         private Label SummonerRegion;
         private DataGridView DataGridTest;
+        private Button nameChangeButton;
     }
 }

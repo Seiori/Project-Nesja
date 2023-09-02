@@ -27,7 +27,7 @@ namespace Project_Nesja.Forms
         private async void LoadSummonerData()
         {
             // Display Summoner Data
-            SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + Summoner.Icon + ".png", "Icons", Summoner.Icon!);
+            SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + Summoner!.Icon + ".png");
             SummonerName.Text = Summoner.Name;
             SummonerRegion.Text = Summoner.Region!.ToUpper();
             SummonerLevel.Text = Summoner.Level!.ToString();
@@ -84,7 +84,7 @@ namespace Project_Nesja.Forms
 
             if (summonderData != null)
             {
-                Summoner = JsonConvert.DeserializeObject<SummonerData>((string)summonderData!);
+                Summoner = JsonConvert.DeserializeObject<SummonerData>(summonderData!.ToString());
 
                 LoadSummonerData();
             }
