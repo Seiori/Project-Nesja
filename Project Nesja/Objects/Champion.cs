@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Project_Nesja;
-using Project_Nesja.Data;
+using Project_Nesja.Models;
 
 public class Champion
 {

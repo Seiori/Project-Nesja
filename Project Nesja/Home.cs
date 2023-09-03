@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
-using Project_Nesja.Data;
 using Project_Nesja.Forms;
+using Project_Nesja.Models;
 
 namespace Project_Nesja
 {
@@ -34,10 +34,10 @@ namespace Project_Nesja
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (ClientData.LeagueClient.IsConnected)
+            if (ClientAPI.LeagueClient.IsConnected)
             {
                 ActiveSummoner.Text = "Current Summoner: ";
-                ActiveSummonerName.Text = ClientData.Summoner.Name;
+                ActiveSummonerName.Text = ClientAPI.Summoner.Name;
             }
             else
             {
@@ -220,16 +220,7 @@ namespace Project_Nesja
 
         private async void ClientConnectButton_Click(object sender, EventArgs e)
         {
-            if (await ClientData.ConnectToClient())
-            {
-                ActiveSummoner.Text = "Current Summoner: ";
-                ActiveSummonerName.Text = ClientData.Summoner.Name;
-            }
-            else
-            {
-                ActiveSummoner.Text = "Client Not Connected";
-                ActiveSummonerName.Text = "N/A";
-            }
+            // Retry Button for Connection to Client
         }
     }
 }

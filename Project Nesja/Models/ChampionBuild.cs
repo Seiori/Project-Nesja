@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Project_Nesja;
-using Project_Nesja.Data;
+using Project_Nesja.Models;
 using Project_Nesja.Objects;
 
 public class ChampionBuild
@@ -145,7 +145,7 @@ public class ChampionBuild
                 id = int.Parse(eachRuneData.Key);
 
             // CHECKS TO MAKE SURE RUNE IS VALID AND NOT A STATMOD VALUE
-            if (GameData.Assets.ContainsKey(id) && GameData.Assets.FirstOrDefault(x => x.Key == id).Value.AssetType == AssetType.Runes)
+            if (GameData.Assets!.ContainsKey(id) && GameData.Assets.FirstOrDefault(x => x.Key == id).Value.AssetType == AssetType.Runes)
             {
                 Rune primaryRuneData = new()
                 {

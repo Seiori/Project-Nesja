@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using Project_Nesja.Data;
+using Project_Nesja.Models;
 using System.Diagnostics;
 
 namespace Project_Nesja.Forms

@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Project_Nesja.Objects;
 
-namespace Project_Nesja.Data
+namespace Project_Nesja.Models
 {
     static class GameData
     {
@@ -31,7 +31,7 @@ namespace Project_Nesja.Data
                 FetchSummonerSpellData()
             );
         }
-        
+
         private static async Task FetchChampionData()
         {
             // Grabs All Champion Data
@@ -41,7 +41,7 @@ namespace Project_Nesja.Data
             foreach (var eachChampion in allChampions!)
             {
                 JObject eachChampionData = (JObject)eachChampion.Value!;
-                
+
                 Champion championData = new()
                 {
                     Name = eachChampionData["name"]!.ToString(),
@@ -51,7 +51,7 @@ namespace Project_Nesja.Data
                 };
                 ChampionList!.Add(championData.ID, championData);
             }
-            
+
             // Saves Updated ChampionList to File
             File.WriteAllText(Path.Combine("Data", "ChampionList"), JsonConvert.SerializeObject(ChampionList));
         }
@@ -91,7 +91,7 @@ namespace Project_Nesja.Data
                 };
 
                 Assets!.Add(runeData.ID, runeData);
-                
+
                 foreach (JObject eachRuneRow in eachRunePage["slots"]!.Cast<JObject>())
                 {
                     foreach (JObject eachRuneSlot in eachRuneRow["runes"]!.Cast<JObject>())
@@ -113,7 +113,7 @@ namespace Project_Nesja.Data
         private static async Task FetchSummonerSpellData()
         {
             // Grabs All SummonerSpell Data
-            JObject allSummonerSpells = ((JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json"))!.SelectToken("data")!);
+            JObject allSummonerSpells = (JObject)(await WebRequests.GetJsonObject("http://ddragon.leagueoflegends.com/cdn/" + CurrentVersion + "/data/en_US/summoner.json"))!.SelectToken("data")!;
 
 
             // Parses the Summoner Spell Data into an Easily Accessible Dictionary of Relevant SummonerSpellData
@@ -145,8 +145,8 @@ namespace Project_Nesja.Data
             if (currentDataVersion == CurrentVersion)
                 return true;
             else
-            File.WriteAllText("CurrentVersion", JsonConvert.SerializeObject(CurrentVersion));
+                File.WriteAllText("CurrentVersion", JsonConvert.SerializeObject(CurrentVersion));
             return false;
-        }  
+        }
     }
 }

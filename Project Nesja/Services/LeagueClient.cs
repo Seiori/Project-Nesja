@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
-namespace Project_Nesja.Models
+namespace Project_Nesja.Services
 {
     public class OnWebsocketEventArgs : EventArgs
     {   // URI    
@@ -144,7 +144,7 @@ namespace Project_Nesja.Models
 
             return client.SendAsync(new HttpRequestMessage(new HttpMethod(RequestMethod), "https://127.0.0.1:" + processInfo.Item3 + url)
             {
-                Content = body == null ? null : new StringContent(body.ToString(), Encoding.UTF8, "application/json")
+                Content = body == null ? null : new StringContent(body.ToString()!, Encoding.UTF8, "application/json")
             }).Result.Content.ReadAsStringAsync();
         }
 
@@ -155,7 +155,7 @@ namespace Project_Nesja.Models
             var res = await client.GetAsync("https://127.0.0.1:" + processInfo.Item3 + url);
             var stringContent = await res.Content.ReadAsStringAsync();
 
-            if (res.StatusCode == System.Net.HttpStatusCode.NotFound) return null;
+            if (res.StatusCode == HttpStatusCode.NotFound) return null;
             return JsonConvert.DeserializeObject(stringContent);
         }
 
@@ -333,7 +333,7 @@ namespace Project_Nesja.Models
         {
             foreach (var p in Process.GetProcessesByName("LeagueClientUx"))
             {
-                if (LeagueClient._Method == LeagueClient.credentials.cmd)
+                if (_Method == credentials.cmd)
                 {
                     using (var mos = new ManagementObjectSearcher("SELECT CommandLine FROM Win32_Process WHERE ProcessId = " + p.Id.ToString()))
                     using (var moc = mos.Get())
@@ -358,7 +358,7 @@ namespace Project_Nesja.Models
                         }
                     }
                 }
-                else if (_Method == LeagueClient.credentials.lockfile)
+                else if (_Method == credentials.lockfile)
                 {
                     try
                     {

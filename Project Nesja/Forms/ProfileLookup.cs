@@ -1,6 +1,7 @@
-﻿using Project_Nesja.Data;
-using Project_Nesja.Objects;
+﻿using Project_Nesja.Objects;
 using Newtonsoft.Json;
+using Project_Nesja.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Project_Nesja.Forms
 {
@@ -16,11 +17,11 @@ namespace Project_Nesja.Forms
 
         private void Profile_Load(object sender, EventArgs e)
         {
-            if (ClientData.LeagueClient.IsConnected)
+            if (ClientAPI.LeagueClient.IsConnected)
             {
-                RegionSelector.Text = ClientData.Summoner.Region;
+                RegionSelector.Text = ClientAPI.Summoner.Region;
 
-                GetSummonerData(ClientData.Summoner.Name!);
+                //GetSummonerData(ClientAPI.Summoner.Name!);
             }
         }
 
@@ -66,14 +67,14 @@ namespace Project_Nesja.Forms
                 }
                 else
                 {
-                    GetSummonerData(SearchPlayerTextBox.Text);
+                    //GetSummonerData(SearchPlayerTextBox.Text);
                 }
             }
         }
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            GetSummonerData(Summoner!.Name!);
+            //GetSummonerData(Summoner!.Name!);
         }
 
         private async void GetSummonerData(string name)
@@ -121,6 +122,23 @@ namespace Project_Nesja.Forms
                 default:
                     return Properties.Resources.unranked;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RiotAPI riotAPI = new RiotAPI();
+
+            JObject response = JObject.Parse(riotAPI.GetSummonerBySummonerName(Regions.EUW1, "SEIORI"));
+
+            var puuid = response["puuid"]!.ToString();
+
+            JArray cresponse = JArray.Parse(riotAPI.GetChampionMasteryByPUUID(Regions.EUW1, "qRPQHxIB-cgCftiORFxiDQljV6_cEnVxtx3NNLFDydb3T9V5OeR1Q_Yns2OMSUcAjGwLUp_kvFlfhQ"));
+
+            var status = riotAPI.GetLeagueStatus(Regions.EUW1);
+
+            var champRotation = riotAPI.GetChampionRotation(Regions.EUW1);
+
+            var challenges = riotAPI.GetChallengesPercentiles(Regions.EUN1);
         }
     }
 }

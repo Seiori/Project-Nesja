@@ -1,6 +1,6 @@
-﻿using Project_Nesja.Data;
-using Project_Nesja;
+﻿using Project_Nesja;
 using Newtonsoft.Json;
+using Project_Nesja.Models;
 
 public enum AssetType
 {

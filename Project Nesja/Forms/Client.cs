@@ -1,10 +1,10 @@
-﻿using Project_Nesja.Data;
+﻿using Project_Nesja.Models;
 
 namespace Project_Nesja.Forms
 {
     public partial class Client : Form
     {
-        private ClientData clientData;
+        private ClientAPI clientData;
 
         public Client()
         {

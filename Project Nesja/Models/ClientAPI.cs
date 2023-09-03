@@ -1,47 +1,28 @@
-﻿using static Project_Nesja.Models.LeagueClient;
+﻿using static Project_Nesja.Services.LeagueClient;
 using Newtonsoft.Json.Linq;
 using Project_Nesja.Objects;
-using Project_Nesja.Models;
 using RiotGames.LeagueOfLegends.LeagueClient;
+using Project_Nesja.Services;
 
-namespace Project_Nesja.Data
+namespace Project_Nesja.Models
 {
-    public class ClientData
+    public class ClientAPI
     {
         public static readonly LeagueClient LeagueClient = new(credentials.cmd);
         public static SummonerData Summoner = new();
 
-        static ClientData()
+        static ClientAPI()
         {
-            _ = ConnectToClient();
-            LeagueClient.ClearAllListeners();
+            if (LeagueClient.IsConnected)
+                ConnectToClient();
+            else
+                MessageBox.Show("Failed to find active client session. Please open the client to use the related features!");
         }
-        
-        public static async Task<bool> ConnectToClient()
+
+        public static async void ConnectToClient()
         {
-            try
-            {
-                JObject data = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner"));
-                JObject region = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"));
-                
-                ClientData.Summoner = new()
-                {
-                    PUUID = data!["puuid"]!.ToString(),
-                    //AccountID = data["accountId"]!.ToObject<long>(),
-                    SID = data["summonerId"]!.ToString(),
-                    Name = data["displayName"]!.ToString(),
-                    //InternalName = data["internalName"]!.ToString(),
-                    Region = region!["region"]!.ToString(),
-                    Level = data["summonerLevel"]!.ToString(),
-                    Icon = data["profileIconId"]!.ToString()
-                };
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to find active client session. Please open the client to use the related features!", ex.ToString());
-                return false;
-            }
+            JObject data = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner"));
+            JObject region = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"));
         }
 
         public static async Task<SummonerData> SearchSummoner(string summonerName)
@@ -56,7 +37,7 @@ namespace Project_Nesja.Data
                 //IconID = data["profileIconId"]!.ToObject<int>(),
                 //PUUID = data["puuid"]!.ToString(),
                 //SummonerID = data["summonerId"]!.ToObject<int>(),
-                //evel = data["summonerLevel"]!.ToObject<int>(),
+                //Level = data["summonerLevel"]!.ToObject<int>(),
             };
             return summoner;
         }
@@ -73,12 +54,12 @@ namespace Project_Nesja.Data
         {
             //var response = await LeagueClient.Request(requestMethod.PUT, $"/lol-item-sets/v1/item-sets/{Summoner.SummonerID}/sets", jsonString);
         }
-        
+
         public static async Task SetSummonerSpells(string jsonString)
         {
             var response = await LeagueClient.Request(requestMethod.PATCH, $"/lol-champ-select/v1/session/my-selection", jsonString);
         }
-        
+
         public static async Task<JObject> GetTopMastery(int summonerID)
         {
             var top3 = await LeagueClient.Request(requestMethod.GET, "/lol-collections/v1/inventories/" + summonerID + "/champion-mastery/top?limit=3");
@@ -95,7 +76,7 @@ namespace Project_Nesja.Data
         {
             var body = Newtonsoft.Json.JsonConvert.SerializeObject(new
             {
-                statusMessage = statusMessage
+                statusMessage
             }); ;
             var response = await LeagueClient.Request(requestMethod.PUT, "/lol-chat/v1/me", body);
         }
