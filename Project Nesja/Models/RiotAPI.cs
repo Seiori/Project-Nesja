@@ -40,7 +40,7 @@ namespace Project_Nesja.Models
     public class RiotAPI
     {
         private static HttpClient? Client;
-        private string APIKey = "?api_key=RGAPI-03801912-ce46-4ff8-beae-ef85d403d8f8";
+        private string APIKey = "";
 
         public RiotAPI()
         {
