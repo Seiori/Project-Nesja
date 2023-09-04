@@ -3,43 +3,29 @@ using Newtonsoft.Json.Linq;
 using Project_Nesja.Objects;
 using RiotGames.LeagueOfLegends.LeagueClient;
 using Project_Nesja.Services;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace Project_Nesja.Models
 {
     public class ClientAPI
     {
-        public static readonly LeagueClient LeagueClient = new(credentials.cmd);
-        public static SummonerData Summoner = new();
+        public static readonly LeagueClient LeagueClient = new();
+        public static CurrentSummoner CurrentSummoner = new();
 
         static ClientAPI()
         {
             if (LeagueClient.IsConnected)
-                ConnectToClient();
+                GetCurrentSummoner();
             else
                 MessageBox.Show("Failed to find active client session. Please open the client to use the related features!");
         }
 
-        public static async void ConnectToClient()
+        public static async void GetCurrentSummoner()
         {
             JObject data = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner"));
-            JObject region = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"));
-        }
 
-        public static async Task<SummonerData> SearchSummoner(string summonerName)
-        {
-            JObject data = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/lol-summoner/v1/summoners?name=" + summonerName));
-
-            SummonerData summoner = new()
-            {
-                //AccountID = data["accountId"]!.ToObject<long>(),
-                //Name = summonerName,
-                //InternalName = data["internalName"]!.ToString(),
-                //IconID = data["profileIconId"]!.ToObject<int>(),
-                //PUUID = data["puuid"]!.ToString(),
-                //SummonerID = data["summonerId"]!.ToObject<int>(),
-                //Level = data["summonerLevel"]!.ToObject<int>(),
-            };
-            return summoner;
+            CurrentSummoner = JsonConvert.DeserializeObject<CurrentSummoner>(data.ToString())!;
         }
 
         public static async Task SetRunePage(string postBody)
@@ -92,19 +78,6 @@ namespace Project_Nesja.Models
         public static async Task GetClashLobby()
         {
             var response = await LeagueClient.Request(requestMethod.GET, "/lol-clash/v1/lobby");
-        }
-
-        // Change summoner name through client
-        public static async Task ChangeSummonerName(string newName)
-        {
-            try
-            {
-                LeagueClientLockFile lockFile = LeagueClientLockFile.FromProcess();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Client Is Not Open!", ex.ToString());
-            }
         }
     }
 }

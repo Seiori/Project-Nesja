@@ -1,80 +1,45 @@
-using System;
-using System.Net.Http;
 using System.Security.Authentication;
 using System.Diagnostics;
 using System.Net;
-using System.Threading.Tasks;
 using System.Management;
 using System.Text.RegularExpressions;
-using System.IO;
-using System.Linq;
 using System.Text;
 using WebSocketSharp;
 using System.Net.Http.Headers;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 
 namespace Project_Nesja.Services
 {
-    public class OnWebsocketEventArgs : EventArgs
-    {   // URI    
-        public string Path { get; set; }
-
-        // Update create delete     
-        public string Type { get; set; }
-
-        // data :D
-        public dynamic Data { get; set; }
-    }
-
     public class LeagueClient
     {
-        #region some_ENUMS
-        public enum credentials
-        {
-            lockfile,
-            cmd
-        }
         public enum requestMethod
         {
-            GET, POST, PATCH, DELETE, PUT
+            GET,
+            POST, 
+            PATCH, 
+            DELETE, 
+            PUT
         }
-        #endregion
-        #region important_variabls
-        public static HttpClient client;
 
-        private Dictionary<string, List<Action<OnWebsocketEventArgs>>> Subscribers = new Dictionary<string, List<Action<OnWebsocketEventArgs>>>();
+        public static HttpClient? Client;
 
-        private WebSocket socketConnection;
+        private WebSocket? socketConnection;
 
-        private Tuple<Process, string, string> processInfo;
+        private Tuple<Process, string, string>? ProcessInfo;
 
-        private bool connected;
-
-        public event Action OnConnected;
-
-        public event Action OnDisconnected;
-
-        public event Action<OnWebsocketEventArgs> OnWebsocketEvent;
-
-        public bool IsConnected => connected;
-
-        static credentials _Method;
+        public bool IsConnected;
 
         private static Regex AUTH_TOKEN_REGEX = new Regex("\"--remoting-auth-token=(.+?)\"");
 
         private static Regex PORT_REGEX = new Regex("\"--app-port=(\\d+?)\"");
-        #endregion
 
-        public LeagueClient(credentials method)
+        public LeagueClient()
         {
-            _Method = method;
             //we initialize the http client
             try
             {
-                client = new HttpClient(new HttpClientHandler()
+                Client = new HttpClient(new HttpClientHandler()
                 {
                     SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls,
                     ServerCertificateCustomValidationCallback = (a, b, c, d) => true
@@ -84,21 +49,23 @@ namespace Project_Nesja.Services
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-                client = new HttpClient(new HttpClientHandler()
+                Client = new HttpClient(new HttpClientHandler()
                 {
                     ServerCertificateCustomValidationCallback = (a, b, c, d) => true
                 });
             }
+
             //wait before we start initializing the connections 
             Task.Delay(2000).ContinueWith(e => TryConnectOrRetry());
-            var trytimes = 0;
+
+            var connectionAttempts = 0;
+
             while (!IsConnected)
             {
-                if (trytimes != 2)
+                if (connectionAttempts != 2)
                 {
-                    trytimes++;
+                    connectionAttempts++;
                     TryConnectOrRetry();
-
                 }
                 else
                 {
@@ -109,9 +76,11 @@ namespace Project_Nesja.Services
             }
         }
         //the method to do requests based on parameters
-        public Task<string> Request(requestMethod method, string url, object body = null)
+        public Task<string> Request(requestMethod method, string url, object? body = null)
         {
-            if (!connected) throw new InvalidOperationException("Not connected to LCU");
+            if (!IsConnected) 
+                throw new InvalidOperationException("Not connected to LCU");
+
             string RequestMethod;
 
             switch (method)
@@ -142,200 +111,68 @@ namespace Project_Nesja.Services
                 url = "/" + url;
             }
 
-            return client.SendAsync(new HttpRequestMessage(new HttpMethod(RequestMethod), "https://127.0.0.1:" + processInfo.Item3 + url)
+            return Client!.SendAsync(new HttpRequestMessage(new HttpMethod(RequestMethod), "https://127.0.0.1:" + ProcessInfo!.Item3 + url)
             {
                 Content = body == null ? null : new StringContent(body.ToString()!, Encoding.UTF8, "application/json")
             }).Result.Content.ReadAsStringAsync();
         }
 
-        public async Task<dynamic> getStringJsoned(string url)
+        public async Task<dynamic?> getStringJsoned(string url)
         {
-            if (!connected) throw new InvalidOperationException("Not connected to LCU");
+            if (!IsConnected) throw new InvalidOperationException("Not connected to LCU");
 
-            var res = await client.GetAsync("https://127.0.0.1:" + processInfo.Item3 + url);
+            var res = await Client!.GetAsync("https://127.0.0.1:" + ProcessInfo!.Item3 + url);
             var stringContent = await res.Content.ReadAsStringAsync();
 
-            if (res.StatusCode == HttpStatusCode.NotFound) return null;
-            return JsonConvert.DeserializeObject(stringContent);
-        }
-
-        public async void GetData(string url, Action<dynamic> handler)
-        {
-            OnWebsocketEvent += data =>
-            {
-                if (data.Path == url) handler(data.Data);
-            };
-
-            if (connected)
-            {
-                handler(await getStringJsoned(url));
-            }
-            else
-            {
-                Action connectHandler = null;
-                connectHandler = async () =>
-                {
-                    OnConnected -= connectHandler;
-                    handler(await getStringJsoned(url));
-                };
-
-                OnConnected += connectHandler;
-            }
-        }
-
-        public void ClearAllListeners()
-        {
-            OnWebsocketEvent = null;
-        }
-
-        public KeyValuePair<string, string>
-            CreateAuthorizationHeader(ICredentials credentials)
-        {
-            NetworkCredential networkCredential =
-                credentials.GetCredential(null, null);
-
-            string userName = networkCredential.UserName;
-            string userPassword = networkCredential.Password;
-
-            string authInfo = userName + ":" + userPassword;
-            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-
-            return new KeyValuePair<string, string>("Authorization", "Bearer " + authInfo);
+            if (res.StatusCode == HttpStatusCode.NotFound) 
+                return null;
+            return JsonConvert.DeserializeObject(stringContent)!;
         }
 
         private void TryConnect()
         {
             try
             {
-                if (connected) return;
+                if (IsConnected) return;
 
                 var status = GetLeagueStatus();
                 if (status == null) return;
 
-                processInfo = status;
+                ProcessInfo = status;
                 var byteArray = Encoding.ASCII.GetBytes("riot:" + status.Item2);
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+                Client!.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
                 socketConnection = new WebSocket("wss://127.0.0.1:" + status.Item3 + "/", "wamp");
                 socketConnection.SetCredentials("riot", status.Item2, true);
 
                 socketConnection.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12;
                 socketConnection.SslConfiguration.ServerCertificateValidationCallback = (a, b, c, d) => true;
-                socketConnection.OnMessage += HandleMessage;
-                socketConnection.OnClose += HandleDisconnect;
                 socketConnection.Connect();
-                //socketConnection.Send($"[5, \"OnJsonApiEvent\"]");
 
-                processInfo = status;
-                connected = true;
-
-                OnConnected?.Invoke();
-
-
+                ProcessInfo = status;
+                IsConnected = true;
             }
             catch (Exception e)
             {
-                processInfo = null;
-                connected = false;
-                if (!connected) throw new InvalidOperationException($"Exception occurred trying to connect to League of Legends: {e.ToString()}");
-            }
-        }
-
-
-        private void HandleDisconnect(object sender, CloseEventArgs args)
-        {
-            processInfo = null;
-            connected = false;
-            socketConnection = null;
-
-            OnDisconnected?.Invoke();
-
-            TryConnectOrRetry();
-        }
-
-        private void HandleMessage(object sender, MessageEventArgs args)
-        {
-            if (!args.IsText) return;
-            var payload = JsonConvert.DeserializeObject<JArray>(args.Data);
-
-            if (payload.Count != 3) return;
-            if ((long)payload[0] != 8 || !((string)payload[1]).Equals("OnJsonApiEvent")) return;
-
-            var ev = (dynamic)payload[2];
-            OnWebsocketEvent?.Invoke(new OnWebsocketEventArgs()
-            {
-                Path = ev["uri"],
-                Type = ev["eventType"],
-                Data = ev["eventType"] == "Delete" ? null : ev["data"]
-            });
-            if (Subscribers.ContainsKey((string)ev["uri"]))
-            {
-                foreach (var item in Subscribers[(string)ev["uri"]])
-                {
-                    item(new OnWebsocketEventArgs()
-                    {
-                        Path = ev["uri"],
-                        Type = ev["eventType"],
-                        Data = ev["eventType"] == "Delete" ? null : ev["data"]
-                    });
-                }
-            }
-        }
-        public void Subscribe(string URI, Action<OnWebsocketEventArgs> args)
-        {
-            if (!Subscribers.ContainsKey(URI))
-            {
-                Subscribers.Add(URI, new List<Action<OnWebsocketEventArgs>>() { args });
-            }
-            else
-            {
-                Subscribers[URI].Add(args);
-            }
-        }
-
-        public void Unsubscribe(string URI, Action<OnWebsocketEventArgs> action)
-        {
-            if (Subscribers.ContainsKey(URI))
-            {
-                if (Subscribers[URI].Count == 1)
-                {
-                    Subscribers.Remove(URI);
-                }
-                else if (Subscribers[URI].Count > 1)
-                {
-                    foreach (var item in Subscribers[URI].ToArray())
-                    {
-                        if (item == action)
-                        {
-                            var index = Subscribers[URI].IndexOf(action);
-                            Subscribers[URI].RemoveAt(index);
-
-                        }
-                    }
-                }
-                else
-                {
-                    return;
-                }
-
-
+                ProcessInfo = null;
+                IsConnected = false;
+                if (!IsConnected) throw new InvalidOperationException($"Exception occurred trying to connect to League of Legends: {e.ToString()}");
             }
         }
 
         private void TryConnectOrRetry()
         {
-            if (connected) return;
+            if (IsConnected) return;
             TryConnect();
 
             Task.Delay(2000).ContinueWith(a => TryConnectOrRetry());
         }
 
-        private Tuple<Process, string, string> GetLeagueStatus()
+        private Tuple<Process, string, string>? GetLeagueStatus()
         {
             foreach (var p in Process.GetProcessesByName("LeagueClientUx"))
             {
-                if (_Method == credentials.cmd)
+                using (var mos = new ManagementObjectSearcher("SELECT CommandLine FROM Win32_Process WHERE ProcessId = " + p.Id.ToString()))
                 {
-                    using (var mos = new ManagementObjectSearcher("SELECT CommandLine FROM Win32_Process WHERE ProcessId = " + p.Id.ToString()))
                     using (var moc = mos.Get())
                     {
                         var commandLine = (string)moc.OfType<ManagementObject>().First()["CommandLine"];
@@ -344,52 +181,14 @@ namespace Project_Nesja.Services
                         {
                             var authToken = AUTH_TOKEN_REGEX.Match(commandLine).Groups[1].Value;
                             var port = PORT_REGEX.Match(commandLine).Groups[1].Value;
-                            return new Tuple<Process, string, string>
-                            (
-                                p,
-                                authToken,
-                                port
-                            );
+
+                            return new Tuple<Process, string, string>(p, authToken, port);
                         }
                         catch (Exception e)
                         {
                             throw new InvalidOperationException($"Error while trying to get the status for LeagueClientUx: {e.ToString()}\n\n(CommandLine = {commandLine})");
 
                         }
-                    }
-                }
-                else if (_Method == credentials.lockfile)
-                {
-                    try
-                    {
-                        if (p.MainModule == null)
-                            throw new Exception("The LeagueClientUx process doesn't have any main module.");
-
-                        var processDirectory = Path.GetDirectoryName(p.MainModule.FileName);
-
-                        if (processDirectory == null)
-                            throw new Exception("Unable to get the directory name for the LeagueClientUx process.");
-
-                        string lockfilePath = Path.Combine(processDirectory, "lockfile");
-
-                        string lockfile;
-                        using (var stream = File.Open(lockfilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                        using (var reader = new StreamReader(stream))
-                        {
-                            lockfile = reader.ReadToEnd();
-                        }
-
-                        var splitContent = lockfile.Split(':');
-                        return new Tuple<Process, string, string>
-                        (
-                            p,
-                            splitContent[3],
-                            splitContent[2]
-                        );
-                    }
-                    catch (Exception e)
-                    {
-                        throw new InvalidOperationException($"Error while trying to get the status for LeagueClientUx: {e.ToString()})");
                     }
                 }
             }

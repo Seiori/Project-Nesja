@@ -10,6 +10,7 @@ namespace Project_Nesja.Models
 {
     // Generate ENUM for all regions
 
+    #region Regions ENUMS
     public enum Regions
     {
         BR1,
@@ -34,20 +35,26 @@ namespace Project_Nesja.Models
         SEA
     }
 
+    #endregion
+
     public class RiotAPI
     {
         private static HttpClient? Client;
-        private string APIKey = "";
+        private string APIKey = "?api_key=RGAPI-03801912-ce46-4ff8-beae-ef85d403d8f8";
 
         public RiotAPI()
         {
             Client = new HttpClient();
         }
 
+        #region Request Method
+
         public async Task<string> Request(string APIUrl)
         {
             return await Client!.SendAsync(new HttpRequestMessage(HttpMethod.Get, APIUrl + APIKey)).Result.Content.ReadAsStringAsync();
         }
+
+        #endregion
 
         #region Account-V1
 

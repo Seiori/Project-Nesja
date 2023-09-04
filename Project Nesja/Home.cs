@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
 using Project_Nesja.Forms;
 using Project_Nesja.Models;
+using Project_Nesja.Services;
 
 namespace Project_Nesja
 {
@@ -37,14 +38,14 @@ namespace Project_Nesja
             if (ClientAPI.LeagueClient.IsConnected)
             {
                 ActiveSummoner.Text = "Current Summoner: ";
-                ActiveSummonerName.Text = ClientAPI.Summoner.Name;
+                ClientAPI.GetCurrentSummoner();
+                //ActiveSummonerName.Text = ClientAPI.Summoner.Name;
             }
             else
             {
                 ActiveSummoner.Text = "Client Not Connected";
                 ActiveSummonerName.Text = "N/A";
             }
-
             CurrentPatch.Text = "v" + GameData.CurrentVersion;
         }
 
@@ -187,7 +188,7 @@ namespace Project_Nesja
             if (GameData.ChampionList != null)
             {
                 // Use the GameData.ChampionList, and compare the letters in the searchChampionTextBox to the names of the champions in the list
-                var filteredList = GameData.ChampionList.Where(x => x.Value.Name.ToLower().Contains(searchChampionTextBox.Text.ToLower())).ToList();
+                var filteredList = GameData.ChampionList.Where(x => x.Value.Name!.ToLower().Contains(searchChampionTextBox.Text.ToLower())).ToList();
 
                 // Clear the listbox
                 searchChampionListBox.Items.Clear();
@@ -218,9 +219,12 @@ namespace Project_Nesja
             OpenChildForm(new ChampionLookup(GameData.ChampionList!.Where(x => x.Value.Name == selectedChampion).FirstOrDefault().Value, null!));
         }
 
-        private async void ClientConnectButton_Click(object sender, EventArgs e)
+        private void ClientConnectButton_Click(object sender, EventArgs e)
         {
-            // Retry Button for Connection to Client
+            if (ClientAPI.LeagueClient.IsConnected)
+                ActiveSummonerName.Text = "ff";
+            else
+                MessageBox.Show("Failed to find active client session. Please open the client to use the related features!");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Project_Nesja.Forms
         {
             if (ClientAPI.LeagueClient.IsConnected)
             {
-                RegionSelector.Text = ClientAPI.Summoner.Region;
+                //RegionSelector.Text = ClientAPI.Summoner.Region;
 
                 //GetSummonerData(ClientAPI.Summoner.Name!);
             }
