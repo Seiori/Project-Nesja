@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
 using Project_Nesja.Forms;
-using Project_Nesja.Models;
 using Project_Nesja.Services;
 
 namespace Project_Nesja

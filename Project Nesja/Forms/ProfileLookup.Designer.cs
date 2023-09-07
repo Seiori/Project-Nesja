@@ -377,16 +377,6 @@
             nameChangeButton.Size = new Size(75, 23);
             nameChangeButton.TabIndex = 0;
             // 
-            // button1
-            // 
-            button1.Location = new Point(653, 463);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 26;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
             // ProfileLookup
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 
-namespace Project_Nesja.Objects
+namespace Project_Nesja.Models
 {
     public interface IMatchData
     {
@@ -19,7 +19,7 @@ namespace Project_Nesja.Objects
         public int[]? Champion;
         public int[]? Winner;
         public int[]? Barons;
-        public int[]?    Herald;
+        public int[]? Herald;
         public int[]? Dragon;
         public int[]? Tower;
         public int[]? Inhib;

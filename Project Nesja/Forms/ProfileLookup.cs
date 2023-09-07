@@ -1,60 +1,26 @@
-﻿using Project_Nesja.Objects;
-using Newtonsoft.Json;
-using Project_Nesja.Models;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Project_Nesja.Services;
+using Project_Nesja.Web;
 
 namespace Project_Nesja.Forms
 {
     public partial class ProfileLookup : Form
     {
-        private static SummonerData? Summoner;
-
+        private readonly RiotAPI riotAPI = new RiotAPI();
         public ProfileLookup()
         {
             InitializeComponent();
-            Summoner = new();
+
+            if (ClientAPI.LeagueClient.IsConnected)
+            {
+                RegionSelector.Text = ClientAPI.Region;
+            }
         }
 
         private void Profile_Load(object sender, EventArgs e)
         {
-            if (ClientAPI.LeagueClient.IsConnected)
-            {
-                //RegionSelector.Text = ClientAPI.Summoner.Region;
 
-                //GetSummonerData(ClientAPI.Summoner.Name!);
-            }
-        }
-
-        private async void LoadSummonerData()
-        {
-            // Display Summoner Data
-            SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + Summoner!.Icon + ".png");
-            SummonerName.Text = Summoner.Name;
-            SummonerRegion.Text = Summoner.Region!.ToUpper();
-            SummonerLevel.Text = Summoner.Level!.ToString();
-            SummonerRank.Text = "Ladder Ranked: " + Summoner.SoloRank!.ToString();
-
-            // Display Solo Data
-            RankedSoloImage.Image = GetRankedIcon(Summoner.SoloTier!.ToLower());
-            RankedSoloTier.Text = Summoner.SoloTier.ToUpper();
-            RankedSoloDivision.Text = Summoner.SoloDivision;
-            RankedSoloGames.Text = Summoner.SoloWins!.ToString() + "W " + Summoner.SoloLosses!.ToString() + "L";
-            RankedSoloLP.Text = Summoner.SoloLP!.ToString() + " LP";
-
-            float.TryParse(Summoner.SoloWins, out float soloWins);
-            float.TryParse(Summoner.SoloLosses, out float soloLosses);
-            RankedSoloWinrate.Text = "Winrate " + System.Math.Round((soloWins / (soloWins + soloLosses) * 100), 2).ToString() + "%";
-
-            // Display Flex Data
-            RankedFlexImage.Image = GetRankedIcon(Summoner.FlexTier!.ToLower());
-            RankedFlexTier.Text = Summoner.FlexTier.ToUpper();
-            RankedFlexDivision.Text = Summoner.FlexDivision;
-            RankedFlexGames.Text = Summoner.FlexWins!.ToString() + "W " + Summoner.FlexLosses!.ToString() + "L";
-            RankedFlexLP.Text = Summoner.FlexLP!.ToString() + " LP";
-
-            float.TryParse(Summoner.FlexWins, out float flexWins);
-            float.TryParse(Summoner.FlexLosses, out float flexLosses);
-            RankedFlexWinrate.Text = "Winrate " + System.Math.Round((flexWins / (flexWins + flexLosses) * 100), 2).ToString() + "%";
         }
 
         private void SearchPlayerTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -67,31 +33,67 @@ namespace Project_Nesja.Forms
                 }
                 else
                 {
-                    //GetSummonerData(SearchPlayerTextBox.Text);
+                    GetSummonerData(SearchPlayerTextBox.Text);
                 }
             }
         }
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            //GetSummonerData(Summoner!.Name!);
+            GetSummonerData(SearchPlayerTextBox.Text);
         }
 
-        private async void GetSummonerData(string name)
+        private async void GetSummonerData(string summonerName)
         {
-            string apiUrl = "https://pp1.xdx.gg/summoner/1/" + RegionSelector.Text.ToLower() + "/" + name.ToLower();
+            JObject summonerData = JObject.Parse(riotAPI.GetSummonerBySummonerName(Regions.EUW1, summonerName));
+            JArray rankedData = JArray.Parse(riotAPI.GetLeagueEntriesInAllQueuesBySummonerID(Regions.EUW1, summonerData["id"]!.ToString()));
 
-            var summonderData = await WebRequests.GetJsonObject(apiUrl);
+            SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + summonerData["profileIconId"].ToString() + ".png");
+            SummonerName.Text = summonerData["name"]!.ToString();
+            SummonerRegion.Text = RegionSelector.Text;
+            SummonerLevel.Text = summonerData["summonerLevel"]!.ToString();
+            //SummonerRank.Text = "Ladder Ranked: " + Summoner.SoloRank!.ToString();
 
-            if (summonderData != null)
+            // Reset Ranked Form Data
+            RankedSoloImage.Image = GetRankedIcon("unranked");
+            RankedSoloTier.Text = "N/A";
+            RankedSoloDivision.Text = "N/A";
+            RankedSoloGames.Text = "N/A";
+            RankedSoloLP.Text = "N/A";
+
+            RankedFlexImage.Image = GetRankedIcon("unranked");
+            RankedFlexTier.Text = "N/A";
+            RankedFlexDivision.Text = "N/A";
+            RankedFlexGames.Text = "N/A";
+            RankedFlexLP.Text = "N/A";
+
+            // Assign New Summoner Data
+            foreach (var rankedQueue in rankedData)
             {
-                Summoner = JsonConvert.DeserializeObject<SummonerData>(summonderData!.ToString());
+                if (rankedQueue["queueType"]!.ToString() == "RANKED_SOLO_5x5")
+                {
+                    RankedSoloImage.Image = GetRankedIcon(rankedQueue["tier"]!.ToString().ToLower());
+                    RankedSoloTier.Text = rankedQueue["tier"]!.ToString();
+                    RankedSoloDivision.Text = rankedQueue["rank"]!.ToString();
+                    RankedSoloGames.Text = rankedQueue["wins"] + "W " + rankedQueue["losses"] + "L";
+                    RankedSoloLP.Text = rankedQueue["leaguePoints"] + " LP";
 
-                LoadSummonerData();
-            }
-            else
-            {
-                MessageBox.Show("Incorrect Summoner Name, Please Check the Summoner Name or Region");
+                    float.TryParse((string?)rankedQueue["wins"]!, out float soloWins);
+                    float.TryParse((string?)rankedQueue["losses"]!, out float soloLosses);
+                    RankedSoloWinrate.Text = "Winrate " + System.Math.Round((soloWins / (soloWins + soloLosses) * 100), 2).ToString() + "%";
+                }
+                else
+                {
+                    RankedFlexImage.Image = GetRankedIcon(rankedQueue["tier"]!.ToString().ToLower());
+                    RankedFlexTier.Text = rankedQueue["tier"]!.ToString();
+                    RankedFlexDivision.Text = rankedQueue["rank"]!.ToString();
+                    RankedFlexGames.Text = rankedQueue["wins"] + "W " + rankedQueue["losses"] + "L";
+                    RankedFlexLP.Text = rankedQueue["leaguePoints"] + " LP";
+
+                    float.TryParse((string?)rankedQueue["wins"], out float flexWins);
+                    float.TryParse((string?)rankedQueue["losses"], out float flexLosses);
+                    RankedFlexWinrate.Text = "Winrate " + System.Math.Round((flexWins / (flexWins + flexLosses) * 100), 2).ToString() + "%";
+                }
             }
         }
 
@@ -122,23 +124,6 @@ namespace Project_Nesja.Forms
                 default:
                     return Properties.Resources.unranked;
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            RiotAPI riotAPI = new RiotAPI();
-
-            JObject response = JObject.Parse(riotAPI.GetSummonerBySummonerName(Regions.EUW1, "SEIORI"));
-
-            var puuid = response["puuid"]!.ToString();
-
-            JArray cresponse = JArray.Parse(riotAPI.GetChampionMasteryByPUUID(Regions.EUW1, "qRPQHxIB-cgCftiORFxiDQljV6_cEnVxtx3NNLFDydb3T9V5OeR1Q_Yns2OMSUcAjGwLUp_kvFlfhQ"));
-
-            var status = riotAPI.GetLeagueStatus(Regions.EUW1);
-
-            var champRotation = riotAPI.GetChampionRotation(Regions.EUW1);
-
-            var challenges = riotAPI.GetChallengesPercentiles(Regions.EUN1);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project_Nesja.Objects
+namespace Project_Nesja.Models
 {
     public class ChampionRankedData
     {

@@ -1,17 +1,17 @@
 ﻿using static Project_Nesja.Services.LeagueClient;
 using Newtonsoft.Json.Linq;
-using Project_Nesja.Objects;
 using RiotGames.LeagueOfLegends.LeagueClient;
-using Project_Nesja.Services;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
+using Project_Nesja.Models;
 
-namespace Project_Nesja.Models
+namespace Project_Nesja.Services
 {
     public class ClientAPI
     {
         public static readonly LeagueClient LeagueClient = new();
         public static CurrentSummoner CurrentSummoner = new();
+        public static string Region;
 
         static ClientAPI()
         {
@@ -24,8 +24,10 @@ namespace Project_Nesja.Models
         public static async void GetCurrentSummoner()
         {
             JObject data = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/lol-summoner/v1/current-summoner"));
+            JObject region = JObject.Parse(await LeagueClient.Request(requestMethod.GET, "/riotclient/get_region_locale"));
 
             CurrentSummoner = JsonConvert.DeserializeObject<CurrentSummoner>(data.ToString())!;
+            Region = region["region"]!.ToString()!;
         }
 
         public static async Task SetRunePage(string postBody)
@@ -60,7 +62,7 @@ namespace Project_Nesja.Models
 
         public static async Task SetStatus(string statusMessage)
         {
-            var body = Newtonsoft.Json.JsonConvert.SerializeObject(new
+            var body = JsonConvert.SerializeObject(new
             {
                 statusMessage
             }); ;

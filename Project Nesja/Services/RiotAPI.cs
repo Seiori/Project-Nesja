@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Design.Behavior;
 
-namespace Project_Nesja.Models
+namespace Project_Nesja.Services
 {
     // Generate ENUM for all regions
 
@@ -40,7 +40,7 @@ namespace Project_Nesja.Models
     public class RiotAPI
     {
         private static HttpClient? Client;
-        private string APIKey = "";
+        private string APIKey = "RGAPI-7265de53-0ed6-40c8-9b69-a962585a2769";
 
         public RiotAPI()
         {
@@ -51,7 +51,8 @@ namespace Project_Nesja.Models
 
         public async Task<string> Request(string APIUrl)
         {
-            return await Client!.SendAsync(new HttpRequestMessage(HttpMethod.Get, APIUrl + APIKey)).Result.Content.ReadAsStringAsync();
+            var test = new HttpRequestMessage(HttpMethod.Get, APIUrl + APIKey);
+            return await Client!.SendAsync(new HttpRequestMessage(HttpMethod.Get, APIUrl + "?api_key=" + APIKey)).Result.Content.ReadAsStringAsync();
         }
 
         #endregion

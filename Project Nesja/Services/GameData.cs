@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Project_Nesja.Objects;
+using Project_Nesja.Web;
 
-namespace Project_Nesja.Models
+namespace Project_Nesja.Services
 {
     static class GameData
     {

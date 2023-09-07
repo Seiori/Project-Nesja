@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Project_Nesja;
 using Project_Nesja.Models;
-using Project_Nesja.Objects;
+using Project_Nesja.Services;
+using Project_Nesja.Web;
 
 public class ChampionBuild
 {
