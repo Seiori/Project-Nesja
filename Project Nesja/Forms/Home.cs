@@ -29,7 +29,7 @@ namespace Project_Nesja
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
 
-            _ = GameData.FetchGameData();
+            GameData.FetchGameData();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -46,6 +46,8 @@ namespace Project_Nesja
                 ActiveSummonerName.Text = "N/A";
             }
             CurrentPatch.Text = "v" + GameData.CurrentVersion;
+
+            Task.WhenAll(GameData.ChampionList!.Values.Select(x => x.FetchSprite()));
         }
 
         private void Logo_Click(object sender, EventArgs e)

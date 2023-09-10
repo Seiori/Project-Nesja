@@ -37,22 +37,66 @@ namespace Project_Nesja.Services
 
     #endregion
 
-    public class RiotAPI
+    static class RiotAPI
     {
         private static HttpClient? Client;
-        private string APIKey = "RGAPI-7265de53-0ed6-40c8-9b69-a962585a2769";
+        private static string APIKey = Environment.GetEnvironmentVariable("RIOT_API_KEY")!;
 
-        public RiotAPI()
+        static RiotAPI()
         {
             Client = new HttpClient();
         }
 
         #region Request Method
 
-        public async Task<string> Request(string APIUrl)
+        public static async Task<string> Request(string APIUrl)
         {
-            var test = new HttpRequestMessage(HttpMethod.Get, APIUrl + APIKey);
-            return await Client!.SendAsync(new HttpRequestMessage(HttpMethod.Get, APIUrl + "?api_key=" + APIKey)).Result.Content.ReadAsStringAsync();
+            return await Client!.GetAsync(APIUrl + APIKey).Result.Content.ReadAsStringAsync();
+        }
+
+        #endregion
+
+        #region RegionConverter
+
+        public static Regions RegionConvert(Regions region)
+        {
+            switch (region)
+            {
+                case Regions.BR1:
+                    return Regions.AMERICAS;
+                case Regions.EUN1:
+                    return Regions.EUROPE;
+                case Regions.EUW1:
+                    return Regions.EUROPE;
+                case Regions.JP1:
+                    return Regions.ASIA;
+                case Regions.KR:
+                    return Regions.ASIA;
+                case Regions.LA1:
+                    return Regions.AMERICAS;
+                case Regions.LA2:
+                    return Regions.AMERICAS;
+                case Regions.NA1:
+                    return Regions.AMERICAS;
+                case Regions.OC1:
+                    return Regions.SEA;
+                case Regions.PH2:
+                    return Regions.SEA;
+                case Regions.RU:
+                    return Regions.EUROPE;
+                case Regions.SG2:
+                    return Regions.SEA;
+                case Regions.TH2:
+                    return Regions.SEA;
+                case Regions.TR1:
+                    return Regions.EUROPE;
+                case Regions.TW2:
+                    return Regions.SEA;
+                case Regions.VN2:
+                    return Regions.SEA;
+                default:
+                    return Regions.EUROPE;
+            }
         }
 
         #endregion
@@ -65,230 +109,245 @@ namespace Project_Nesja.Services
 
         #region Champion-Mastery-V4
 
-        public string GetChampionMasteryByPUUID(Regions region, string PUUID)
+        public static string GetChampionMasteryByPUUID(Regions region, string PUUID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{PUUID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{PUUID}?api_key=").Result;
         }
 
-        public string GetChampionMasteryByPUUIDForChampion(Regions region, string PUUID, string CID)
+        public static string GetChampionMasteryByPUUIDForChampion(Regions region, string PUUID, string CID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{PUUID}/by-champion/{CID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{PUUID}/by-champion/{CID}?api_key=").Result;
         }
 
-        public string GetChampionMasteryByPUUIDTop(Regions region, string PUUID)
+        public static string GetChampionMasteryByPUUIDTop(Regions region, string PUUID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{PUUID}/top").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{PUUID}/top?api_key=").Result;
         }
 
-        public string GetChampionMasteryBySummonerID(Regions region, string SID)
+        public static string GetChampionMasteryBySummonerID(Regions region, string SID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{SID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{SID}?api_key=").Result;
         }
 
-        public string GetChampionMasteryBySummonerIDForChampion(Regions region, string SID, string CID)
+        public static string GetChampionMasteryBySummonerIDForChampion(Regions region, string SID, string CID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{SID}/by-champion/{CID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{SID}/by-champion/{CID}?api_key=").Result;
         }
 
-        public string GetChampionMasteryBySummonerIDTop(Regions region, string SID)
+        public static string GetChampionMasteryBySummonerIDTop(Regions region, string SID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{SID}/top").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{SID}/top&api_key=").Result;
         }
 
-        public string GetChampionMasteryScoreByPUUID(Regions region, string PUUID)
+        public static string GetChampionMasteryScoreByPUUID(Regions region, string PUUID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/scores/by-puuid/{PUUID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/scores/by-puuid/{PUUID}?api_key=").Result;
         }
 
-        public string GetChampionMasteryScoreBySummonerID(Regions region, string SID)
+        public static string GetChampionMasteryScoreBySummonerID(Regions region, string SID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/scores/by-summoner/{SID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/champion-mastery/v4/scores/by-summoner/{SID}?api_key=").Result;
         }
 
         #endregion
 
         #region Champion-V3
 
-        public string GetChampionRotation(Regions region)
+        public static string GetChampionRotation(Regions region)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/platform/v3/champion-rotations").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=").Result;
         }
 
         #endregion
 
         #region Clash-V1
 
-        public string GetClashPlayersByPUUID(Regions region, string PUUID)
+        public static string GetClashPlayersByPUUID(Regions region, string PUUID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/players/by-puuid/{PUUID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/players/by-puuid/{PUUID}?api_key=").Result;
         }
 
-        public string GetClashPlayersBySummonerID(Regions region, string SID)
+        public static string GetClashPlayersBySummonerID(Regions region, string SID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/players/by-summoner/{SID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/players/by-summoner/{SID}?api_key=").Result;
         }
 
-        public string GetClashTeamByTeamID(Regions region, string teamID)
+        public static string GetClashTeamByTeamID(Regions region, string teamID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/teams/{teamID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/teams/{teamID}?api_key=").Result;
         }
 
-        public string GetClashTournaments(Regions region)
+        public static string GetClashTournaments(Regions region)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/tournaments").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/tournaments?api_key=").Result;
         }
 
-        public string GetClashTournamentsByTeamID(Regions region, string teamID)
+        public static string GetClashTournamentsByTeamID(Regions region, string teamID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/tournaments/{teamID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/tournaments/{teamID}?api_key=").Result;
         }
 
-        public string GetClashTournamentsByTournamentID(Regions region, string tournamentID)
+        public static string GetClashTournamentsByTournamentID(Regions region, string tournamentID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/tournaments/{tournamentID}").Result;
-        }
+            return Request($"https://{region}.api.riotgames.com/lol/clash/v1/tournaments/{tournamentID}?api_key=").Result;
+        }   
 
         #endregion
 
         #region League-Exp-V4
 
-        public string GetLeaguePlayersByQueueTierDivision(Regions region, string queue, string tier, string division)
+        public static string GetLeaguePlayersByQueueTierDivision(Regions region, string queue, string tier, string division)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/league-exp/v4/entries/{queue}/{tier}/{division}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/league-exp/v4/entries/{queue}/{tier}/{division}?api_key=").Result;
         }
 
         #endregion
 
         #region League-V4
 
-        public string GetChallengerLeagueByQueue(Regions region, string queue)
+        public static string GetChallengerLeagueByQueue(Regions region, string queue)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/{queue}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/{queue}?api_key=").Result;
         }
 
-        public string GetLeagueEntriesInAllQueuesBySummonerID(Regions region, string SID)
+        public static string GetLeagueEntriesInAllQueuesBySummonerID(Regions region, string SID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/league/v4/entries/by-summoner/{SID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/league/v4/entries/by-summoner/{SID}?api_key=").Result;
         }
 
-        public string GetLeagueEntriesByQueueTierDivision(Regions region, string queue, string tier, string division)
+        public static string GetLeagueEntriesByQueueTierDivision(Regions region, string queue, string tier, string division)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/league/v4/entries/{queue}/{tier}/{division}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/league/v4/entries/{queue}/{tier}/{division}?api_key=").Result;
         }
 
-        public string GetGrandmasterLeagueByQueue(Regions region, string queue)
+        public static string GetGrandmasterLeagueByQueue(Regions region, string queue)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/league/v4/grandmasterleagues/by-queue/{queue}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/league/v4/grandmasterleagues/by-queue/{queue}?api_key=").Result;
         }
 
-        public string GetLeagueByLeagueID(Regions region, string leagueID)
+        public static string GetLeagueByLeagueID(Regions region, string leagueID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/league/v4/leagues/{leagueID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/league/v4/leagues/{leagueID}?api_key=").Result;
         }
 
-        public string GetMasterLeagueByQueue(Regions region, string queue)
+        public static string GetMasterLeagueByQueue(Regions region, string queue)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/league/v4/masterleagues/by-queue/{queue}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/league/v4/masterleagues/by-queue/{queue}?api_key=").Result;
         }
 
         #endregion
 
         #region LOL-CHALLENGES-V1
 
-        public string GetChallengesConfig(Regions region)
+        public static string GetChallengesConfig(Regions region)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/config").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/config?api_key=").Result;
         }
 
-        public string GetChallengesPercentiles(Regions region)
+        public static string GetChallengesPercentiles(Regions region)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/percentiles").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/percentiles?api_key=").Result;
         }
 
-        public string GetSpecificChallengeConfig(Regions region, string challengeID)
+        public static string GetSpecificChallengeConfig(Regions region, string challengeID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/{challengeID}/config").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/{challengeID}/config?api_key=").Result;
         }
 
-        public string GetChallengesTopPlayersByLevel(Regions region, string challengeID, string level)
+        public static string GetChallengesTopPlayersByLevel(Regions region, string challengeID, string level)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/{challengeID}/top/{level}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/{challengeID}/top/{level}?api_key=").Result;
         }
 
-        public string GetSpecificChallengePercentiles(Regions region, string challengeID)
+        public static string GetSpecificChallengePercentiles(Regions region, string challengeID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/{challengeID}/percentiles").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/challenges/{challengeID}/percentiles?api_key=").Result;
         }
 
-        public string GetPlayerChallengesData(Regions region, string PUUID)
+        public static string GetPlayerChallengesData(Regions region, string PUUID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/player-data/{PUUID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/challenges/v1/player-data/{PUUID}?api_key=").Result;
         }
 
         #endregion
 
         #region LOL-STATUS-V4
 
-        public string GetLeagueStatus(Regions region)
+        public static string GetLeagueStatus(Regions region)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/status/v4/platform-data").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/status/v4/platform-data?api_key=").Result;
         }
 
         #endregion
 
         #region MATCH-V5
 
-        public string GetMatchesbyPUUID(Regions region, string PUUID)
+        public static string GetMatchesbyPUUID(Regions region, string PUUID, long startTime, long endTime, int queue, string? type, int startingPoint, int numOfGames)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{PUUID}/ids").Result;
+            region = RegionConvert(region);
+
+            var APIUrl = $"https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{PUUID}/ids?";
+
+            if (startTime != 0)
+                APIUrl += $"startTime={startTime}&";
+            if (endTime != 0)
+                APIUrl += $"endTime={endTime}&";
+            if (queue != 0)
+                APIUrl += $"queue={queue}&";
+            if (type != null)
+                APIUrl += $"type={type}&";
+
+            return Request(APIUrl + "&api_key=").Result;
         }
 
-        public string GetMatchesbyMatchID(Regions region, string matchID)
+        public static string GetMatchesbyMatchID(Regions region, string matchID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/match/v5/matches/{matchID}").Result;
+            region = RegionConvert(region);
+            return Request($"https://{region}.api.riotgames.com/lol/match/v5/matches/{matchID}?api_key=").Result;
         }
 
-        public string GetMatchTimelinebyMatchID(Regions region, string matchID)
+        public static string GetMatchTimelinebyMatchID(Regions region, string matchID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/match/v5/matches/{matchID}/timeline").Result;
+            region = RegionConvert(region);
+            return Request($"https://{region}.api.riotgames.com/lol/match/v5/matches/{matchID}/timeline?api_key=").Result;
         }
 
         #endregion
 
         #region SPECTATOR-V4
 
-        public string GetCurrentGameInfoBySummonerID(Regions region, string SID)
+        public static string GetCurrentGameInfoBySummonerID(Regions region, string SID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/{SID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/{SID}?api_key=").Result;
         }
 
-        public string GetFeaturedGames(Regions region)
+        public static string GetFeaturedGames(Regions region)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/spectator/v4/featured-games").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/spectator/v4/featured-games?api_key=").Result;
         }
 
         #endregion
 
         #region SUMMONER-V4
 
-        public string GetSummonerByAccountID(Regions region, string accountID)
+        public static string GetSummonerByAccountID(Regions region, string accountID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-account/{accountID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-account/{accountID}?api_key=").Result;
         }
 
-        public string GetSummonerBySummonerName(Regions region, string summonerName)
+        public static string GetSummonerBySummonerName(Regions region, string summonerName)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summonerName}?api_key=").Result;
         }
 
-        public string GetSummonerByPUUID(Regions region, string PUUID)
+        public static string GetSummonerByPUUID(Regions region, string PUUID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{PUUID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{PUUID}?api_key=").Result;
         }
 
-        public string GetSummonerBySummonerID(Regions region, string summonerID)
+        public static string GetSummonerBySummonerID(Regions region, string summonerID)
         {
-            return Request($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/{summonerID}").Result;
+            return Request($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/{summonerID}?api_key=").Result;
         }
 
         #endregion

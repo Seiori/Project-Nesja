@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             SearchPlayerTextBox = new TextBox();
             SummonerIcon = new PictureBox();
             SummonerName = new Label();
@@ -54,8 +56,10 @@
             RankedFlexDivision = new Label();
             RankedFlexImage = new PictureBox();
             DataGridTest = new DataGridView();
-            nameChangeButton = new Button();
-            button1 = new Button();
+            Result = new DataGridViewTextBoxColumn();
+            ChampionImage = new DataGridViewImageColumn();
+            KDA = new DataGridViewTextBoxColumn();
+            flowLayoutPanel = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)SummonerIcon).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -363,27 +367,66 @@
             // 
             // DataGridTest
             // 
+            DataGridTest.BackgroundColor = SystemColors.ControlLight;
             DataGridTest.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DataGridTest.Columns.AddRange(new DataGridViewColumn[] { Result, ChampionImage, KDA });
+            DataGridTest.GridColor = SystemColors.Desktop;
             DataGridTest.Location = new Point(181, 182);
             DataGridTest.Name = "DataGridTest";
             DataGridTest.RowTemplate.Height = 25;
             DataGridTest.Size = new Size(1000, 525);
             DataGridTest.TabIndex = 25;
             // 
-            // nameChangeButton
+            // Result
             // 
-            nameChangeButton.Location = new Point(0, 0);
-            nameChangeButton.Name = "nameChangeButton";
-            nameChangeButton.Size = new Size(75, 23);
-            nameChangeButton.TabIndex = 0;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            Result.DefaultCellStyle = dataGridViewCellStyle3;
+            Result.HeaderText = "Result";
+            Result.Name = "Result";
+            Result.ReadOnly = true;
+            // 
+            // ChampionImage
+            // 
+            ChampionImage.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            ChampionImage.FillWeight = 10F;
+            ChampionImage.HeaderText = "Champion";
+            ChampionImage.ImageLayout = DataGridViewImageCellLayout.Stretch;
+            ChampionImage.MinimumWidth = 40;
+            ChampionImage.Name = "ChampionImage";
+            ChampionImage.ReadOnly = true;
+            ChampionImage.Width = 69;
+            // 
+            // KDA
+            // 
+            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.ForeColor = Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = Color.White;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            KDA.DefaultCellStyle = dataGridViewCellStyle4;
+            KDA.HeaderText = "K/D/A";
+            KDA.Name = "KDA";
+            KDA.ReadOnly = true;
+            // 
+            // flowLayoutPanel
+            // 
+            flowLayoutPanel.AutoScroll = true;
+            flowLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanel.Location = new Point(185, 185);
+            flowLayoutPanel.Name = "flowLayoutPanel";
+            flowLayoutPanel.Size = new Size(1000, 545);
+            flowLayoutPanel.TabIndex = 26;
+            flowLayoutPanel.WrapContents = false;
             // 
             // ProfileLookup
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1177, 722);
-            Controls.Add(button1);
-            Controls.Add(nameChangeButton);
+            Controls.Add(flowLayoutPanel);
             Controls.Add(DataGridTest);
             Controls.Add(panel1);
             Controls.Add(panel3);
@@ -431,7 +474,9 @@
         private Label RankedFlexDivision;
         private Label SummonerRegion;
         private DataGridView DataGridTest;
-        private Button nameChangeButton;
-        private Button button1;
+        private DataGridViewTextBoxColumn Result;
+        private DataGridViewImageColumn ChampionImage;
+        private DataGridViewTextBoxColumn KDA;
+        private FlowLayoutPanel flowLayoutPanel;
     }
 }

@@ -40,7 +40,7 @@ namespace Project_Nesja.Services
 
         public static async Task SetItemSet(string jsonString)
         {
-            //var response = await LeagueClient.Request(requestMethod.PUT, $"/lol-item-sets/v1/item-sets/{Summoner.SummonerID}/sets", jsonString);
+            var response = await LeagueClient.Request(requestMethod.PUT, $"/lol-item-sets/v1/item-sets/{CurrentSummoner.SummonerId}/sets", jsonString);
         }
 
         public static async Task SetSummonerSpells(string jsonString)

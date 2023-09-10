@@ -2,12 +2,17 @@
 using Newtonsoft.Json.Linq;
 using Project_Nesja.Services;
 using Project_Nesja.Web;
+using System.Collections.Concurrent;
+using System.Windows.Forms;
+using System.Windows.Documents;
+using Project_Nesja.Models;
 
 namespace Project_Nesja.Forms
 {
     public partial class ProfileLookup : Form
     {
-        private readonly RiotAPI riotAPI = new RiotAPI();
+        ConcurrentBag<JObject> Matches = new ConcurrentBag<JObject>();
+
         public ProfileLookup()
         {
             InitializeComponent();
@@ -45,10 +50,10 @@ namespace Project_Nesja.Forms
 
         private async void GetSummonerData(string summonerName)
         {
-            JObject summonerData = JObject.Parse(riotAPI.GetSummonerBySummonerName(Regions.EUW1, summonerName));
-            JArray rankedData = JArray.Parse(riotAPI.GetLeagueEntriesInAllQueuesBySummonerID(Regions.EUW1, summonerData["id"]!.ToString()));
+            JObject summonerData = JObject.Parse(RiotAPI.GetSummonerBySummonerName(Regions.EUW1, summonerName));
+            JArray rankedData = JArray.Parse(RiotAPI.GetLeagueEntriesInAllQueuesBySummonerID(Regions.EUW1, summonerData["id"]!.ToString()));
 
-            SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + summonerData["profileIconId"].ToString() + ".png");
+            SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + summonerData["profileIconId"]!.ToString() + ".png");
             SummonerName.Text = summonerData["name"]!.ToString();
             SummonerRegion.Text = RegionSelector.Text;
             SummonerLevel.Text = summonerData["summonerLevel"]!.ToString();
@@ -94,6 +99,60 @@ namespace Project_Nesja.Forms
                     float.TryParse((string?)rankedQueue["losses"], out float flexLosses);
                     RankedFlexWinrate.Text = "Winrate " + System.Math.Round((flexWins / (flexWins + flexLosses) * 100), 2).ToString() + "%";
                 }
+            }
+
+            JArray matchHistory = JArray.Parse(RiotAPI.GetMatchesbyPUUID(Regions.EUROPE, summonerData["puuid"]!.ToString(), 0, 0, 0, null, 0, 20));
+
+            Parallel.ForEach(matchHistory, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, matchID => ProcessMatch(matchID.ToString()).Wait());
+
+            string result = "";
+            int championID = 0;
+            int kills = 0;
+            int deaths = 0;
+            int assists = 0;
+
+            // Order Matches
+            Matches = new ConcurrentBag<JObject>(Matches.OrderBy(x => x["info"]!["gameCreation"]!.ToObject<long>()));
+
+            MatchInfoControl matchInfoControl;
+
+            foreach (var matchInfo in Matches)
+            {
+                foreach (var participant in matchInfo["info"]!["participants"]!)
+                {
+                    if (participant["puuid"]!.ToString() == summonerData["puuid"]!.ToString())
+                    {
+                        result = participant["win"]!.ToString();
+                        championID = int.Parse(participant["championId"]!.ToString());
+                        kills = int.Parse(participant["kills"]!.ToString());
+                        deaths = int.Parse(participant["deaths"]!.ToString());
+                        assists = int.Parse(participant["assists"]!.ToString());
+
+                        matchInfoControl = new MatchInfoControl(result, GameData.ChampionList!.First(x => x.Key == championID).Value.Sprite!, kills + "/" + deaths + "/" + assists);
+
+                        flowLayoutPanel.Controls.Add(matchInfoControl);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private Task ProcessMatch(string matchID)
+        {
+            try
+            {
+                JObject match = JObject.Parse(RiotAPI.GetMatchesbyMatchID(Regions.EUROPE, matchID.ToString()));
+
+                Matches.Add(match);
+
+                return Task.CompletedTask;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions here
+                MessageBox.Show($"Error processing match {matchID}: {ex.Message}");
+
+                return Task.CompletedTask;
             }
         }
 
