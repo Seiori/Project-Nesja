@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using FontAwesome.Sharp;
+using Microsoft.Extensions.Configuration;
 using Project_Nesja.Forms;
 using Project_Nesja.Services;
 
@@ -28,8 +29,6 @@ namespace Project_Nesja
             this.ControlBox = false;
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
-
-            GameData.FetchGameData();
         }
 
         private void Form1_Load(object sender, EventArgs e)

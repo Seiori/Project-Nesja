@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.Design.Behavior;
+using Microsoft.Extensions.Configuration;
 
 namespace Project_Nesja.Services
 {
@@ -37,15 +39,32 @@ namespace Project_Nesja.Services
 
     #endregion
 
+    #region RiotAPIKeyManager
+
+    class RiotAPIKeyManager
+    {
+        public static string APIKey { get; set; }
+        static RiotAPIKeyManager()
+        {
+            // Create a Configuration Builder
+            var builder = new ConfigurationBuilder().AddUserSecrets<RiotAPIKeyManager>();
+
+            // Build the configuration
+            var config = builder.Build();
+
+            // Retrieve the API Key from User Secrets
+            APIKey = config["API_Key"];
+        }
+    }
+
+    #endregion
+
     static class RiotAPI
     {
         private static HttpClient? Client;
-        private static string APIKey = Environment.GetEnvironmentVariable("RIOT_API_KEY")!;
+        private static string APIKey => RiotAPIKeyManager.APIKey;
 
-        static RiotAPI()
-        {
-            Client = new HttpClient();
-        }
+        static RiotAPI() => Client = new HttpClient();
 
         #region Request Method
 

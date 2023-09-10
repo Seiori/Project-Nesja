@@ -1,6 +1,5 @@
 ﻿using static Project_Nesja.Services.LeagueClient;
 using Newtonsoft.Json.Linq;
-using RiotGames.LeagueOfLegends.LeagueClient;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using Project_Nesja.Models;

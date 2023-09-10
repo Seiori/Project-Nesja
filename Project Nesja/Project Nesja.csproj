@@ -7,15 +7,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>ca17776b-de2f-4372-b8f7-ce62a2559412</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Costura.Fody" Version="5.7.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="FontAwesome.Sharp" Version="6.2.1" />
-    <PackageReference Include="MikaelDui.RiotGames.LeagueOfLegends.LeagueClient.LockFile" Version="1.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="System.Management" Version="7.0.2" />
     <PackageReference Include="websocketsharp.core" Version="1.0.0" />

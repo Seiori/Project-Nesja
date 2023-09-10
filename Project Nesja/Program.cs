@@ -1,3 +1,6 @@
+using Microsoft.Extensions.Configuration;
+using Project_Nesja.Services;
+
 namespace Project_Nesja
 {
     internal static class Program
