@@ -1,12 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.Design.Behavior;
-using Microsoft.Extensions.Configuration;
 
 namespace Project_Nesja.Services
 {
@@ -68,9 +60,9 @@ namespace Project_Nesja.Services
 
         #region Request Method
 
-        public static async Task<string> Request(string APIUrl)
+        public static Task<string> Request(string APIUrl)
         {
-            return await Client!.GetAsync(APIUrl + APIKey).Result.Content.ReadAsStringAsync();
+            return Client!.GetStringAsync(APIUrl + APIKey);
         }
 
         #endregion
