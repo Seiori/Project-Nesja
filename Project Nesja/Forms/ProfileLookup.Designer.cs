@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             SearchPlayerTextBox = new TextBox();
             SummonerIcon = new PictureBox();
             SummonerName = new Label();
@@ -60,6 +60,7 @@
             ChampionImage = new DataGridViewImageColumn();
             KDA = new DataGridViewTextBoxColumn();
             flowLayoutPanel = new FlowLayoutPanel();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)SummonerIcon).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -67,6 +68,8 @@
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)RankedFlexImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DataGridTest).BeginInit();
+            flowLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // SearchPlayerTextBox
@@ -379,11 +382,11 @@
             // 
             // Result
             // 
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = Color.White;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            Result.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = Color.White;
+            dataGridViewCellStyle1.ForeColor = Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            Result.DefaultCellStyle = dataGridViewCellStyle1;
             Result.HeaderText = "Result";
             Result.Name = "Result";
             Result.ReadOnly = true;
@@ -401,11 +404,11 @@
             // 
             // KDA
             // 
-            dataGridViewCellStyle4.BackColor = Color.White;
-            dataGridViewCellStyle4.ForeColor = Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = Color.White;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            KDA.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = Color.White;
+            dataGridViewCellStyle2.SelectionForeColor = Color.Black;
+            KDA.DefaultCellStyle = dataGridViewCellStyle2;
             KDA.HeaderText = "K/D/A";
             KDA.Name = "KDA";
             KDA.ReadOnly = true;
@@ -414,12 +417,21 @@
             // 
             flowLayoutPanel.AutoScroll = true;
             flowLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flowLayoutPanel.Controls.Add(pictureBox1);
             flowLayoutPanel.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel.Location = new Point(185, 185);
             flowLayoutPanel.Name = "flowLayoutPanel";
             flowLayoutPanel.Size = new Size(1000, 545);
             flowLayoutPanel.TabIndex = 26;
             flowLayoutPanel.WrapContents = false;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(3, 3);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(100, 50);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // ProfileLookup
             // 
@@ -444,6 +456,8 @@
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)RankedFlexImage).EndInit();
             ((System.ComponentModel.ISupportInitialize)DataGridTest).EndInit();
+            flowLayoutPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -478,5 +492,6 @@
         private DataGridViewImageColumn ChampionImage;
         private DataGridViewTextBoxColumn KDA;
         private FlowLayoutPanel flowLayoutPanel;
+        private PictureBox pictureBox1;
     }
 }

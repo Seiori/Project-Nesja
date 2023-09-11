@@ -50,8 +50,8 @@ namespace Project_Nesja.Forms
 
         private async void GetSummonerData(string summonerName)
         {
-            JObject summonerData = JObject.Parse(RiotAPI.GetSummonerBySummonerName(Regions.EUW1, summonerName));
-            JArray rankedData = JArray.Parse(RiotAPI.GetLeagueEntriesInAllQueuesBySummonerID(Regions.EUW1, summonerData["id"]!.ToString()));
+            JObject summonerData = JObject.Parse(RiotAPI.GetSummonerBySummonerName(RiotAPI.Platform.EUW1, summonerName));
+            JArray rankedData = JArray.Parse(RiotAPI.GetLeagueEntriesInAllQueuesBySummonerID(RiotAPI.Platform.EUW1, summonerData["id"]!.ToString()));
 
             SummonerIcon.Image = await WebRequests.DownloadImage("http://ddragon.leagueoflegends.com/cdn/" + GameData.CurrentVersion + "/img/profileicon/" + summonerData["profileIconId"]!.ToString() + ".png");
             SummonerName.Text = summonerData["name"]!.ToString();
@@ -101,7 +101,7 @@ namespace Project_Nesja.Forms
                 }
             }
 
-            JArray matchHistory = JArray.Parse(RiotAPI.GetMatchesbyPUUID(Regions.EUROPE, summonerData["puuid"]!.ToString(), 0, 0, 0, null, 0, 20));
+            JArray matchHistory = JArray.Parse(RiotAPI.GetMatchesbyPUUID(RiotAPI.Region.EUROPE, summonerData["puuid"]!.ToString(), 0, 0, 0, null, 0, 20));
 
             Parallel.ForEach(matchHistory, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount }, matchID => ProcessMatch(matchID.ToString()).Wait());
 
@@ -141,7 +141,7 @@ namespace Project_Nesja.Forms
         {
             try
             {
-                JObject match = JObject.Parse(RiotAPI.GetMatchesbyMatchID(Regions.EUROPE, matchID.ToString()));
+                JObject match = JObject.Parse(RiotAPI.GetMatchesbyMatchID(RiotAPI.Region.EUROPE, matchID.ToString()));
 
                 Matches.Add(match);
 

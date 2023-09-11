@@ -29,6 +29,15 @@ namespace Project_Nesja
             this.ControlBox = false;
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+
+            // Create a Configuration Builder
+            var builder = new ConfigurationBuilder().AddUserSecrets<MainMenu>();
+
+            // Build the Configuration
+            var configuration = builder.Build();
+
+            // Retrieve the API Key from User Secrets
+            RiotAPI.APIKey = configuration["API_Key"];
         }
 
         private void Form1_Load(object sender, EventArgs e)
