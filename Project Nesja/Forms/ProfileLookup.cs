@@ -17,9 +17,9 @@ namespace Project_Nesja.Forms
         {
             InitializeComponent();
 
-            if (ClientAPI.LeagueClient.IsConnected)
+            if (LeagueClient.IsConnected)
             {
-                RegionSelector.Text = ClientAPI.Region;
+                RegionSelector.Text = JObject.Parse(LeagueClient.Default.RegionLocale())["locale"]!.ToString();
             }
         }
 

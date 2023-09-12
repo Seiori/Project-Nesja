@@ -42,11 +42,10 @@ namespace Project_Nesja
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (ClientAPI.LeagueClient.IsConnected)
+            if (LeagueClient.IsConnected)
             {
                 ActiveSummoner.Text = "Current Summoner: ";
-                ClientAPI.GetCurrentSummoner();
-                //ActiveSummonerName.Text = ClientAPI.Summoner.Name;
+                ActiveSummonerName.Text = LeagueClient.CurrentSummoner.GameName;
             }
             else
             {
@@ -230,8 +229,8 @@ namespace Project_Nesja
 
         private void ClientConnectButton_Click(object sender, EventArgs e)
         {
-            if (ClientAPI.LeagueClient.IsConnected)
-                ActiveSummonerName.Text = "ff";
+            if (LeagueClient.IsConnected)
+            { }
             else
                 MessageBox.Show("Failed to find active client session. Please open the client to use the related features!");
         }

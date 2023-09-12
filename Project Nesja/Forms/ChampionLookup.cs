@@ -29,7 +29,7 @@ namespace Project_Nesja.Forms
         {
             searchChampionListBox.Visible = false;
 
-            if (ClientAPI.LeagueClient.IsConnected!)
+            if (LeagueClient.IsConnected!)
                 ImportButton.Visible = true;
         }
 
@@ -201,7 +201,7 @@ namespace Project_Nesja.Forms
             if (runePageImport)
             {
                 var jsonString = "{\"name\":\"" + selectedChampion.Name + " " + championBuild.role + " Runes\", \"selectedPerkIds\": " + JArray.FromObject(this.championBuild.RunePageChoice.GetRunePageIDs()).ToString() + ", \"primaryStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.Keystone!.RuneTree) + ", \"subStyleId\":" + this.championBuild.RunePageChoice.GetStyleID(this.championBuild.RunePageChoice.SecTreeFirstOption!.RuneTree) + ", \"current\": true}";
-                await ClientAPI.SetRunePage(jsonString);
+                LeagueClient.lolPerks.SetCurrentPage(jsonString);
             }
 
             if (itemSetImport)
@@ -281,7 +281,7 @@ namespace Project_Nesja.Forms
                 requestBody.Add("timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
 
                 string jsonString = JsonConvert.SerializeObject(requestBody);
-                await ClientAPI.SetItemSet(jsonString);
+                LeagueClient.lolItemSets.SetItemSet(jsonString);
             }
 
             if (summonerSpellImport)
@@ -292,7 +292,7 @@ namespace Project_Nesja.Forms
                 requestBody.Add("spell2Id", championBuild.SummonerSpells.SecondSpellData!.ID);
 
                 string jsonString = JsonConvert.SerializeObject(requestBody);
-                await ClientAPI.SetSummonerSpells(jsonString);
+                LeagueClient.lolChampSelect.SetSummonerSpells(jsonString);
             }
         }
 
